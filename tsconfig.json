@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2017",                          
+    "module": "commonjs", 
+    "allowJs": true,                                            
+    "esModuleInterop": true,                  
+    "skipLibCheck": true,                     
+    "forceConsistentCasingInFileNames": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@interfaces": ["./src/interfaces/index.ts"],
+      "@models": ["./src/models/index.ts"],
+      "@providers/*": ["./src/providers/*"],
+      "@repositories/*": ["./src/repositories/*"],
+      "@enum/*": ["./src/enum/*"],
+      "@middleware/*": ["./src/middleware/*"]
+    } 
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

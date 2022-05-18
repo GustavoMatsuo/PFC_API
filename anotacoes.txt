@@ -1,0 +1,107 @@
+import { User } from "@models"
+import { ICreateUserRequestDTO, IUpdateUserRequestDTO } from "src/components/User/UserDTO"
+
+export interface IUsersRepository {
+  index():Promise<Array<User>>
+  create(user:ICreateUserRequestDTO):Promise<void>
+  update(User:IUpdateUserRequestDTO):Promise<void>
+  delete(id:string): Promise<void>
+  findByEmail(email:string):Promise<User>
+  findById(id:string):Promise<User>
+}
+---------------------------------------------------------------------------------------------------
+await this.mailProvider.sendMail({
+  to: {
+    name: data.name,
+    email: data.email
+  },
+  from: {
+    name: 'Equipe do Meu App',
+    email: 'equipe@meuapp.com'
+  },
+  subject: 'Seja bem-vindo à plataforma',
+  body: '<p>Você já pode fazer login em nossa plataforma.</p>'
+})
+await this.mailProvider.sendMail({
+  to: {
+    name: data.name,
+    email: data.email
+  },  
+  from: {
+    name: 'Equipe do Meu App',
+    email: 'equipe@meuapp.com'
+  },
+  subject: 'Seus dados foram atualizados',
+  body: '<p>Atenção seus dados foram atualizados em nossa Plataforma</p>'
+})
+---------------------------------------------------------------------------------------------------------
+  // private users: User[] = []
+
+  // async index():Promise<Array<User>> {
+  //   return this.users
+  // }
+
+  // async create(user:User):Promise<void> {
+  //   this.users.push(user)
+  // }
+
+  // async update(user:User) {
+  //   return
+  // }
+
+  // async delete(id:string):Promise<void> {
+  //   this.users = this.users.filter(user => {
+  //     if(user.id != id) {
+  //       return user
+  //     }
+  //   })
+  //   return
+  // }
+
+  // async findByEmail(email:string):Promise<User> {
+  //   const user = this.users.find(user => user.email === email)
+
+  //   return user
+  // }
+
+  // async findById(id:string):Promise<User> {
+  //   const user = this.users.find(user => user.id === id)
+
+  //   return user
+  // }
+-------------------------------------------------------------------------------------------
+CREATE TABLE roles (
+  role_id INT NOT NULL,
+  role_name VARCHAR(255),
+
+  PRIMARY KEY (role_id)
+);
+
+INSERT INTO roles (role_id, role_name)
+  VALUES (1, 'GERENTE'),
+  VALUES (2, 'FUNCIONARIO');
+----------------------------------------------------------------------
+Usuario
+	usuario_id:string
+	name:string
+	email:string
+  status:boolean
+	role:string
+	password:string
+
+
+Fornecodor
+	fornecedor_id:string
+	nome:string
+	cnpj:string
+	telefone:string
+
+Categoria
+	categoria_id:string
+	nome:sting
+
+Produto
+	produto_id:string
+	categoria:Categoria
+	fonecedor:Fornecedor
+	qtd:number
