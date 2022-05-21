@@ -13,3 +13,8 @@ export interface IUpdateUserRequestDTO {
   email:string
   password:string
 }
+
+export interface ILoginUserRequestDTO {
+  email:string
+  password:string
+}

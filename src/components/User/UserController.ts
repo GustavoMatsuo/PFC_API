@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { IUserServices } from '../../interfaces/IUserServices'
-import { ICreateUserRequestDTO, IUpdateUserRequestDTO } from "./UserDTO"
+import { ICreateUserRequestDTO, ILoginUserRequestDTO, IUpdateUserRequestDTO } from "./UserDTO"
 
 export class UserController {
   private userServices:IUserServices
@@ -11,9 +11,31 @@ export class UserController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const userList = await this.userServices.index()
+      const { limit, skip } = request.params
+      const userList = await this.userServices.index(limit, skip)
   
       return response.status(200).json(userList)
+    } catch (err) {
+      return response.status(400).json({
+        message: err.message || 'Unexpected error.'
+      })
+    }
+  }
+
+  async login(request:Request, response:Response):Promise<Response> {
+    try {
+      const { email, password } = request.body
+      const userData:ILoginUserRequestDTO = {email, password}
+
+      const user = await this.userServices.login(userData)
+
+      if(user){
+        return response.status(200).json(user)
+      }else{
+        return response.status(401).json({
+          msg: 'Email ou senha incorreto!'
+        })
+      }
     } catch (err) {
       return response.status(400).json({
         message: err.message || 'Unexpected error.'
@@ -40,7 +62,7 @@ export class UserController {
     try {
       const { id, name, status, email, role, password } = request.body
       const user:IUpdateUserRequestDTO = {id, name, status, email, role, password}
-
+      console.log(user)
       await this.userServices.update(user)
   
       return response.status(200).json({msg: "user updated"})

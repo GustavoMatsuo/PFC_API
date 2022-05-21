@@ -10,6 +10,9 @@ router.get('/users', (request, response) => {
 router.post('/users', (request, response) => {
   return userController.create(request, response)
 })
+router.post('/users/login', (request, response) => {
+  return userController.login(request, response)
+})
 router.put('/users', (request, response) => {
   return userController.update(request, response)
 })

@@ -1,7 +1,7 @@
 import { User } from "@models"
 import { IUserServices } from "@interfaces"
 import { IMailProvider } from '@providers/IMailProvider'
-import { ICreateUserRequestDTO, IUpdateUserRequestDTO } from './UserDTO'
+import { ICreateUserRequestDTO, ILoginUserRequestDTO, IUpdateUserRequestDTO } from './UserDTO'
 import { PostgresUsersRepository } from "@repositories/PostgresUsersRepository"
 
 export class UserServices implements IUserServices {
@@ -16,10 +16,28 @@ export class UserServices implements IUserServices {
     this.mailProvider = mailProvider
   }
 
-  async index():Promise<Array<User>> {
-    const userList = await this.usersRepository.find()
+  async index(limit, skip):Promise<Array<User>> {
+    const userList = await this.usersRepository.find({
+      take: limit,
+      skip: skip
+    })
 
     return userList
+  }
+
+  async login(data:ILoginUserRequestDTO):Promise<User> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        email: data.email,
+        password: data.password
+      },
+    })
+
+    if(user && !user.status){
+      throw new Error('User disabled.')
+    }
+
+    return user
   }
 
   async create(data:ICreateUserRequestDTO):Promise<void> {
