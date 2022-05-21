@@ -10,11 +10,12 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "@interfaces": ["./src/interfaces/index.ts"],
       "@models": ["./src/models/index.ts"],
-      "@providers/*": ["./src/providers/*"],
       "@repositories": ["./src/repositories/index.ts"],
+      "@interfaces": ["./src/interfaces/index.ts"],
+      "@providers/*": ["./src/providers/*"],
       "@enum/*": ["./src/enum/*"],
+      "@dto/*": ["src/dto/*"],
       "@middleware/*": ["./src/middleware/*"]
     } 
   },
