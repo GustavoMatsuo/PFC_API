@@ -13,7 +13,7 @@
       "@interfaces": ["./src/interfaces/index.ts"],
       "@models": ["./src/models/index.ts"],
       "@providers/*": ["./src/providers/*"],
-      "@repositories/*": ["./src/repositories/*"],
+      "@repositories": ["./src/repositories/index.ts"],
       "@enum/*": ["./src/enum/*"],
       "@middleware/*": ["./src/middleware/*"]
     } 
