@@ -2,14 +2,14 @@ import { User } from "@models"
 import { IUserServices } from "@interfaces"
 import { IMailProvider } from '@providers/IMailProvider'
 import { ICreateUserRequestDTO, ILoginUserRequestDTO, IUpdateUserRequestDTO } from './UserDTO'
-import { PostgresUsersRepository } from "@repositories/PostgresUsersRepository"
+import { UsersRepository } from "@repositories"
 
 export class UserServices implements IUserServices {
-  private usersRepository: PostgresUsersRepository
+  private usersRepository: UsersRepository
   private mailProvider:IMailProvider
 
   constructor(
-    usersRepository:PostgresUsersRepository,
+    usersRepository:UsersRepository,
     mailProvider:IMailProvider,
   ) {
     this.usersRepository = usersRepository
