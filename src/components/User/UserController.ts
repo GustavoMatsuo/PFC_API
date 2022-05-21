@@ -1,5 +1,5 @@
 import { Response, Request } from "express"
-import { IUserServices } from '../../interfaces/IUserServices'
+import { IUserServices } from '@interfaces'
 import { ICreateUserRequestDTO, ILoginUserRequestDTO, IUpdateUserRequestDTO } from "./UserDTO"
 
 export class UserController {

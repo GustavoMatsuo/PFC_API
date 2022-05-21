@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToOne, PrimaryColumn,  } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn,  } from "typeorm"
 import { v4 as uuidv4 } from 'uuid'
 import { Endereco } from "./Endereco"
 
@@ -17,6 +17,7 @@ export class Fornecedor {
   cnpj:string
 
   @OneToOne(() => Endereco)
+  @JoinColumn({name: 'endereco_fornecedor'})
   endereco:Endereco
 
   constructor(props: Omit<Fornecedor, 'id_fornecedor'>, id_fornecedor?:string) {
