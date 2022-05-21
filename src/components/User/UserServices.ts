@@ -1,7 +1,7 @@
 import { User } from "@models"
 import { IUserServices } from "@interfaces"
 import { IMailProvider } from '@providers/IMailProvider'
-import { ICreateUserRequestDTO, ILoginUserRequestDTO, IUpdateUserRequestDTO } from './UserDTO'
+import { ICreateUserDTO, ILoginUserDTO, IUpdateUserDTO } from '@dto/UserDTO'
 import { UsersRepository } from "@repositories"
 
 export class UserServices implements IUserServices {
@@ -25,7 +25,7 @@ export class UserServices implements IUserServices {
     return userList
   }
 
-  async login(data:ILoginUserRequestDTO):Promise<User> {
+  async login(data:ILoginUserDTO):Promise<User> {
     const user = await this.usersRepository.findOne({
       where: {
         email: data.email,
@@ -40,7 +40,7 @@ export class UserServices implements IUserServices {
     return user
   }
 
-  async create(data:ICreateUserRequestDTO):Promise<void> {
+  async create(data:ICreateUserDTO):Promise<void> {
     const userAlreadyExists = await this.usersRepository.findOneBy({
       email: data.email
     })
@@ -54,7 +54,7 @@ export class UserServices implements IUserServices {
     await this.usersRepository.save(user)
   }
 
-  async update(data:IUpdateUserRequestDTO):Promise<void> {
+  async update(data:IUpdateUserDTO):Promise<void> {
     const userExists = await this.usersRepository.findOneBy({id: data.id})
 
     if (!userExists) {

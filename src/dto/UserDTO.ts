@@ -1,11 +1,11 @@
-export interface ICreateUserRequestDTO {
+export interface ICreateUserDTO {
   name:string
   email:string
   role:string
   password:string
 }
 
-export interface IUpdateUserRequestDTO {
+export interface IUpdateUserDTO {
   id:string
   name:string
   status:boolean
@@ -14,7 +14,7 @@ export interface IUpdateUserRequestDTO {
   password:string
 }
 
-export interface ILoginUserRequestDTO {
+export interface ILoginUserDTO {
   email:string
   password:string
 }

@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { IUserServices } from '@interfaces'
-import { ICreateUserRequestDTO, ILoginUserRequestDTO, IUpdateUserRequestDTO } from "./UserDTO"
+import { ICreateUserDTO, ILoginUserDTO, IUpdateUserDTO } from "@dto/UserDTO"
 
 export class UserController {
   private userServices:IUserServices
@@ -25,7 +25,7 @@ export class UserController {
   async login(request:Request, response:Response):Promise<Response> {
     try {
       const { email, password } = request.body
-      const userData:ILoginUserRequestDTO = {email, password}
+      const userData:ILoginUserDTO = {email, password}
 
       const user = await this.userServices.login(userData)
 
@@ -46,7 +46,7 @@ export class UserController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { name, email, role, password, userId } = request.body
-      const user:ICreateUserRequestDTO = {name, email, role, password}
+      const user:ICreateUserDTO = {name, email, role, password}
 
       await this.userServices.create(user)
   
@@ -61,7 +61,7 @@ export class UserController {
   async update(request:Request, response:Response):Promise<Response> {
     try {
       const { id, name, status, email, role, password } = request.body
-      const user:IUpdateUserRequestDTO = {id, name, status, email, role, password}
+      const user:IUpdateUserDTO = {id, name, status, email, role, password}
       console.log(user)
       await this.userServices.update(user)
   
