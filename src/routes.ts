@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { fornecedorController } from "./components/Fornecedor"
 import { userController } from "./components/User"
 
 const router = Router()
@@ -21,6 +22,11 @@ router.put('/users/status', (request, response) => {
 })
 router.delete('/users', (request, response) => {
   return userController.delete(request, response)
+})
+
+//FORNECEDOR
+router.get('/fornecedor', (request, response) => {
+  return fornecedorController.index(request, response)
 })
 
 export { router }
