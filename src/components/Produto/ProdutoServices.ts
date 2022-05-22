@@ -40,16 +40,16 @@ export class ProdutoServices implements IProdutoServices {
     }
 
     const fornecedor = await this.fornecedorRepository.findOneBy({id_fornecedor: data.fornecedor})
-    if(fornecedor) {
+    if(!fornecedor) {
       throw new Error('Fornecedor not found.')
     }
 
     const categoria = await this.categoriaRepository.findOneBy({id_categoria: data.categoria})
-    if(fornecedor) {
+    if(!categoria) {
       throw new Error('Categoria not found.')
     }
 
-    const produto = new Produto({...data, fornecedor:fornecedor, categoria: categoria, status: true})
+    const produto = new Produto({...data, fornecedor: fornecedor, categoria: categoria, status: true})
 
     await this.produtoRepository.save(produto)
   }
@@ -62,16 +62,16 @@ export class ProdutoServices implements IProdutoServices {
     }
 
     const fornecedor = await this.fornecedorRepository.findOneBy({id_fornecedor: data.fornecedor})
-    if(fornecedor) {
+    if(!fornecedor) {
       throw new Error('fornecedor not found.')
     }
 
     const categoria = await this.categoriaRepository.findOneBy({id_categoria: data.categoria})
-    if(fornecedor) {
+    if(!fornecedor) {
       throw new Error('categoria not found.')
     }
 
-    const produto = new Produto({...data, fornecedor:fornecedor, categoria: categoria, status: true})
+    const produto = new Produto({...data, fornecedor: fornecedor, categoria: categoria, status: true})
 
     await this.produtoRepository.update(data.id_produto, produto)
   }
