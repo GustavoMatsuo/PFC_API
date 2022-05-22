@@ -16,7 +16,10 @@ export class Fornecedor {
   @Column()
   cnpj:string
 
-  @OneToOne(() => Endereco)
+  @Column()
+  status:boolean
+
+  @OneToOne(() => Endereco, {cascade: true})
   @JoinColumn({name: 'endereco_fornecedor'})
   endereco:Endereco
 

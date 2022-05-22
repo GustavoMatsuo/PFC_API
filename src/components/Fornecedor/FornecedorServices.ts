@@ -1,6 +1,8 @@
-import { Fornecedor } from "@models"
+import { Endereco, Fornecedor } from "@models"
 import { IFornecedorServices } from "@interfaces"
 import { FornecedorRepository } from "@repositories"
+import { ICreateFornecedorDTO, IUpdateFornecedorDTO } from "@dto/FornecedorDTO"
+import { db } from "src/config/database"
 
 export class FornecedorServices implements IFornecedorServices {
   private fornecedorRepository: FornecedorRepository
@@ -10,11 +12,52 @@ export class FornecedorServices implements IFornecedorServices {
   }
 
   async index(limit, skip):Promise<Array<Fornecedor>> {
-    const fornecedorList = await this.fornecedorRepository.find({
-      take: limit,
-      skip: skip
-    })
+    const fornecedorList = await this.fornecedorRepository
+      .createQueryBuilder("fornecedor")
+      .leftJoinAndSelect("fornecedor.endereco", "endereco.id_endereco")
+      .take(limit)
+      .skip(skip)
+      .getMany()
 
     return fornecedorList
+  }
+
+  async create(data:ICreateFornecedorDTO):Promise<void> {
+    const fornecedorAlreadyExists = await this.fornecedorRepository.findOneBy({
+      cnpj: data.cnpj
+    })
+
+    if (fornecedorAlreadyExists) {
+      throw new Error('fornecedor already exists.')
+    }
+    const endereco = new Endereco(data.endereco)
+    const fornecedor = new Fornecedor({...data, endereco, status: true})
+
+    await this.fornecedorRepository.save(fornecedor)
+  }
+
+  async update(data:IUpdateFornecedorDTO):Promise<void> {
+    const fornecedorExists = await this.fornecedorRepository.findOneBy({id_fornecedor: data.id_fornecedor})
+
+    if (!fornecedorExists) {
+      throw new Error('Fornecedor not found.')
+    }
+
+    await db.manager.transaction(async entityManager => { 
+      await entityManager.update(Endereco, data.endereco.id_endereco, data.endereco)
+      await entityManager.update(Fornecedor, data.id_fornecedor, data) 
+    })
+  }
+
+  async changeStatus(id:string):Promise<void> {
+    let fornecedorExists = await this.fornecedorRepository.findOneBy({id_fornecedor: id})
+
+    if (!fornecedorExists) {
+      throw new Error('Fornecedor not found.')
+    }
+
+    fornecedorExists.status = !fornecedorExists.status
+
+    await this.fornecedorRepository.update(id, fornecedorExists)
   }
 }

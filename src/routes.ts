@@ -28,5 +28,14 @@ router.delete('/users', (request, response) => {
 router.get('/fornecedor', (request, response) => {
   return fornecedorController.index(request, response)
 })
+router.post('/fornecedor', (request, response) => {
+  return fornecedorController.create(request, response)
+})
+router.put('/fornecedor', (request, response) => {
+  return fornecedorController.update(request, response)
+})
+router.put('/fornecedor/status', (request, response) => {
+  return fornecedorController.changeStatus(request, response)
+})
 
 export { router }
