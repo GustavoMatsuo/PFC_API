@@ -105,3 +105,16 @@ Produto
 	categoria:Categoria
 	fonecedor:Fornecedor
 	qtd:number
+
+-----------------------------------------------------------------
+    // await this.enderecoRepository.update(endereco.id_endereco, endereco)
+    // await this.fornecedorRepository.update(fornecedor.id_fornecedor, fornecedor)
+
+    // const queryRunner = db.createQueryRunner()
+    // await queryRunner.connect();
+    // await queryRunner.startTransaction()
+
+    // await queryRunner.manager.update(Endereco, data.endereco.id_endereco, data.endereco)
+    // await queryRunner.manager.update(Fornecedor, data.id_fornecedor, data)
+
+    // await queryRunner.commitTransaction();
