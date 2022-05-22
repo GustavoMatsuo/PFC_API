@@ -17,7 +17,7 @@ export class UserController {
       return response.status(200).json(userList)
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }
@@ -38,7 +38,7 @@ export class UserController {
       }
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }
@@ -53,7 +53,7 @@ export class UserController {
       return response.status(201).json({msg: "user created"})
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }
@@ -68,7 +68,7 @@ export class UserController {
       return response.status(200).json({msg: "user updated"})
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }
@@ -82,7 +82,7 @@ export class UserController {
       return response.status(200).json({msg: "user deleted"})
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }
@@ -97,7 +97,7 @@ export class UserController {
       return response.status(200).json({msg: "user status update."})
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }

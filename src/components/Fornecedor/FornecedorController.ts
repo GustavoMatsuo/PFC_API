@@ -17,7 +17,7 @@ export class FornecedorController {
       return response.status(200).json(fornecedorList)
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }
@@ -32,7 +32,7 @@ export class FornecedorController {
       return response.status(201).json({msg: "fornecedor created"})
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }
@@ -47,7 +47,7 @@ export class FornecedorController {
       return response.status(200).json({msg: "fornecedor updated"})
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }
@@ -61,7 +61,7 @@ export class FornecedorController {
       return response.status(200).json({msg: "fornecedor status update."})
     } catch (err) {
       return response.status(400).json({
-        message: err.message || 'Unexpected error.'
+        msg: err.message || 'Unexpected error.'
       })
     }
   }
