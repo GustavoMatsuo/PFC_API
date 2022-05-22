@@ -1,0 +1,577 @@
+{
+	"info": {
+		"_postman_id": "ef87b95e-51f5-468b-a955-30dc2c7d7f9c",
+		"name": "API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "create_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"Gustavo\",\r\n   \"email\":\"teste@teste.com\",\r\n   \"password\": \"123\",\r\n   \"role\": \"employee\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "update_user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"gustavo0\",\r\n    \"status\": false,\r\n    \"email\": \"gustavo@teste.com\",\r\n    \"password\": \"12345\",\r\n    \"role\": \"role\",\r\n    \"id\": \"15ba76d0-4a55-464b-aa1c-6c14cc16fd53\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/users",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "change_status_user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"92052b61-d4e7-449d-af7f-305f3ab051cb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/users/status",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"status"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "delete_user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"d167f0b7-6c40-4558-b4a0-6960855b0ef5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/users",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "index_user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/users?limit=2&skip=0",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "skip",
+									"value": "0"
+								}
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "create_categoria",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nome\":\"Teste\",\r\n   \"cor\":\"FFF\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/categoria",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"categoria"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "update_categoria",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id_categoria\": \"cacb7caa-1171-4765-b8f9-2a424fb684bb\",\r\n        \"nome\": \"Teste\",\r\n        \"cor\": \"FFF\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/categoria",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"categoria"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "read_categoria",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/categoria?id=cacb7caa-1171-4765-b8f9-2a424fb684bb",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"categoria"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "cacb7caa-1171-4765-b8f9-2a424fb684bb"
+								}
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "delete_categoria",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"27f30214-819c-4a97-83cc-30a29cde5ba1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/categoria",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"categoria"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "index_categoria",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/categoria/list",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"categoria",
+								"list"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fornecedor",
+			"item": [
+				{
+					"name": "index_forncecedor",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/fornecedor",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"fornecedor"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "create_fornecedor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"empresa fulane\",\r\n    \"email\":\"empresa@email.com\",\r\n    \"cnpj\":\"21247105000110\",\r\n    \"endereco\": {\r\n        \"rua\":\"dois\",\r\n        \"numero\":\"123\",\r\n        \"bairro\":\"bairro um\",\r\n        \"cep\":\"08773500\",\r\n        \"cidade\":\"Mogi das Cruzes\",\r\n        \"uf\":\"SP\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/fornecedor",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"fornecedor"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "change_status_fornecedor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"2c6f448d-3195-455e-8cb9-47f7a5b41518\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/fornecedor/status",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"fornecedor",
+								"status"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "update_fornecedor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_fornecedor\": \"2c6f448d-3195-455e-8cb9-47f7a5b41518\",\r\n    \"nome\": \"empresa fulano\",\r\n    \"email\": \"empresa@email.com\",\r\n    \"cnpj\": \"21247105000110\",\r\n    \"status\": true,\r\n    \"endereco\": {\r\n        \"id_endereco\": \"45ca1de5-bea6-4e3f-828e-512760a3f971\",\r\n        \"rua\": \"um dois\",\r\n        \"numero\": \"123\",\r\n        \"bairro\": \"bairro dois\",\r\n        \"cep\": \"08773500\",\r\n        \"cidade\": \"Mogi das Cruzes\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/fornecedor",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"fornecedor"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "index_produto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/produto",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"produto"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "create_produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Produto teste\",\r\n  \"fornecedor\": \"2c6f448d-3195-455e-8cb9-47f7a5b41518\",\r\n  \"qtdEstoque\": 20,\r\n  \"estoqueMinimo\": 10,\r\n  \"categoria\": \"cacb7caa-1171-4765-b8f9-2a424fb684bb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/produto",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"produto"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "change_status_produto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"5a958b15-159f-4533-8e73-db8b33497bae\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/produto/status",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"produto",
+								"status"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "update_produto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_produto\": \"5a958b15-159f-4533-8e73-db8b33497bae\",\r\n    \"nome\": \"Produto teste\",\r\n    \"status\": false,\r\n    \"qtdEstoque\": 25,\r\n    \"estoqueMinimo\": 10,\r\n    \"fornecedor\": \"2c6f448d-3195-455e-8cb9-47f7a5b41518\",\r\n    \"categoria\": \"cacb7caa-1171-4765-b8f9-2a424fb684bb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/produto",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"produto"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
