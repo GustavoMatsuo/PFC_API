@@ -62,7 +62,7 @@ export class UserController {
     try {
       const { id, name, status, email, role, password } = request.body
       const user:IUpdateUserDTO = {id, name, status, email, role, password}
-      console.log(user)
+
       await this.userServices.update(user)
   
       return response.status(200).json({msg: "user updated"})
