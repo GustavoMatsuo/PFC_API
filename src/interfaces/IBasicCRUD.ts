@@ -3,5 +3,5 @@ export interface IBasicCRUD {
   read(id:string):Promise<object>
   update(data:object):Promise<void>
   delete(id:string):Promise<void>
-  index(limit?:string, skip?: string):Promise<Array<any>>
+  index(limit?:string, skip?:string):Promise<Array<any>>
 }

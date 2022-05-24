@@ -11,12 +11,15 @@ export class FornecedorServices implements IFornecedorServices {
     this.fornecedorRepository = fornecedorRepository
   }
 
-  async index(limit, skip):Promise<Array<Fornecedor>> {
+  async index(limit:string, skip:string):Promise<Array<Fornecedor>> {
+    const limitNum = Number.parseInt(limit)
+    const skipNum = Number.parseInt(skip)
+
     const fornecedorList = await this.fornecedorRepository
       .createQueryBuilder("fornecedor")
       .leftJoinAndSelect("fornecedor.endereco", "endereco.id_endereco")
-      .take(limit)
-      .skip(skip)
+      .take(limitNum)
+      .skip(skipNum)
       .getMany()
 
     return fornecedorList

@@ -18,13 +18,16 @@ export class ProdutoServices implements IProdutoServices {
     this.categoriaRepository = categoriaRepository
   }
 
-  async index(limit, skip):Promise<Array<Produto>> {
+  async index(limit:string, skip:string):Promise<Array<Produto>> {
+    const limitNum = Number.parseInt(limit)
+    const skipNum = Number.parseInt(skip)
+
     const produtoList = await this.produtoRepository
       .createQueryBuilder("produto")
       .leftJoinAndSelect("produto.fornecedor", "fornecedor.id_fornecedor")
       .leftJoinAndSelect("produto.categoria", "categoria.id_categoria")
-      .take(limit)
-      .skip(skip)
+      .take(limitNum)
+      .skip(skipNum)
       .getMany()
 
     return produtoList

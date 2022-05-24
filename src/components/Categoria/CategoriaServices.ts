@@ -24,7 +24,7 @@ export class CategoriaServices implements IBasicCRUD {
     await this.categoriaRepository.save(categoria)
   }
 
-  async read(id):Promise<Categoria> {
+  async read(id:string):Promise<Categoria> {
     const categoria = await this.categoriaRepository.findOneBy({
       id_categoria: id
     })
@@ -54,10 +54,13 @@ export class CategoriaServices implements IBasicCRUD {
     await this.categoriaRepository.delete(id)
   }
 
-  async index(limit, skip):Promise<Array<Categoria>> {
+  async index(limit:string, skip:string):Promise<Array<Categoria>> {
+    const limitNum = Number.parseInt(limit)
+    const skipNum = Number.parseInt(skip)
+
     const categoriaList = await this.categoriaRepository.find({
-      take: limit,
-      skip: skip
+      take: limitNum,
+      skip: skipNum
     })
 
     return categoriaList
