@@ -12,8 +12,8 @@ export class FornecedorServices implements IFornecedorServices {
   }
 
   async index(limit:string, skip:string):Promise<Array<Fornecedor>> {
-    const limitNum = Number.parseInt(limit)
-    const skipNum = Number.parseInt(skip)
+    const limitNum = limit? Number.parseInt(limit) : null
+    const skipNum = skip? Number.parseInt(skip) : null
 
     const fornecedorList = await this.fornecedorRepository
       .createQueryBuilder("fornecedor")

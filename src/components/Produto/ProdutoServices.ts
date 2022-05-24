@@ -19,8 +19,8 @@ export class ProdutoServices implements IProdutoServices {
   }
 
   async index(limit:string, skip:string):Promise<Array<Produto>> {
-    const limitNum = Number.parseInt(limit)
-    const skipNum = Number.parseInt(skip)
+    const limitNum = limit? Number.parseInt(limit) : null
+    const skipNum = skip? Number.parseInt(skip) : null
 
     const produtoList = await this.produtoRepository
       .createQueryBuilder("produto")

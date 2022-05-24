@@ -55,8 +55,8 @@ export class CategoriaServices implements IBasicCRUD {
   }
 
   async index(limit:string, skip:string):Promise<Array<Categoria>> {
-    const limitNum = Number.parseInt(limit)
-    const skipNum = Number.parseInt(skip)
+    const limitNum = limit? Number.parseInt(limit) : null
+    const skipNum = skip? Number.parseInt(skip) : null
 
     const categoriaList = await this.categoriaRepository.find({
       take: limitNum,

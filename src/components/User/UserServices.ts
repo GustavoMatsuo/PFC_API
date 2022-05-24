@@ -17,8 +17,8 @@ export class UserServices implements IUserServices {
   }
 
   async index(limit, skip):Promise<Array<User>> {
-    const limitNum = Number.parseInt(limit)
-    const skipNum = Number.parseInt(skip)
+    const limitNum = limit? Number.parseInt(limit) : null
+    const skipNum = skip? Number.parseInt(skip) : null
 
     const userList = await this.usersRepository.find({
       take: limitNum,
