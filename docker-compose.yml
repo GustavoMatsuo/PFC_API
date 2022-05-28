@@ -10,6 +10,7 @@ services:
     depends_on:
       - postgres-compose
     profiles:
+      - infra
       - default
     volumes:
     - .:/usr/src/app
@@ -21,6 +22,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     profiles:
       - infra
+      - dev
       - default
     ports:
       - "${POSTGRES_PORT}:5432"
@@ -35,7 +37,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     profiles:
-      - infra
+      - dev
       - default
     ports:
       - "${PGADMIN_PORT}:80"
