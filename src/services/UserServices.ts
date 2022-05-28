@@ -6,14 +6,14 @@ import { UsersRepository } from "@repositories"
 
 export class UserServices implements IUserServices {
   private usersRepository: UsersRepository
-  private mailProvider:IMailProvider
+  // private mailProvider:IMailProvider
 
   constructor(
     usersRepository:UsersRepository,
-    mailProvider:IMailProvider,
+    // mailProvider:IMailProvider,
   ) {
     this.usersRepository = usersRepository
-    this.mailProvider = mailProvider
+    // this.mailProvider = mailProvider
   }
 
   async index(limit, skip):Promise<Array<User>> {
