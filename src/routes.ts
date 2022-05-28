@@ -1,8 +1,10 @@
 import { Router } from "express"
-import { categoriaController } from "./components/Categoria"
-import { fornecedorController } from "./components/Fornecedor"
-import { produtoController } from "./components/Produto"
-import { userController } from "./components/User"
+import {
+  userController,
+  fornecedorController,
+  produtoController,
+  categoriaController 
+} from "@controllers"
 
 const router = Router()
 

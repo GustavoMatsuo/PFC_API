@@ -118,3 +118,6 @@ Produto
     // await queryRunner.manager.update(Fornecedor, data.id_fornecedor, data)
 
     // await queryRunner.commitTransaction();
+
+
+    docker-compose --profile infra up
