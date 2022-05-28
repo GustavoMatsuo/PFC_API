@@ -3,8 +3,8 @@ import { router } from './routes'
 import dotenv from 'dotenv'
 import cors from 'cors'
 
-const app = express()
 dotenv.config()
+const app = express()
 
 app.use(cors('*'))
 app.use(express.json())

@@ -28,6 +28,9 @@ export class Produto {
   @JoinColumn({ name: 'categoria_produto' })
   categoria:Categoria
 
+  @Column()
+  valorUnitario:number 
+
   constructor(props: Omit<Produto, 'id_produto'>, id_produto?:string) {
     Object.assign(this, props)
     if (!id_produto) {

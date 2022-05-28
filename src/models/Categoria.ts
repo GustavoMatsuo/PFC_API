@@ -9,6 +9,9 @@ export class Categoria {
   @Column()
   nome:string
 
+  @Column()
+  status:boolean
+
   @Column({ nullable: true })
   cor:string
 
