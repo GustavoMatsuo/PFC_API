@@ -24,8 +24,8 @@ export class ProdutoController {
 
   async create(request:Request, response:Response):Promise<Response> {
     try {
-      const { nome, fornecedor, qtdEstoque, estoqueMinimo, categoria } = request.body
-      const produto:ICreateProdutoDTO = { nome, fornecedor, qtdEstoque, estoqueMinimo, categoria }
+      const { nome, fornecedor, valorUnitario, qtdEstoque, estoqueMinimo, categoria } = request.body
+      const produto:ICreateProdutoDTO = { nome, fornecedor, valorUnitario, qtdEstoque, estoqueMinimo, categoria }
 
       await this.produtoServices.create(produto)
   
@@ -39,8 +39,8 @@ export class ProdutoController {
 
   async update(request:Request, response:Response):Promise<Response> {
     try {
-      const { id_produto, nome, status, fornecedor, qtdEstoque, estoqueMinimo, categoria } = request.body
-      const produto:IUpdateProdutoDTO = { id_produto, nome, status, fornecedor, qtdEstoque, estoqueMinimo, categoria }
+      const { id_produto, nome, status, fornecedor, valorUnitario, qtdEstoque, estoqueMinimo, categoria } = request.body
+      const produto:IUpdateProdutoDTO = { id_produto, nome, status, fornecedor, valorUnitario, qtdEstoque, estoqueMinimo, categoria }
 
       await this.produtoServices.update(produto)
   

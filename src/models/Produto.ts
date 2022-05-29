@@ -24,11 +24,11 @@ export class Produto {
   @Column()
   estoqueMinimo:number
 
-  @OneToOne(() => Categoria, categoria => categoria.id_categoria)
+  @ManyToOne(() => Categoria, categoria => categoria.id_categoria)
   @JoinColumn({ name: 'categoria_produto' })
   categoria:Categoria
 
-  @Column()
+  @Column("decimal", { scale: 2 })
   valorUnitario:number 
 
   constructor(props: Omit<Produto, 'id_produto'>, id_produto?:string) {
