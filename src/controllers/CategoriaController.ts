@@ -1,11 +1,11 @@
 import { Response, Request } from "express"
-import { IBasicCRUD } from '@interfaces'
+import { ICategoriaServices } from "src/interfaces/ICategoriaServices"
 import { ICreateCategoriaDTO, IUpdateCategoriaDTO } from "@dto/CategoriaDTO"
 
 export class CategoriaController {
-  private categoriaServices:IBasicCRUD
+  private categoriaServices:ICategoriaServices
 
-  constructor(categoriaServices:IBasicCRUD) {
+  constructor(categoriaServices:ICategoriaServices) {
     this.categoriaServices = categoriaServices
   }
 
@@ -70,6 +70,18 @@ export class CategoriaController {
     try {
       const { limit, skip } = request.params
       const categoriaList = await this.categoriaServices.index(limit, skip)
+  
+      return response.status(200).json(categoriaList)
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
+
+  async simpleList(request:Request, response:Response):Promise<Response> {
+    try {
+      const categoriaList = await this.categoriaServices.simpleList()
   
       return response.status(200).json(categoriaList)
     } catch (err) {

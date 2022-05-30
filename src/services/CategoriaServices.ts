@@ -1,10 +1,9 @@
 import { Categoria, Endereco, Fornecedor } from "@models"
-import { IBasicCRUD } from "@interfaces"
+import { ICategoriaServices } from "src/interfaces/ICategoriaServices"
 import { CategoriaRepository } from "@repositories"
 import { ICreateCategoriaDTO, IUpdateCategoriaDTO } from "@dto/CategoriaDTO"
-import { db } from "src/config/database"
 
-export class CategoriaServices implements IBasicCRUD {
+export class CategoriaServices implements ICategoriaServices {
   private categoriaRepository: CategoriaRepository
 
   constructor(categoriaRepository:CategoriaRepository) {
@@ -19,7 +18,7 @@ export class CategoriaServices implements IBasicCRUD {
     if (categoriaAlreadyExists) {
       throw new Error('categoria already exists.')
     }
-    const categoria = new Categoria({...data})
+    const categoria = new Categoria({...data, status: true})
 
     await this.categoriaRepository.save(categoria)
   }
@@ -62,6 +61,16 @@ export class CategoriaServices implements IBasicCRUD {
       take: limitNum,
       skip: skipNum
     })
+
+    return categoriaList
+  }
+
+  async simpleList():Promise<Array<Object>> {
+    const categoriaList = await this.categoriaRepository
+      .createQueryBuilder("categoria")
+      .select("categoria.id_categoria")
+      .addSelect("categoria.nome")
+      .getMany()
 
     return categoriaList
   }

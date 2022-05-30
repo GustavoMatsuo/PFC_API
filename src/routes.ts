@@ -41,6 +41,9 @@ router.put('/fornecedor', (request, response) => {
 router.put('/fornecedor/status', (request, response) => {
   return fornecedorController.changeStatus(request, response)
 })
+router.get('/fornecedor/simple', (request, response) => {
+  return fornecedorController.simpleList(request, response)
+})
 
 //CATEGORIA
 router.post('/categoria', (request, response) => {
@@ -57,6 +60,9 @@ router.delete('/categoria', (request, response) => {
 })
 router.get('/categoria/list', (request, response) => {
   return categoriaController.index(request, response)
+})
+router.get('/categoria/simple', (request, response) => {
+  return categoriaController.simpleList(request, response)
 })
 
 //PRODUTO

@@ -63,4 +63,14 @@ export class FornecedorServices implements IFornecedorServices {
 
     await this.fornecedorRepository.update(id, fornecedorExists)
   }
+
+  async simpleList():Promise<Array<Object>> {
+    const fornecedorList = await this.fornecedorRepository
+      .createQueryBuilder("fornecedor")
+      .select("fornecedor.id_fornecedor")
+      .addSelect("fornecedor.nome")
+      .getMany()
+
+    return fornecedorList
+  }
 }

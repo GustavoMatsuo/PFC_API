@@ -6,4 +6,5 @@ export interface IFornecedorServices {
   create(data:ICreateFornecedorDTO):Promise<void>
   update(data:IUpdateFornecedorDTO):Promise<void>
   changeStatus(id:string):Promise<void>
+  simpleList():Promise<Array<Object>>
 }

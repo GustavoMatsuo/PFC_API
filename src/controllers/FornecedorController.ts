@@ -65,4 +65,16 @@ export class FornecedorController {
       })
     }
   }
+
+  async simpleList(request:Request, response:Response):Promise<Response> {
+    try {
+      const fornecedorList = await this.fornecedorServices.simpleList()
+  
+      return response.status(200).json(fornecedorList)
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
 }
