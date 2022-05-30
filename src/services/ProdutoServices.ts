@@ -74,7 +74,7 @@ export class ProdutoServices implements IProdutoServices {
       throw new Error('categoria not found.')
     }
 
-    const produto = new Produto({...data, fornecedor: fornecedor, categoria: categoria, status: true})
+    const produto = new Produto({...data, fornecedor: fornecedor, categoria: categoria})
 
     await this.produtoRepository.update(data.id_produto, produto)
   }
