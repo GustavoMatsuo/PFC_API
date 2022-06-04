@@ -45,7 +45,7 @@ export class UserController {
 
   async create(request:Request, response:Response):Promise<Response> {
     try {
-      const { name, email, role, password, userId } = request.body
+      const { name, email, role, password } = request.body
       const user:ICreateUserDTO = {name, email, role, password}
 
       await this.userServices.create(user)

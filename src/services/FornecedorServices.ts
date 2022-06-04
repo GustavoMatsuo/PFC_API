@@ -33,6 +33,7 @@ export class FornecedorServices implements IFornecedorServices {
     if (fornecedorAlreadyExists) {
       throw new Error('fornecedor already exists.')
     }
+
     const endereco = new Endereco(data.endereco)
     const fornecedor = new Fornecedor({...data, endereco, status: true})
 
