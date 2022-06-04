@@ -90,4 +90,18 @@ export class CategoriaController {
       })
     }
   }
+
+  async changeStatus(request:Request, response:Response):Promise<Response> {
+    try {
+      const { id } = request.body
+
+      await this.categoriaServices.changeStatus(id)
+  
+      return response.status(200).json({msg: "categoria status update."})
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
 }

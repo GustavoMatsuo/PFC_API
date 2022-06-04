@@ -16,7 +16,7 @@ export class CategoriaServices implements ICategoriaServices {
     })
 
     if (categoriaAlreadyExists) {
-      throw new Error('categoria already exists.')
+      throw new Error('Categoria already exists.')
     }
     const categoria = new Categoria({...data, status: true})
 
@@ -47,7 +47,7 @@ export class CategoriaServices implements ICategoriaServices {
     const categoriaExists = await this.categoriaRepository.findBy({id_categoria: id})
 
     if (!categoriaExists) {
-      throw new Error('User not found.')
+      throw new Error('Categoria not found.')
     }
 
     await this.categoriaRepository.delete(id)
@@ -73,5 +73,17 @@ export class CategoriaServices implements ICategoriaServices {
       .getMany()
 
     return categoriaList
+  }
+
+  async changeStatus(id:string):Promise<void> {
+    let categoriaExists = await this.categoriaRepository.findOneBy({id_categoria: id})
+
+    if (!categoriaExists) {
+      throw new Error('Categoria not found.')
+    }
+
+    categoriaExists.status = !categoriaExists.status
+
+    await this.categoriaRepository.update(id, categoriaExists)
   }
 }

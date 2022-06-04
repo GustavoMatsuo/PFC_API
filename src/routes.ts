@@ -64,6 +64,9 @@ router.get('/categoria/list', (request, response) => {
 router.get('/categoria/simple', (request, response) => {
   return categoriaController.simpleList(request, response)
 })
+router.put('/categoria/status', (request, response) => {
+  return categoriaController.changeStatus(request, response)
+})
 
 //PRODUTO
 router.get('/produto', (request, response) => {
