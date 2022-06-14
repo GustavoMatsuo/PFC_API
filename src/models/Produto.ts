@@ -19,17 +19,14 @@ export class Produto {
   fornecedor:Fornecedor
 
   @Column()
-  qtdEstoque:number
-
-  @Column()
-  estoqueMinimo:number
+  estoque_minimo:number
 
   @ManyToOne(() => Categoria, categoria => categoria.id_categoria)
   @JoinColumn({ name: 'categoria_produto' })
   categoria:Categoria
 
   @Column("decimal", { scale: 2 })
-  valorUnitario:number 
+  valor_unitario:number 
 
   constructor(props: Omit<Produto, 'id_produto'>, id_produto?:string) {
     Object.assign(this, props)
