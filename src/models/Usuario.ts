@@ -2,34 +2,34 @@ import { UserRole } from "@enum/userRole"
 import { Column, Entity, PrimaryColumn,  } from "typeorm"
 import { v4 as uuidv4 } from 'uuid'
 
-@Entity('user')
-export class User {
+@Entity('usuario')
+export class Usuario {
   @PrimaryColumn()
-  id:string
+  id_usuario:string
 
   @Column()
   status:boolean
 
   @Column()
-  name:string
+  nome:string
 
   @Column({
     type: "enum",
     enum: UserRole,
     default: UserRole.EMP
   })
-  role:string
+  cargo:string
 
   @Column()
   email:string
 
   @Column()
-  password:string
+  senha:string
 
-  constructor(props: Omit<User, 'id'>, id?:string) {
+  constructor(props: Omit<Usuario, 'id_usuario'>, id_usuario?:string) {
     Object.assign(this, props)
-    if (!id) {
-      this.id = uuidv4()
+    if (!id_usuario) {
+      this.id_usuario = uuidv4()
     }
   }
 }

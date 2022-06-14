@@ -1,4 +1,4 @@
-import { UserController } from "./UserController"
+import { UsuarioController } from "./UsuarioController"
 import { FornecedorController } from "./FornecedorController"
 import { CategoriaController } from "./CategoriaController"
 import { ProdutoController } from "./ProdutoController"
@@ -7,23 +7,23 @@ import {
   categoriaServices,
   fornecedorServices,
   produtoServices,
-  userServices
+  usuarioServices
 } from "@services"
 
-const userController = new UserController(userServices)
+const usuarioController = new UsuarioController(usuarioServices)
 const fornecedorController = new FornecedorController(fornecedorServices)
 const categoriaController = new CategoriaController(categoriaServices)
 const produtoController = new ProdutoController(produtoServices)
 
 export { 
-  userController,
+  usuarioController,
   fornecedorController,
   categoriaController,
   produtoController
 }
 
 export {
-  UserController,
+  UsuarioController,
   FornecedorController,
   CategoriaController,
   ProdutoController

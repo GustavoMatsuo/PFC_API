@@ -1,11 +1,11 @@
 import { IBasicCRUD } from "./IBasicCRUD"
 import { IFornecedorServices } from "./IFornecedorServices"
 import { IProdutoServices } from "./IProdutoServices"
-import { IUserServices } from "./IUserServices"
+import { IUsuarioServices } from "./IUsuarioServices"
 
 export {
   IBasicCRUD,
-  IUserServices,
+  IUsuarioServices,
   IFornecedorServices,
   IProdutoServices
 }

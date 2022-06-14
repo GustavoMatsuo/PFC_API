@@ -2,7 +2,7 @@ import { CategoriaRepository } from "./CategoriaRepository"
 import { EnderecoRepository } from "./EnderecoRepository"
 import { FornecedorRepository } from "./FornecedorRepository"
 import { ProdutoRepository } from "./ProdutoRepository"
-import { UsersRepository } from "./UsersRepository"
+import { UsuarioRepository } from "./UsuarioRepository"
 
 import { db } from "@config/database"
 import {
@@ -10,17 +10,17 @@ import {
   Endereco, 
   Fornecedor, 
   Produto, 
-  User
+  Usuario
 } from "@models"
 
-const usersRepository = db.getRepository(User)
+const usuarioRepository = db.getRepository(Usuario)
 const enderecoRepository = db.getRepository(Endereco)
 const fornecedorRepository = db.getRepository(Fornecedor)
 const categoriaRepository = db.getRepository(Categoria)
 const produtoRepository = db.getRepository(Produto)
 
 export {
-  usersRepository,
+  usuarioRepository,
   enderecoRepository,
   fornecedorRepository,
   categoriaRepository,
@@ -28,7 +28,7 @@ export {
 }
 
 export {
-  UsersRepository,
+  UsuarioRepository,
   EnderecoRepository,
   FornecedorRepository,
   CategoriaRepository,

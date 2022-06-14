@@ -1,11 +1,11 @@
 import { Fornecedor } from "./Fornecedor"
 import { Endereco } from "./Endereco"
-import { User } from "./User"
+import { Usuario } from "./Usuario"
 import { Categoria } from "./Categoria"
 import { Produto } from "./Produto"
 
 export {
-  User,
+  Usuario,
   Endereco,
   Fornecedor,
   Categoria,

@@ -1,6 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { Endereco, Fornecedor, User } from "@models"
+import { Endereco, Fornecedor, Usuario } from "@models"
 import { Categoria } from "src/models/Categoria"
 import { Produto } from "src/models/Produto"
 
@@ -12,7 +12,7 @@ const db = new DataSource({
   password: "changeme",//String(process.env.POSTGRES_PASSWORD),
   database: "postgres",
   entities: [
-    User,
+    Usuario,
     Endereco,
     Fornecedor,
     Categoria,

@@ -1,4 +1,4 @@
-import { UserServices } from "./UserServices"
+import { UsuarioServices } from "./UsuarioServices"
 import { FornecedorServices } from "./FornecedorServices"
 import { CategoriaServices } from "./CategoriaServices"
 import { ProdutoServices } from "./ProdutoServices"
@@ -7,10 +7,10 @@ import {
   categoriaRepository,
   fornecedorRepository,
   produtoRepository,
-  usersRepository 
+  usuarioRepository 
 } from "@repositories" 
 
-const userServices = new UserServices(usersRepository)
+const usuarioServices = new UsuarioServices(usuarioRepository)
 const fornecedorServices = new FornecedorServices(fornecedorRepository)
 const categoriaServices = new CategoriaServices(categoriaRepository)
 const produtoServices = new ProdutoServices(
@@ -20,14 +20,14 @@ const produtoServices = new ProdutoServices(
 )
 
 export { 
-  userServices,
+  usuarioServices,
   fornecedorServices,
   categoriaServices,
   produtoServices
 }
 
 export {
-  UserServices,
+  UsuarioServices,
   FornecedorServices,
   CategoriaServices,
   ProdutoServices

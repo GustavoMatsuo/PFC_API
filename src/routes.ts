@@ -1,6 +1,6 @@
 import { Router } from "express"
 import {
-  userController,
+  usuarioController,
   fornecedorController,
   produtoController,
   categoriaController 
@@ -8,24 +8,24 @@ import {
 
 const router = Router()
 
-//USER
-router.get('/users', (request, response) => {
-  return userController.index(request, response)
+//USUARIO
+router.get('/usuario', (request, response) => {
+  return usuarioController.index(request, response)
 })
-router.post('/users', (request, response) => {
-  return userController.create(request, response)
+router.post('/usuario', (request, response) => {
+  return usuarioController.create(request, response)
 })
-router.post('/users/login', (request, response) => {
-  return userController.login(request, response)
+router.post('/usuario/login', (request, response) => {
+  return usuarioController.login(request, response)
 })
-router.put('/users', (request, response) => {
-  return userController.update(request, response)
+router.put('/usuario', (request, response) => {
+  return usuarioController.update(request, response)
 })
-router.put('/users/status', (request, response) => {
-  return userController.changeStatus(request, response)
+router.put('/usuario/status', (request, response) => {
+  return usuarioController.changeStatus(request, response)
 })
-router.delete('/users', (request, response) => {
-  return userController.delete(request, response)
+router.delete('/usuario', (request, response) => {
+  return usuarioController.delete(request, response)
 })
 
 //FORNECEDOR

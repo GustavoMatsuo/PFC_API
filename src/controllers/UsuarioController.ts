@@ -1,20 +1,20 @@
 import { Response, Request } from "express"
-import { IUserServices } from '@interfaces'
-import { ICreateUserDTO, ILoginUserDTO, IUpdateUserDTO } from "@dto/UserDTO"
+import { IUsuarioServices } from '@interfaces'
+import { ICreateUsuarioDTO, ILoginUsuarioDTO, IUpdateUsuarioDTO } from "@dto/UsuarioDTO"
 
-export class UserController {
-  private userServices:IUserServices
+export class UsuarioController {
+  private usuarioServices:IUsuarioServices
 
-  constructor(userServices:IUserServices) {
-    this.userServices = userServices
+  constructor(usuarioServices:IUsuarioServices) {
+    this.usuarioServices = usuarioServices
   }
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
       const { limit, skip } = request.params
-      const userList = await this.userServices.index(limit, skip)
+      const usuarioList = await this.usuarioServices.index(limit, skip)
   
-      return response.status(200).json(userList)
+      return response.status(200).json(usuarioList)
     } catch (err) {
       return response.status(400).json({
         msg: err.message || 'Unexpected error.'
@@ -24,13 +24,13 @@ export class UserController {
 
   async login(request:Request, response:Response):Promise<Response> {
     try {
-      const { email, password } = request.body
-      const userData:ILoginUserDTO = {email, password}
+      const { email, senha } = request.body
+      const usuarioData:ILoginUsuarioDTO = {email, senha}
 
-      const user = await this.userServices.login(userData)
+      const usuario = await this.usuarioServices.login(usuarioData)
 
-      if(user){
-        return response.status(200).json(user)
+      if(usuario){
+        return response.status(200).json(usuario)
       }else{
         return response.status(401).json({
           msg: 'Email ou senha incorreto!'
@@ -45,12 +45,12 @@ export class UserController {
 
   async create(request:Request, response:Response):Promise<Response> {
     try {
-      const { name, email, role, password } = request.body
-      const user:ICreateUserDTO = {name, email, role, password}
+      const { nome, email, cargo, senha } = request.body
+      const usuario:ICreateUsuarioDTO = {nome, email, cargo, senha}
 
-      await this.userServices.create(user)
+      await this.usuarioServices.create(usuario)
   
-      return response.status(201).json({msg: "user created"})
+      return response.status(201).json({msg: "usuario created"})
     } catch (err) {
       return response.status(400).json({
         msg: err.message || 'Unexpected error.'
@@ -60,12 +60,12 @@ export class UserController {
 
   async update(request:Request, response:Response):Promise<Response> {
     try {
-      const { id, name, status, email, role, password } = request.body
-      const user:IUpdateUserDTO = {id, name, status, email, role, password}
+      const { id_usuario, nome, status, email, cargo, senha } = request.body
+      const usuario:IUpdateUsuarioDTO = {id_usuario, nome, status, email, cargo, senha}
 
-      await this.userServices.update(user)
+      await this.usuarioServices.update(usuario)
   
-      return response.status(200).json({msg: "user updated"})
+      return response.status(200).json({msg: "usuario updated"})
     } catch (err) {
       return response.status(400).json({
         msg: err.message || 'Unexpected error.'
@@ -77,9 +77,9 @@ export class UserController {
     try {
       const { id } = request.body
 
-      await this.userServices.delete(id)
+      await this.usuarioServices.delete(id)
   
-      return response.status(200).json({msg: "user deleted"})
+      return response.status(200).json({msg: "usuario deleted"})
     } catch (err) {
       return response.status(400).json({
         msg: err.message || 'Unexpected error.'
@@ -92,9 +92,9 @@ export class UserController {
     try {
       const { id } = request.body
 
-      await this.userServices.changeStatus(id)
+      await this.usuarioServices.changeStatus(id)
   
-      return response.status(200).json({msg: "user status update."})
+      return response.status(200).json({msg: "usuario status update."})
     } catch (err) {
       return response.status(400).json({
         msg: err.message || 'Unexpected error.'
