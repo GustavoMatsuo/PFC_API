@@ -1,6 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { Endereco, Fornecedor, Usuario } from "@models"
+import { Endereco, Entrada, Fornecedor, Usuario } from "@models"
 import { Categoria } from "src/models/Categoria"
 import { Produto } from "src/models/Produto"
 
@@ -16,7 +16,8 @@ const db = new DataSource({
     Endereco,
     Fornecedor,
     Categoria,
-    Produto
+    Produto,
+    Entrada
   ],
   synchronize: true,
   logging: false,

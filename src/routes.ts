@@ -3,7 +3,8 @@ import {
   usuarioController,
   fornecedorController,
   produtoController,
-  categoriaController 
+  categoriaController, 
+  entradaController
 } from "@controllers"
 
 const router = Router()
@@ -83,6 +84,14 @@ router.put('/produto/status', (request, response) => {
 })
 router.put('/produto/updateEstoque', (request, response) => {
   return produtoController.updateEstoque(request, response)
+})
+
+//ENTRADA
+router.get('/entrada', (request, response) => {
+  return entradaController.index(request, response)
+})
+router.post('/entrada', (request, response) => {
+  return entradaController.create(request, response)
 })
 
 export { router }

@@ -2,12 +2,14 @@ import { UsuarioServices } from "./UsuarioServices"
 import { FornecedorServices } from "./FornecedorServices"
 import { CategoriaServices } from "./CategoriaServices"
 import { ProdutoServices } from "./ProdutoServices"
+import { EntradaServices } from "./EntradaServices"
 
 import { 
   categoriaRepository,
   fornecedorRepository,
   produtoRepository,
-  usuarioRepository 
+  usuarioRepository,
+  entradaRepository
 } from "@repositories" 
 
 const usuarioServices = new UsuarioServices(usuarioRepository)
@@ -18,17 +20,21 @@ const produtoServices = new ProdutoServices(
   fornecedorRepository, 
   categoriaRepository
 )
+const entradaServices = new EntradaServices(entradaRepository)
+
 
 export { 
   usuarioServices,
   fornecedorServices,
   categoriaServices,
-  produtoServices
+  produtoServices,
+  entradaServices
 }
 
 export {
   UsuarioServices,
   FornecedorServices,
   CategoriaServices,
-  ProdutoServices
+  ProdutoServices,
+  EntradaServices
 }
