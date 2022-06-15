@@ -4,6 +4,7 @@ import { Usuario } from "./Usuario"
 import { Categoria } from "./Categoria"
 import { Produto } from "./Produto"
 import { Entrada } from "./Entrada"
+import { Estoque } from "./Estoque"
 
 export {
   Usuario,
@@ -11,5 +12,6 @@ export {
   Fornecedor,
   Categoria,
   Produto,
-  Entrada
+  Entrada,
+  Estoque
 }

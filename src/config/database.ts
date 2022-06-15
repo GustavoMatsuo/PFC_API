@@ -1,8 +1,14 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { Endereco, Entrada, Fornecedor, Usuario } from "@models"
-import { Categoria } from "src/models/Categoria"
-import { Produto } from "src/models/Produto"
+import { 
+  Usuario,
+  Endereco, 
+  Fornecedor, 
+  Categoria,
+  Produto,
+  Entrada, 
+  Estoque
+} from "@models"
 
 const db = new DataSource({
   type: "postgres",
@@ -17,7 +23,8 @@ const db = new DataSource({
     Fornecedor,
     Categoria,
     Produto,
-    Entrada
+    Entrada,
+    Estoque
   ],
   synchronize: true,
   logging: false,
