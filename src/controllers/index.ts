@@ -3,13 +3,14 @@ import { FornecedorController } from "./FornecedorController"
 import { CategoriaController } from "./CategoriaController"
 import { ProdutoController } from "./ProdutoController"
 import { EntradaController } from "./EntradaController"
-
+import { ClienteController } from "./ClienteController"
 import { 
   categoriaServices,
   fornecedorServices,
   produtoServices,
   usuarioServices,
-  entradaServices
+  entradaServices,
+  clienteServices
 } from "@services"
 
 const usuarioController = new UsuarioController(usuarioServices)
@@ -17,13 +18,15 @@ const fornecedorController = new FornecedorController(fornecedorServices)
 const categoriaController = new CategoriaController(categoriaServices)
 const produtoController = new ProdutoController(produtoServices)
 const entradaController = new EntradaController(entradaServices)
+const clienteController = new ClienteController(clienteServices)
 
 export { 
   usuarioController,
   fornecedorController,
   categoriaController,
   produtoController,
-  entradaController
+  entradaController,
+  clienteController
 }
 
 export {
@@ -31,5 +34,6 @@ export {
   FornecedorController,
   CategoriaController,
   ProdutoController,
-  EntradaController
+  EntradaController,
+  ClienteController
 }

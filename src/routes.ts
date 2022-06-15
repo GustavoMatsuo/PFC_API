@@ -4,7 +4,8 @@ import {
   fornecedorController,
   produtoController,
   categoriaController, 
-  entradaController
+  entradaController,
+  clienteController
 } from "@controllers"
 
 const router = Router()
@@ -92,6 +93,24 @@ router.get('/entrada', (request, response) => {
 })
 router.post('/entrada', (request, response) => {
   return entradaController.create(request, response)
+})
+
+
+//CLIENTE
+router.post('/cliente', (request, response) => {
+  return clienteController.create(request, response)
+})
+router.get('/cliente', (request, response) => {
+  return clienteController.read(request, response)
+})
+router.put('/cliente', (request, response) => {
+  return clienteController.update(request, response)
+})
+router.delete('/cliente', (request, response) => {
+  return clienteController.delete(request, response)
+})
+router.get('/cliente/list', (request, response) => {
+  return clienteController.index(request, response)
 })
 
 export { router }

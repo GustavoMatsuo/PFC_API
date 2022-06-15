@@ -3,13 +3,14 @@ import { FornecedorServices } from "./FornecedorServices"
 import { CategoriaServices } from "./CategoriaServices"
 import { ProdutoServices } from "./ProdutoServices"
 import { EntradaServices } from "./EntradaServices"
-
+import { ClienteServices } from "./ClienteServices"
 import { 
   categoriaRepository,
   fornecedorRepository,
   produtoRepository,
   usuarioRepository,
-  entradaRepository
+  entradaRepository,
+  clienteRepository
 } from "@repositories" 
 
 const usuarioServices = new UsuarioServices(usuarioRepository)
@@ -21,14 +22,15 @@ const produtoServices = new ProdutoServices(
   categoriaRepository
 )
 const entradaServices = new EntradaServices(entradaRepository)
-
+const clienteServices = new ClienteServices(clienteRepository)
 
 export { 
   usuarioServices,
   fornecedorServices,
   categoriaServices,
   produtoServices,
-  entradaServices
+  entradaServices,
+  clienteServices
 }
 
 export {
@@ -36,5 +38,6 @@ export {
   FornecedorServices,
   CategoriaServices,
   ProdutoServices,
-  EntradaServices
+  EntradaServices,
+  ClienteServices
 }

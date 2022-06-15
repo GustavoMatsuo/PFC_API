@@ -4,10 +4,11 @@ import { FornecedorRepository } from "./FornecedorRepository"
 import { ProdutoRepository } from "./ProdutoRepository"
 import { UsuarioRepository } from "./UsuarioRepository"
 import { EntradaRepository } from "./EntradaRepository"
-
+import { ClienteRepository } from "./ClienteRepository"
 import { db } from "@config/database"
 import {
   Categoria, 
+  Cliente, 
   Endereco, 
   Entrada, 
   Fornecedor, 
@@ -21,6 +22,7 @@ const fornecedorRepository = db.getRepository(Fornecedor)
 const categoriaRepository = db.getRepository(Categoria)
 const produtoRepository = db.getRepository(Produto)
 const entradaRepository = db.getRepository(Entrada)
+const clienteRepository = db.getRepository(Cliente)
 
 export {
   usuarioRepository,
@@ -28,7 +30,8 @@ export {
   fornecedorRepository,
   categoriaRepository,
   produtoRepository,
-  entradaRepository
+  entradaRepository,
+  clienteRepository
 }
 
 export {
@@ -37,5 +40,6 @@ export {
   FornecedorRepository,
   CategoriaRepository,
   ProdutoRepository,
-  EntradaRepository
+  EntradaRepository,
+  ClienteRepository
 }
