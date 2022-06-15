@@ -28,12 +28,3 @@ export {
   entradaController,
   clienteController
 }
-
-export {
-  UsuarioController,
-  FornecedorController,
-  CategoriaController,
-  ProdutoController,
-  EntradaController,
-  ClienteController
-}

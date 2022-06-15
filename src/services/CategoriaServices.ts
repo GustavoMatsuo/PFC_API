@@ -1,4 +1,4 @@
-import { Categoria, Endereco, Fornecedor } from "@models"
+import { Categoria } from "@models"
 import { ICategoriaServices } from "src/interfaces/ICategoriaServices"
 import { CategoriaRepository } from "@repositories"
 import { ICreateCategoriaDTO, IUpdateCategoriaDTO } from "@dto/CategoriaDTO"

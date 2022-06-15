@@ -7,7 +7,6 @@ export class Entrada {
   @PrimaryColumn()
   id_entrada:string
 
-
   @ManyToOne(() => Produto, produto => produto.id_produto)
   @JoinColumn({ name: 'produto_categoria' })
   id_produto:string

@@ -32,12 +32,3 @@ export {
   entradaServices,
   clienteServices
 }
-
-export {
-  UsuarioServices,
-  FornecedorServices,
-  CategoriaServices,
-  ProdutoServices,
-  EntradaServices,
-  ClienteServices
-}
