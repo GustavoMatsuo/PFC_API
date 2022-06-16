@@ -6,5 +6,4 @@ export interface IProdutoServices {
   create(data:ICreateProdutoDTO):Promise<void>
   update(data:IUpdateProdutoDTO):Promise<void>
   changeStatus(id:string):Promise<void>
-  updateEstoque(id:string, qtd:number):Promise<void>
 }

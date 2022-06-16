@@ -64,17 +64,17 @@ export class ProdutoServices implements IProdutoServices {
       throw new Error('Produto not found.')
     }
 
-    const fornecedor = await this.fornecedorRepository.findOneBy({id_fornecedor: data.fornecedor})
-    if(!fornecedor) {
+    const newFornecedor = await this.fornecedorRepository.findOneBy({id_fornecedor: data.fornecedor})
+    if(!newFornecedor) {
       throw new Error('fornecedor not found.')
     }
 
-    const categoria = await this.categoriaRepository.findOneBy({id_categoria: data.categoria})
-    if(!fornecedor) {
+    const newCategoria = await this.categoriaRepository.findOneBy({id_categoria: data.categoria})
+    if(!newCategoria) {
       throw new Error('categoria not found.')
     }
 
-    const produto = new Produto({...data, fornecedor: fornecedor, categoria: categoria})
+    const produto = new Produto({...data, fornecedor: newFornecedor, categoria: newCategoria})
 
     await this.produtoRepository.update(data.id_produto, produto)
   }
@@ -87,18 +87,6 @@ export class ProdutoServices implements IProdutoServices {
     }
 
     produtoExists.status = !produtoExists.status
-
-    await this.produtoRepository.update(id, produtoExists)
-  }
-
-  async updateEstoque(id:string, qtd:number):Promise<void> {
-    let produtoExists = await this.produtoRepository.findOneBy({id_produto: id})
-
-    if (!produtoExists) {
-      throw new Error('Produto not found.')
-    }
-
-    produtoExists.qtdEstoque = qtd
 
     await this.produtoRepository.update(id, produtoExists)
   }

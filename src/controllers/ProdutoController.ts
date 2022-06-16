@@ -24,8 +24,8 @@ export class ProdutoController {
 
   async create(request:Request, response:Response):Promise<Response> {
     try {
-      const { nome, fornecedor, valorUnitario, qtdEstoque, estoqueMinimo, categoria } = request.body
-      const produto:ICreateProdutoDTO = { nome, fornecedor, valorUnitario, qtdEstoque, estoqueMinimo, categoria }
+      const { nome, fornecedor, valor_unitario, estoque_minimo, categoria } = request.body
+      const produto:ICreateProdutoDTO = { nome, fornecedor, valor_unitario, estoque_minimo, categoria }
 
       await this.produtoServices.create(produto)
   
@@ -39,8 +39,8 @@ export class ProdutoController {
 
   async update(request:Request, response:Response):Promise<Response> {
     try {
-      const { id_produto, nome, status, fornecedor, valorUnitario, qtdEstoque, estoqueMinimo, categoria } = request.body
-      const produto:IUpdateProdutoDTO = { id_produto, nome, status, fornecedor, valorUnitario, qtdEstoque, estoqueMinimo, categoria }
+      const { id_produto, nome, status, fornecedor, valor_unitario, estoque_minimo, categoria } = request.body
+      const produto:IUpdateProdutoDTO = { id_produto, nome, status, fornecedor, valor_unitario, estoque_minimo, categoria }
 
       await this.produtoServices.update(produto)
   
@@ -59,20 +59,6 @@ export class ProdutoController {
       await this.produtoServices.changeStatus(id)
   
       return response.status(200).json({msg: "produto status update."})
-    } catch (err) {
-      return response.status(400).json({
-        msg: err.message || 'Unexpected error.'
-      })
-    }
-  }
-
-  async updateEstoque(request:Request, response:Response):Promise<Response> {
-    try {
-      const { id, qtd } = request.body
-
-      await this.produtoServices.updateEstoque(id, qtd)
-  
-      return response.status(200).json({msg: "estoque update."})
     } catch (err) {
       return response.status(400).json({
         msg: err.message || 'Unexpected error.'

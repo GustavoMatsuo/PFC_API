@@ -15,14 +15,14 @@ export class Produto {
   status:boolean
 
   @ManyToOne(() => Fornecedor, fornecedor => fornecedor.id_fornecedor)
-  @JoinColumn({ name: 'fornecedor_produto' })
+  @JoinColumn({ name: 'fornecedor' })
   fornecedor:Fornecedor
 
   @Column()
   estoque_minimo:number
 
   @ManyToOne(() => Categoria, categoria => categoria.id_categoria)
-  @JoinColumn({ name: 'categoria_produto' })
+  @JoinColumn({ name: 'categoria' })
   categoria:Categoria
 
   @Column("decimal", { scale: 2 })

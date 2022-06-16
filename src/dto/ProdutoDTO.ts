@@ -1,9 +1,8 @@
 export interface ICreateProdutoDTO {
   nome:string
   fornecedor:string
-  valorUnitario:number
-  qtdEstoque:number
-  estoqueMinimo:number
+  valor_unitario:number
+  estoque_minimo:number
   categoria:string
 }
 
@@ -12,8 +11,7 @@ export interface IUpdateProdutoDTO {
   nome:string
   status:boolean
   fornecedor:string
-  valorUnitario:number
-  qtdEstoque:number
-  estoqueMinimo:number
+  valor_unitario:number
+  estoque_minimo:number
   categoria:string
 }
