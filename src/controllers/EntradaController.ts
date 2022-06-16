@@ -11,8 +11,8 @@ export class EntradaController {
 
   async create(request:Request, response:Response):Promise<Response> {
     try {
-      const { id_produto, qtd, valor_unitario } = request.body
-      const entrada:ICreateEntradaDTO = { id_produto, qtd, valor_unitario }
+      const { produto, qtd, valor_unitario } = request.body
+      const entrada:ICreateEntradaDTO = { produto, qtd, valor_unitario }
 
       await this.entradaServices.create(entrada)
   

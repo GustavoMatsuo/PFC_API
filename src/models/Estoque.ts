@@ -1,18 +1,18 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm"
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
 import { v4 as uuidv4 } from 'uuid'
 import { Produto } from "./Produto"
 
 @Entity('estoque')
 export class Estoque {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn("uuid")
   id_estoque:string
 
   @OneToOne(() => Produto)
-  @JoinColumn({ name: 'produto_estoque' })
+  @JoinColumn({ name: 'produto' })
   produto:string
 
   @Column()
-  qtd:string 
+  qtd:number 
 
   constructor(props: Omit<Estoque, 'id_estoque'>, id_estoque?:string) {
     Object.assign(this, props)

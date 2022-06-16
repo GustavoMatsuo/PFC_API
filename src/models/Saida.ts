@@ -9,7 +9,7 @@ export class Saida {
   id_saida:string
 
   @ManyToOne(() => Produto, produto => produto.id_produto)
-  @JoinColumn({ name: 'produto_saida' })
+  @JoinColumn({ name: 'produto' })
   produto:string
 
   @Column('timestamptz')
@@ -22,7 +22,7 @@ export class Saida {
   valor_unitario:number
 
   @ManyToOne(() => Cliente, cliente => cliente.id_cliente)
-  @JoinColumn({ name: 'cliente_saida' })
+  @JoinColumn({ name: 'cliente' })
   cliente:string
 
   constructor(props: Omit<Saida, 'id_saida'>, id_saida?:string) {

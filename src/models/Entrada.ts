@@ -8,8 +8,8 @@ export class Entrada {
   id_entrada:string
 
   @ManyToOne(() => Produto, produto => produto.id_produto)
-  @JoinColumn({ name: 'produto_categoria' })
-  id_produto:string
+  @JoinColumn({ name: 'produto' })
+  produto:string
 
   @Column()
   qtd:number
