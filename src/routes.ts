@@ -5,7 +5,8 @@ import {
   produtoController,
   categoriaController, 
   entradaController,
-  clienteController
+  clienteController,
+  saidaController
 } from "@controllers"
 
 const router = Router()
@@ -95,7 +96,6 @@ router.post('/entrada', (request, response) => {
   return entradaController.create(request, response)
 })
 
-
 //CLIENTE
 router.post('/cliente', (request, response) => {
   return clienteController.create(request, response)
@@ -111,6 +111,14 @@ router.delete('/cliente', (request, response) => {
 })
 router.get('/cliente/list', (request, response) => {
   return clienteController.index(request, response)
+})
+
+//SAIDA
+router.get('/saida', (request, response) => {
+  return saidaController.index(request, response)
+})
+router.post('/saida', (request, response) => {
+  return saidaController.create(request, response)
 })
 
 export { router }

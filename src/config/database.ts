@@ -8,7 +8,8 @@ import {
   Produto,
   Entrada, 
   Estoque,
-  Cliente
+  Cliente,
+  Saida
 } from "@models"
 
 const db = new DataSource({
@@ -26,7 +27,8 @@ const db = new DataSource({
     Produto,
     Entrada,
     Estoque,
-    Cliente
+    Cliente,
+    Saida
   ],
   synchronize: true,
   logging: false,

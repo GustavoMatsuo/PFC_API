@@ -6,6 +6,7 @@ import { Produto } from "./Produto"
 import { Entrada } from "./Entrada"
 import { Estoque } from "./Estoque"
 import { Cliente } from "./Cliente"
+import { Saida } from "./Saida"
 
 export {
   Usuario,
@@ -15,5 +16,6 @@ export {
   Produto,
   Entrada,
   Estoque,
-  Cliente
+  Cliente,
+  Saida
 }
