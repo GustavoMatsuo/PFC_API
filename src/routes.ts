@@ -84,9 +84,6 @@ router.put('/produto', (request, response) => {
 router.put('/produto/status', (request, response) => {
   return produtoController.changeStatus(request, response)
 })
-router.put('/produto/updateEstoque', (request, response) => {
-  return produtoController.updateEstoque(request, response)
-})
 
 //ENTRADA
 router.get('/entrada', (request, response) => {
