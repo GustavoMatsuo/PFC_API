@@ -29,12 +29,16 @@ export class UsuarioServices implements IUsuarioServices {
   }
 
   async login(data:ILoginUsuarioDTO):Promise<Usuario> {
-    const usuario = await this.usuarioRepository.findOne({
-      where: {
-        email: data.email,
-        senha: data.senha
-      },
-    })
+    let usuario:Usuario = null
+    
+    if(data.email && data.senha){
+      usuario = await this.usuarioRepository.findOne({
+        where: {
+          email: data.email,
+          senha: data.senha
+        },
+      })
+    }
 
     if(usuario && !usuario.status){
       throw new Error('Usuario disabled.')
