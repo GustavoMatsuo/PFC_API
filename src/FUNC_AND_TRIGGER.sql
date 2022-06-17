@@ -7,13 +7,13 @@ DECLARE
   contador integer := 0;
 
 BEGIN  
-  SELECT count(*) into contador FROM estoque WHERE id_produto = NEW.id_produto;
+  SELECT count(*) into contador FROM estoque WHERE produto = NEW.produto;
 
   IF contador > 0 THEN
-    UPDATE estoque SET qtd = qtd + NEW.qtd WHERE id_produto = NEW.id_produto;
+    UPDATE estoque SET qtd = qtd + NEW.qtd WHERE produto = NEW.produto;
     RETURN NEW;
   ELSE
-    INSERT INTO estoque (id_produto, qtd) values (NEW.id_produto, NEW.qtd);
+    INSERT INTO estoque (produto, qtd) values (NEW.produto, NEW.qtd);
     RETURN NEW;
   END IF; 
     RETURN NULL;
@@ -31,13 +31,13 @@ DECLARE
   contador integer := 0;
 
 BEGIN  
-  SELECT count(*) into contador FROM estoque WHERE id_produto = NEW.id_produto;
+  SELECT count(*) into contador FROM estoque WHERE produto = NEW.produto;
 
   IF contador > 0 THEN
-    UPDATE estoque SET qtd = qtd + (NEW.qtd * -1) WHERE id_produto = NEW.id_produto;
+    UPDATE estoque SET qtd = qtd + (NEW.qtd * -1) WHERE produto = NEW.produto;
     RETURN NEW;
   ELSE
-    INSERT INTO estoque (id_produto, qtd) values (NEW.id_produto, NEW.qtd);
+    INSERT INTO estoque (produto, qtd) values (NEW.produto, NEW.qtd);
     RETURN NEW;
   END IF; 
     RETURN NULL;
