@@ -6,7 +6,8 @@ import {
   categoriaController, 
   entradaController,
   clienteController,
-  saidaController
+  saidaController,
+  estoqueController
 } from "@controllers"
 
 const router = Router()
@@ -119,6 +120,11 @@ router.get('/saida', (request, response) => {
 })
 router.post('/saida', (request, response) => {
   return saidaController.create(request, response)
+})
+
+//ESTOQUE
+router.get('/estoque', (request, response) => {
+  return estoqueController.index(request, response)
 })
 
 export { router }

@@ -5,7 +5,8 @@ import {
   usuarioRepository,
   entradaRepository,
   clienteRepository,
-  saidaRepository
+  saidaRepository,
+  estoqueRepository
 } from "@repositories" 
 import { UsuarioServices } from "./UsuarioServices"
 import { FornecedorServices } from "./FornecedorServices"
@@ -14,6 +15,7 @@ import { ProdutoServices } from "./ProdutoServices"
 import { EntradaServices } from "./EntradaServices"
 import { ClienteServices } from "./ClienteServices"
 import { SaidaServices } from "./SaidaServices"
+import { EstoqueServices } from "./EstoqueServices"
 
 const usuarioServices = new UsuarioServices(usuarioRepository)
 const fornecedorServices = new FornecedorServices(fornecedorRepository)
@@ -26,6 +28,7 @@ const produtoServices = new ProdutoServices(
 const entradaServices = new EntradaServices(entradaRepository)
 const clienteServices = new ClienteServices(clienteRepository)
 const saidaServices = new SaidaServices(saidaRepository)
+const estoqueServices = new EstoqueServices(estoqueRepository)
 
 export { 
   usuarioServices,
@@ -34,5 +37,6 @@ export {
   produtoServices,
   entradaServices,
   clienteServices,
-  saidaServices
+  saidaServices,
+  estoqueServices
 }

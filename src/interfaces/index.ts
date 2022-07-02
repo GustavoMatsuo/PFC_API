@@ -5,6 +5,7 @@ import { IUsuarioServices } from "./IUsuarioServices"
 import { IEntradaServices } from "./IEntradaServices"
 import { IClienteServices } from "./IClienteServices"
 import { ISaidaServices } from "./ISaidaServices"
+import { IEstoqueServices } from "./IEstoqueServices"
 
 export {
   IBasicCRUD,
@@ -13,5 +14,6 @@ export {
   IProdutoServices,
   IEntradaServices,
   IClienteServices,
-  ISaidaServices
+  ISaidaServices,
+  IEstoqueServices
 }

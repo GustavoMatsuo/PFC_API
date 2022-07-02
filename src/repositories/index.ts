@@ -3,6 +3,7 @@ import {
   Cliente, 
   Endereco, 
   Entrada, 
+  Estoque, 
   Fornecedor, 
   Produto, 
   Saida, 
@@ -17,6 +18,7 @@ import { UsuarioRepository } from "./UsuarioRepository"
 import { EntradaRepository } from "./EntradaRepository"
 import { ClienteRepository } from "./ClienteRepository"
 import { SaidaRepository } from "./SaidaRepository"
+import { EstoqueRepository } from "./EstoqueRepository"
 
 const usuarioRepository = db.getRepository(Usuario)
 const enderecoRepository = db.getRepository(Endereco)
@@ -26,6 +28,7 @@ const produtoRepository = db.getRepository(Produto)
 const entradaRepository = db.getRepository(Entrada)
 const clienteRepository = db.getRepository(Cliente)
 const saidaRepository = db.getRepository(Saida)
+const estoqueRepository = db.getRepository(Estoque)
 
 export {
   usuarioRepository,
@@ -35,7 +38,8 @@ export {
   produtoRepository,
   entradaRepository,
   clienteRepository,
-  saidaRepository
+  saidaRepository,
+  estoqueRepository
 }
 
 export {
@@ -46,5 +50,6 @@ export {
   ProdutoRepository,
   EntradaRepository,
   ClienteRepository,
-  SaidaRepository
+  SaidaRepository,
+  EstoqueRepository
 }

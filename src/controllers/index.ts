@@ -5,7 +5,8 @@ import {
   usuarioServices,
   entradaServices,
   clienteServices,
-  saidaServices
+  saidaServices,
+  estoqueServices
 } from "@services"
 import { UsuarioController } from "./UsuarioController"
 import { FornecedorController } from "./FornecedorController"
@@ -14,6 +15,7 @@ import { ProdutoController } from "./ProdutoController"
 import { EntradaController } from "./EntradaController"
 import { ClienteController } from "./ClienteController"
 import { SaidaController } from "./SaidaController"
+import { EstoqueController } from "./EstoqueController"
 
 const usuarioController = new UsuarioController(usuarioServices)
 const fornecedorController = new FornecedorController(fornecedorServices)
@@ -22,6 +24,7 @@ const produtoController = new ProdutoController(produtoServices)
 const entradaController = new EntradaController(entradaServices)
 const clienteController = new ClienteController(clienteServices)
 const saidaController = new SaidaController(saidaServices)
+const estoqueController = new EstoqueController(estoqueServices)
 
 export { 
   usuarioController,
@@ -30,5 +33,6 @@ export {
   produtoController,
   entradaController,
   clienteController,
-  saidaController
+  saidaController,
+  estoqueController
 }
