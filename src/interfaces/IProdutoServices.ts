@@ -6,4 +6,5 @@ export interface IProdutoServices {
   create(data:ICreateProdutoDTO):Promise<void>
   update(data:IUpdateProdutoDTO):Promise<void>
   changeStatus(id:string):Promise<void>
+  simpleList():Promise<Array<Object>>
 }

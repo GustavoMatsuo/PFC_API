@@ -90,4 +90,14 @@ export class ProdutoServices implements IProdutoServices {
 
     await this.produtoRepository.update(id, produtoExists)
   }
+
+  async simpleList():Promise<Array<Object>> {
+    const produtoList = await this.produtoRepository
+      .createQueryBuilder("produto")
+      .select("produto.id_produto")
+      .addSelect("produto.nome")
+      .getMany()
+
+    return produtoList
+  }
 }

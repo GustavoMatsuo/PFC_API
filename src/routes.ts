@@ -84,6 +84,9 @@ router.put('/produto', (request, response) => {
 router.put('/produto/status', (request, response) => {
   return produtoController.changeStatus(request, response)
 })
+router.get('/produto/simple', (request, response) => {
+  return produtoController.simpleList(request, response)
+})
 
 //ENTRADA
 router.get('/entrada', (request, response) => {

@@ -65,4 +65,16 @@ export class ProdutoController {
       })
     }
   }
+
+  async simpleList(request:Request, response:Response):Promise<Response> {
+    try {
+      const produtoList = await this.produtoServices.simpleList()
+  
+      return response.status(200).json(produtoList)
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
 }
