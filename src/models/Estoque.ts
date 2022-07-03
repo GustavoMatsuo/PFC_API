@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm"
 import { v4 as uuidv4 } from 'uuid'
 import { Produto } from "./Produto"
 
@@ -14,10 +14,7 @@ export class Estoque {
   @Column()
   qtd:number 
 
-  constructor(props: Omit<Estoque, 'id_estoque'>, id_estoque?:string) {
+  constructor(props: Omit<Estoque, 'id_estoque'>) {
     Object.assign(this, props)
-    if (!id_estoque) {
-      this.id_estoque = uuidv4()
-    }
   }
 }

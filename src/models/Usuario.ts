@@ -1,10 +1,9 @@
 import { UserRole } from "@enum/userRole"
-import { Column, Entity, PrimaryColumn,  } from "typeorm"
-import { v4 as uuidv4 } from 'uuid'
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity('usuario')
 export class Usuario {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id_usuario:string
 
   @Column()
@@ -26,10 +25,7 @@ export class Usuario {
   @Column()
   senha:string
 
-  constructor(props: Omit<Usuario, 'id_usuario'>, id_usuario?:string) {
+  constructor(props: Omit<Usuario, 'id_usuario'>) {
     Object.assign(this, props)
-    if (!id_usuario) {
-      this.id_usuario = uuidv4()
-    }
   }
 }

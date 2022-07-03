@@ -1,10 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm"
-import { v4 as uuidv4 } from 'uuid'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 import { Cliente } from "./Cliente"
 
 @Entity('venda')
 export class Venda {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id_venda:string
 
   @ManyToOne(() => Cliente, cliente => cliente.id_cliente)
@@ -14,10 +13,7 @@ export class Venda {
   @Column('timestamptz')
   data_venda:Date
 
-  constructor(props: Omit<Venda, 'id_venda'>, id_venda?:string) {
+  constructor(props: Omit<Venda, 'id_venda'>) {
     Object.assign(this, props)
-    if (!id_venda) {
-      this.id_venda = uuidv4()
-    }
   }
 }

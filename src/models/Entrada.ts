@@ -1,10 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm"
-import { v4 as uuidv4 } from 'uuid'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 import { Produto } from "./Produto"
 
 @Entity('entrada')
 export class Entrada {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id_entrada:string
 
   @ManyToOne(() => Produto, produto => produto.id_produto)
@@ -20,10 +19,7 @@ export class Entrada {
   @Column("decimal", { scale: 2 })
   valor_unitario:number
 
-  constructor(props: Omit<Entrada, 'id_entrada'>, id_entrada?:string) {
+  constructor(props: Omit<Entrada, 'id_entrada'>) {
     Object.assign(this, props)
-    if (!id_entrada) {
-      this.id_entrada = uuidv4()
-    }
   }
 }

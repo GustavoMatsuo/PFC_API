@@ -1,9 +1,8 @@
-import { Column, Entity, PrimaryColumn } from "typeorm"
-import { v4 as uuidv4 } from 'uuid'
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity('categoria')
 export class Categoria {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id_categoria:string
 
   @Column()
@@ -15,10 +14,7 @@ export class Categoria {
   @Column({ nullable: true })
   cor:string
 
-  constructor(props: Omit<Categoria, 'id_categoria'>, id_categoria?:string) {
+  constructor(props: Omit<Categoria, 'id_categoria'>) {
     Object.assign(this, props)
-    if (!id_categoria) {
-      this.id_categoria = uuidv4()
-    }
   }
 }

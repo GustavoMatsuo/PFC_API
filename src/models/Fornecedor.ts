@@ -1,10 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm"
-import { v4 as uuidv4 } from 'uuid'
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm"
 import { Endereco } from "./Endereco"
 
 @Entity('fornecedor')
 export class Fornecedor {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id_fornecedor:string
 
   @Column()
@@ -20,13 +19,10 @@ export class Fornecedor {
   status:boolean
 
   @OneToOne(() => Endereco, {cascade: true})
-  @JoinColumn({ name: 'endereco_fornecedor' })
+  @JoinColumn({ name: 'endereco' })
   endereco:Endereco
 
-  constructor(props: Omit<Fornecedor, 'id_fornecedor'>, id_fornecedor?:string) {
+  constructor(props: Omit<Fornecedor, 'id_fornecedor'>) {
     Object.assign(this, props)
-    if (!id_fornecedor) {
-      this.id_fornecedor = uuidv4()
-    }
   }
 }

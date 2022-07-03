@@ -1,9 +1,8 @@
-import { Column, Entity, PrimaryColumn } from "typeorm"
-import { v4 as uuidv4 } from 'uuid'
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity('cliente')
 export class Cliente {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id_cliente:string
 
   @Column()
@@ -15,10 +14,7 @@ export class Cliente {
   @Column({ type: 'bigint' })
   cel:number
 
-  constructor(props: Omit<Cliente, 'id_cliente'>, id_cliente?:string) {
+  constructor(props: Omit<Cliente, 'id_cliente'>) {
     Object.assign(this, props)
-    if (!id_cliente) {
-      this.id_cliente = uuidv4()
-    }
   }
 }
