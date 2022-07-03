@@ -34,11 +34,15 @@ export class ProdutoServices implements IProdutoServices {
   }
 
   async create(data:ICreateProdutoDTO):Promise<void> {
-    const produtoAlreadyExists = await this.produtoRepository.findOneBy({
+      const produtoAlreadyExistsByName = await this.produtoRepository.findOneBy({
       nome: data.nome
     })
 
-    if (produtoAlreadyExists) {
+    const produtoAlreadyExistsByCodigo = await this.produtoRepository.findOneBy({
+      codigo: data.codigo
+    })
+
+    if (produtoAlreadyExistsByName || produtoAlreadyExistsByCodigo) {
       throw new Error('Produto already exists.')
     }
 
