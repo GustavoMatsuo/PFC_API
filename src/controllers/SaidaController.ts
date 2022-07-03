@@ -11,8 +11,8 @@ export class SaidaController {
 
   async create(request:Request, response:Response):Promise<Response> {
     try {
-      const { produto, qtd, valor_unitario, cliente } = request.body
-      const saida:ICreateSaidaDTO = { produto, qtd, valor_unitario, cliente }
+      const { produto, qtd, valor_unitario } = request.body
+      const saida:ICreateSaidaDTO = { produto, qtd, valor_unitario  }
 
       await this.saidaServices.create(saida)
   

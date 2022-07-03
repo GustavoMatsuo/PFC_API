@@ -12,7 +12,8 @@ export class SaidaServices implements ISaidaServices {
 
   async create(data:ICreateSaidaDTO):Promise<void> {
     const date = new Date()
-    const saida = new Saida({ ...data, data_saida: date })
+    const venda = data.venda
+    const saida = new Saida({ ...data, venda, data_saida: date })
 
     await this.saidaRepository.save(saida)
   }

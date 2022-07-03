@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm"
 import { v4 as uuidv4 } from 'uuid'
-import { Cliente } from "./Cliente"
 import { Produto } from "./Produto"
+import { Venda } from "./Venda"
 
 @Entity('saida')
 export class Saida {
@@ -21,9 +21,9 @@ export class Saida {
   @Column("decimal", { scale: 2 })
   valor_unitario:number
 
-  @ManyToOne(() => Cliente, cliente => cliente.id_cliente)
-  @JoinColumn({ name: 'cliente' })
-  cliente:string
+  @ManyToOne(() => Venda, venda => venda.id_venda, { nullable: true })
+  @JoinColumn({ name: 'venda' })
+  venda:string
 
   constructor(props: Omit<Saida, 'id_saida'>, id_saida?:string) {
     Object.assign(this, props)
