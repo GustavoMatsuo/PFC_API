@@ -26,11 +26,11 @@ export class VendaServices implements IVendaServices {
     const venda = new Venda({ cliente, data_venda: date })
 
     await db.manager.transaction(async entityManager => { 
-      const savedVenda = await entityManager.save(venda)
+      const savedVenda = await entityManager.save(Venda, venda)
       const idVenda = savedVenda.id_venda
       for(var item in saidas){
         const saida = new Saida({ ...saidas[item], venda: idVenda, data_saida: date })
-        await entityManager.save(saida)
+        await entityManager.save(Saida, saida)
       }
     })
   }
