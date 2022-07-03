@@ -5,6 +5,7 @@ export interface ICreateEntradaDTO {
 }
 
 export interface IEntradaFormattedDTO {
+  id_entrada:string
   id_produto:string
   nome_produto:string
   qtd:number

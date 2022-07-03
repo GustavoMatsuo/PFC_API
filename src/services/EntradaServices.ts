@@ -29,6 +29,7 @@ export class EntradaServices implements IEntradaServices {
     
     const entradaListFormatted:IEntradaFormattedDTO[] = entradaList.map(entrada => {
       return {
+        id_entrada: entrada.id_entrada,
         id_produto: entrada.produto.id_produto,
         nome_produto: entrada.produto.nome,
         qtd: entrada.qtd,
