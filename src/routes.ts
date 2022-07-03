@@ -7,7 +7,8 @@ import {
   entradaController,
   clienteController,
   saidaController,
-  estoqueController
+  estoqueController,
+  vendaController
 } from "@controllers"
 
 const router = Router()
@@ -125,6 +126,14 @@ router.post('/saida', (request, response) => {
 //ESTOQUE
 router.get('/estoque', (request, response) => {
   return estoqueController.index(request, response)
+})
+
+//VENDA
+router.get('/venda', (request, response) => {
+  return vendaController.index(request, response)
+})
+router.post('/venda', (request, response) => {
+  return vendaController.create(request, response)
 })
 
 export { router }

@@ -7,7 +7,8 @@ import {
   Fornecedor, 
   Produto, 
   Saida, 
-  Usuario
+  Usuario,
+  Venda
 } from "@models"
 import { db } from "@config/database"
 import { CategoriaRepository } from "./CategoriaRepository"
@@ -19,6 +20,7 @@ import { EntradaRepository } from "./EntradaRepository"
 import { ClienteRepository } from "./ClienteRepository"
 import { SaidaRepository } from "./SaidaRepository"
 import { EstoqueRepository } from "./EstoqueRepository"
+import { VendaRepository } from "./VendaRepository"
 
 const usuarioRepository = db.getRepository(Usuario)
 const enderecoRepository = db.getRepository(Endereco)
@@ -29,6 +31,7 @@ const entradaRepository = db.getRepository(Entrada)
 const clienteRepository = db.getRepository(Cliente)
 const saidaRepository = db.getRepository(Saida)
 const estoqueRepository = db.getRepository(Estoque)
+const vendaRepository = db.getRepository(Venda)
 
 export {
   usuarioRepository,
@@ -39,7 +42,8 @@ export {
   entradaRepository,
   clienteRepository,
   saidaRepository,
-  estoqueRepository
+  estoqueRepository,
+  vendaRepository
 }
 
 export {
@@ -51,5 +55,6 @@ export {
   EntradaRepository,
   ClienteRepository,
   SaidaRepository,
-  EstoqueRepository
+  EstoqueRepository,
+  VendaRepository
 }

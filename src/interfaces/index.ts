@@ -6,6 +6,7 @@ import { IEntradaServices } from "./IEntradaServices"
 import { IClienteServices } from "./IClienteServices"
 import { ISaidaServices } from "./ISaidaServices"
 import { IEstoqueServices } from "./IEstoqueServices"
+import { IVendaServices } from "./IVendaServices"
 
 export {
   IBasicCRUD,
@@ -15,5 +16,6 @@ export {
   IEntradaServices,
   IClienteServices,
   ISaidaServices,
-  IEstoqueServices
+  IEstoqueServices,
+  IVendaServices
 }
