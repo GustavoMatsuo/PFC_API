@@ -11,8 +11,8 @@ export class UsuarioController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.params
-      const usuarioList = await this.usuarioServices.index(limit, skip)
+      const { limit, skip } = request.query
+      const usuarioList = await this.usuarioServices.index(String(limit), String(skip))
   
       return response.status(200).json(usuarioList)
     } catch (err) {

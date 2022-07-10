@@ -11,8 +11,8 @@ export class ProdutoController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.params
-      const produtoList = await this.produtoServices.index(limit, skip)
+      const { limit, skip } = request.query
+      const produtoList = await this.produtoServices.index(String(limit), String(skip))
   
       return response.status(200).json(produtoList)
     } catch (err) {

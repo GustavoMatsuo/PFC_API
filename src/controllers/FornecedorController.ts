@@ -11,8 +11,8 @@ export class FornecedorController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.params
-      const fornecedorList = await this.fornecedorServices.index(limit, skip)
+      const { limit, skip } = request.query
+      const fornecedorList = await this.fornecedorServices.index(String(limit), String(skip))
   
       return response.status(200).json(fornecedorList)
     } catch (err) {

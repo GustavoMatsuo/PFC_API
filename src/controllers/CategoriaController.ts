@@ -26,9 +26,10 @@ export class CategoriaController {
 
   async read(request:Request, response:Response):Promise<Response> {
     try {
-      const { id } = request.params
-      const categoria = await this.categoriaServices.read(id)
-  
+      const { id } = request.query
+
+      const categoria = await this.categoriaServices.read(String(id))
+
       return response.status(200).json(categoria)
     } catch (err) {
       return response.status(400).json({
@@ -68,8 +69,8 @@ export class CategoriaController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.params
-      const categoriaList = await this.categoriaServices.index(limit, skip)
+      const { limit, skip } = request.query
+      const categoriaList = await this.categoriaServices.index(String(limit), String(skip))
   
       return response.status(200).json(categoriaList)
     } catch (err) {

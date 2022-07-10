@@ -26,8 +26,9 @@ export class SaidaController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.params
-      const saidaList = await this.saidaServices.index(limit, skip)
+      const { limit, skip } = request.query
+
+      const saidaList = await this.saidaServices.index(String(limit), String(skip))
   
       return response.status(200).json(saidaList)
     } catch (err) {

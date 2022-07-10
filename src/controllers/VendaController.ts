@@ -26,8 +26,8 @@ export class VendaController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.params
-      const vendaList = await this.vendaServices.index(limit, skip)
+      const { limit, skip } = request.query
+      const vendaList = await this.vendaServices.index(String(limit), String(skip))
   
       return response.status(200).json(vendaList)
     } catch (err) {
