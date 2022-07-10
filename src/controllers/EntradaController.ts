@@ -27,7 +27,10 @@ export class EntradaController {
   async index(request:Request, response:Response):Promise<Response> {
     try {
       const { limit, skip } = request.query
-      const entradaList = await this.entradaServices.index(String(limit), String(skip))
+      const formattedLimit = limit? String(limit) : null
+      const formattedSkip = skip?  String(skip) : null
+
+      const entradaList = await this.entradaServices.index(formattedLimit, formattedSkip)
   
       return response.status(200).json(entradaList)
     } catch (err) {

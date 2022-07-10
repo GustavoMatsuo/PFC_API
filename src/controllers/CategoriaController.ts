@@ -70,7 +70,10 @@ export class CategoriaController {
   async index(request:Request, response:Response):Promise<Response> {
     try {
       const { limit, skip } = request.query
-      const categoriaList = await this.categoriaServices.index(String(limit), String(skip))
+      const formattedLimit = limit? String(limit) : null
+      const formattedSkip = skip?  String(skip) : null
+
+      const categoriaList = await this.categoriaServices.index(formattedLimit, formattedSkip)
   
       return response.status(200).json(categoriaList)
     } catch (err) {

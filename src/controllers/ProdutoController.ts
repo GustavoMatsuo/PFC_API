@@ -12,7 +12,10 @@ export class ProdutoController {
   async index(request:Request, response:Response):Promise<Response> {
     try {
       const { limit, skip } = request.query
-      const produtoList = await this.produtoServices.index(String(limit), String(skip))
+      const formattedLimit = limit? String(limit) : null
+      const formattedSkip = skip?  String(skip) : null
+
+      const produtoList = await this.produtoServices.index(formattedLimit, formattedSkip)
   
       return response.status(200).json(produtoList)
     } catch (err) {

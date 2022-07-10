@@ -10,7 +10,7 @@ export class ClienteServices implements IClienteServices {
     this.clienteRepository = clienteRepository
   }
 
-  async create(data:ICreateClienteDTO):Promise<void> {
+  async create(data:ICreateClienteDTO):Promise<Cliente> {
     const clienteAlreadyExists = await this.clienteRepository.findOneBy({
       cpf: data.cpf
     })
@@ -20,7 +20,9 @@ export class ClienteServices implements IClienteServices {
     }
     const cliente = new Cliente({ ...data })
 
-    await this.clienteRepository.save(cliente)
+    const newCliente = await this.clienteRepository.save(cliente)
+
+    return newCliente
   }
 
   async read(id:string):Promise<Cliente> {    

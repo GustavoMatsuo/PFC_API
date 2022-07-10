@@ -14,9 +14,9 @@ export class ClienteController {
       const { nome, cpf, cel  } = request.body
       const cliente:ICreateClienteDTO = { nome, cpf, cel }
 
-      await this.clienteServices.create(cliente)
+      const newCliente = await this.clienteServices.create(cliente)
   
-      return response.status(201).json({msg: "cliente created"})
+      return response.status(201).json({cliente: newCliente, msg: "cliente created"})
     } catch (err) {
       return response.status(400).json({
         msg: err.message || 'Unexpected error.'
@@ -68,8 +68,11 @@ export class ClienteController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.params
-      const clienteList = await this.clienteServices.index(limit, skip)
+      const { limit, skip } = request.query
+      const formattedLimit = limit? String(limit) : null
+      const formattedSkip = skip?  String(skip) : null
+
+      const clienteList = await this.clienteServices.index(formattedLimit, formattedSkip)
   
       return response.status(200).json(clienteList)
     } catch (err) {
