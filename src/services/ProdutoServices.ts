@@ -103,6 +103,8 @@ export class ProdutoServices implements IProdutoServices {
       .createQueryBuilder("produto")
       .select("produto.id_produto")
       .addSelect("produto.nome")
+      .addSelect("produto.codigo")
+      .addSelect("produto.valor_unitario")
       .getMany()
 
     return produtoList
