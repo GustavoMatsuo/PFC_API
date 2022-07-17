@@ -61,7 +61,7 @@ export class UsuarioServices implements IUsuarioServices {
     
     return {
       id: usuario.id_usuario, 
-      name: usuario.nome, 
+      nome: usuario.nome, 
       email: usuario.email,
       token: token 
     }

@@ -5,7 +5,7 @@ import { Paginationlist } from "src/globalTypes"
 export type loginType = {
   token: string
   id: string
-  name: string 
+  nome: string 
   email: string
 }
 
