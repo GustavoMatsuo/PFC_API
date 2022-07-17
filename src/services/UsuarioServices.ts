@@ -4,6 +4,9 @@ import { IUsuarioServices } from "@interfaces"
 import { ICreateUsuarioDTO, ILoginUsuarioDTO, IUpdateUsuarioDTO } from '@dto/UsuarioDTO'
 import { UsuarioRepository } from "@repositories"
 import { Paginationlist } from "src/globalTypes"
+import { hash, compare } from "bcryptjs"
+import { sign } from "jsonwebtoken"
+import { loginType } from "src/interfaces/IUsuarioServices"
 
 export class UsuarioServices implements IUsuarioServices {
   private usuarioRepository: UsuarioRepository
@@ -31,15 +34,12 @@ export class UsuarioServices implements IUsuarioServices {
     return {list: usuarioList, total: sumRow}
   }
 
-  async login(data:ILoginUsuarioDTO):Promise<Usuario> {
+  async login(data:ILoginUsuarioDTO):Promise<loginType> {
     let usuario:Usuario = null
     
-    if(data.email && data.senha){
+    if(data.email){
       usuario = await this.usuarioRepository.findOne({
-        where: {
-          email: data.email,
-          senha: data.senha
-        },
+        where: { email: data.email }
       })
     }
 
@@ -47,7 +47,20 @@ export class UsuarioServices implements IUsuarioServices {
       throw new Error('Usuario disabled.')
     }
 
-    return usuario
+    const isValidPassword = await compare(data.senha, usuario.senha)
+
+    if(!isValidPassword) {
+      return null
+    }
+
+    const token = sign({id: usuario.id_usuario}, "secret", { expiresIn: "10s" })
+    
+    return {
+      id: usuario.id_usuario, 
+      name: usuario.nome, 
+      email: usuario.email,
+      token: token 
+    }
   }
 
   async create(data:ICreateUsuarioDTO):Promise<void> {
@@ -59,7 +72,9 @@ export class UsuarioServices implements IUsuarioServices {
       throw new Error('Usuario already exists.')
     }
 
-    const usuario = new Usuario({...data, status: true})
+    const hash_password = await hash(data.senha, 8)
+
+    const usuario = new Usuario({...data, senha: hash_password, status: true})
 
     await this.usuarioRepository.save(usuario)
   }

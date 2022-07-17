@@ -90,7 +90,6 @@ export class UsuarioController {
     }
   }
 
-  
   async changeStatus(request:Request, response:Response):Promise<Response> {
     try {
       const { id } = request.body
