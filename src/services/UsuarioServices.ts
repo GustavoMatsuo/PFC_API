@@ -7,6 +7,7 @@ import { Paginationlist } from "src/globalTypes"
 import { hash, compare } from "bcryptjs"
 import { sign } from "jsonwebtoken"
 import { loginType } from "src/interfaces/IUsuarioServices"
+import { resetPassword } from "../templates/resetPassword"
 
 export class UsuarioServices implements IUsuarioServices {
   private usuarioRepository: UsuarioRepository
@@ -145,6 +146,11 @@ export class UsuarioServices implements IUsuarioServices {
 
     const urlReset = `http://localhost:3000/reset/${token}`
     
+    const templateEmail = resetPassword
+      .replaceAll("{{email}}", usuario.email)
+      .replaceAll("{{nome}}", usuario.nome)
+      .replaceAll("{{link}}", urlReset)
+
     await this.mailProvider.sendMail({
       to: {
         name: usuario.nome,
@@ -155,9 +161,7 @@ export class UsuarioServices implements IUsuarioServices {
         email: 'equipe@meuapp.com',
       },
       subject: 'Soliciatcão de nova senha',
-      body: `
-        <a href="${urlReset}" target="_blank" >Nova senha</a>
-      `
+      body: templateEmail
     })
   }
 
