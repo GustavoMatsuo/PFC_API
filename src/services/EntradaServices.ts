@@ -2,6 +2,7 @@ import { Entrada } from "@models"
 import { IEntradaServices } from "src/interfaces/IEntradaServices"
 import { EntradaRepository } from "@repositories"
 import { ICreateEntradaDTO, IEntradaFormattedDTO } from "@dto/EntradaDTO"
+import { Paginationlist } from "src/globalTypes"
 
 export class EntradaServices implements IEntradaServices {
   private entradaRepository: EntradaRepository
@@ -17,12 +18,12 @@ export class EntradaServices implements IEntradaServices {
     await this.entradaRepository.save(entrada)
   }
 
-  async index(limit:string, skip:string):Promise<Array<IEntradaFormattedDTO>> {
+  async index(limit:string, skip:string):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
     const entradaList:any[] = await this.entradaRepository.createQueryBuilder("entrada")
-    .leftJoinAndSelect("entrada.produto", "entrada.id_entrada")
+    .leftJoinAndSelect("entrada.produto", "produto.id_produto")
     .take(limitNum)
     .skip(skipNum)
     .getMany()
@@ -38,6 +39,8 @@ export class EntradaServices implements IEntradaServices {
       }
     })
 
-    return entradaListFormatted
+    const sumRow = await this.entradaRepository.count()
+    
+    return {list: entradaListFormatted, total: sumRow}
   }
 }

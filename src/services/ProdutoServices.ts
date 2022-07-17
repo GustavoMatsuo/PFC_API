@@ -2,6 +2,7 @@ import { Produto } from "@models"
 import { IProdutoServices } from "@interfaces"
 import { CategoriaRepository, FornecedorRepository, ProdutoRepository } from "@repositories"
 import { ICreateProdutoDTO, IUpdateProdutoDTO } from "@dto/ProdutoDTO"
+import { Paginationlist } from "src/globalTypes"
 
 export class ProdutoServices implements IProdutoServices {
   private produtoRepository:ProdutoRepository
@@ -18,7 +19,7 @@ export class ProdutoServices implements IProdutoServices {
     this.categoriaRepository = categoriaRepository
   }
 
-  async index(limit:string, skip:string):Promise<Array<Produto>> {
+  async index(limit:string, skip:string):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
@@ -30,7 +31,9 @@ export class ProdutoServices implements IProdutoServices {
       .skip(skipNum)
       .getMany()
 
-    return produtoList
+    const sumRow = await this.produtoRepository.count()
+  
+    return {list: produtoList, total: sumRow}
   }
 
   async create(data:ICreateProdutoDTO):Promise<void> {

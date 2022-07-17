@@ -35,14 +35,8 @@ export class VendaServices implements IVendaServices {
     })
   }
 
-  async index(limit:string, skip:string):Promise<Array<Venda>> {
-    const limitNum = limit? Number.parseInt(limit) : null
-    const skipNum = skip? Number.parseInt(skip) : null
-
-    const vendaList = await this.vendaRepository.find({
-      take: limitNum,
-      skip: skipNum
-    })
+  async index():Promise<Array<Venda>> {
+    const vendaList = await this.vendaRepository.find()
 
     return vendaList
   }

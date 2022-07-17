@@ -9,15 +9,10 @@ export class EstoqueServices implements IEstoqueServices {
     this.estoqueRepository = estoqueRepository
   }
 
-  async index(limit:string, skip:string):Promise<Array<Estoque>> {
-    const limitNum = limit? Number.parseInt(limit) : null
-    const skipNum = skip? Number.parseInt(skip) : null
-
+  async index():Promise<Array<Estoque>> {
     const estoqueList:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
-    .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
-    .take(limitNum)
-    .skip(skipNum)
-    .getMany()
+      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
+      .getMany()
 
     return estoqueList
   }

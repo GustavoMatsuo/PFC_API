@@ -1,8 +1,9 @@
 import { Endereco, Fornecedor } from "@models"
 import { IFornecedorServices } from "@interfaces"
 import { FornecedorRepository } from "@repositories"
-import { ICreateFornecedorDTO, IUpdateFornecedorDTO } from "@dto/FornecedorDTO"
+import { ICreateFornecedorDTO, IEnderecoDTO, IUpdateFornecedorDTO } from "@dto/FornecedorDTO"
 import { db } from "src/config/database"
+import { Paginationlist } from "src/globalTypes"
 
 export class FornecedorServices implements IFornecedorServices {
   private fornecedorRepository: FornecedorRepository
@@ -11,7 +12,7 @@ export class FornecedorServices implements IFornecedorServices {
     this.fornecedorRepository = fornecedorRepository
   }
 
-  async index(limit:string, skip:string):Promise<Array<Fornecedor>> {
+  async index(limit:string, skip:string):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
@@ -22,7 +23,9 @@ export class FornecedorServices implements IFornecedorServices {
       .skip(skipNum)
       .getMany()
 
-    return fornecedorList
+    const sumRow = await this.fornecedorRepository.count()
+
+    return {list: fornecedorList, total: sumRow}
   }
 
   async create(data:ICreateFornecedorDTO):Promise<void> {

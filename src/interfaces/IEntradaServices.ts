@@ -1,7 +1,7 @@
-import { ICreateEntradaDTO, IEntradaFormattedDTO } from "@dto/EntradaDTO"
-import { Entrada } from "src/models/Entrada"
+import { ICreateEntradaDTO } from "@dto/EntradaDTO"
+import { Paginationlist } from "src/globalTypes"
 
 export interface IEntradaServices {
   create(data:ICreateEntradaDTO):Promise<void>
-  index(limit?:string, skip?:string):Promise<Array<IEntradaFormattedDTO>>
+  index(limit?:string, skip?:string):Promise<Paginationlist>
 }

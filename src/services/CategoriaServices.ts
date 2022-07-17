@@ -53,14 +53,8 @@ export class CategoriaServices implements ICategoriaServices {
     await this.categoriaRepository.delete(id)
   }
 
-  async index(limit:string, skip:string):Promise<Array<Categoria>> {
-    const limitNum = limit? Number.parseInt(limit) : null
-    const skipNum = skip? Number.parseInt(skip) : null
-
-    const categoriaList = await this.categoriaRepository.find({
-      take: limitNum,
-      skip: skipNum
-    })
+  async index():Promise<Array<Categoria>> {
+    const categoriaList = await this.categoriaRepository.find()
 
     return categoriaList
   }

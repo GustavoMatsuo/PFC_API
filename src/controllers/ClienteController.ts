@@ -68,11 +68,7 @@ export class ClienteController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.query
-      const formattedLimit = limit? String(limit) : null
-      const formattedSkip = skip?  String(skip) : null
-
-      const clienteList = await this.clienteServices.index(formattedLimit, formattedSkip)
+      const clienteList = await this.clienteServices.index()
   
       return response.status(200).json(clienteList)
     } catch (err) {

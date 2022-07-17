@@ -55,14 +55,8 @@ export class ClienteServices implements IClienteServices {
     await this.clienteRepository.delete(id)
   }
 
-  async index(limit:string, skip:string):Promise<Array<Cliente>> {
-    const limitNum = limit? Number.parseInt(limit) : null
-    const skipNum = skip? Number.parseInt(skip) : null
-
-    const clienteList = await this.clienteRepository.find({
-      take: limitNum,
-      skip: skipNum
-    })
+  async index():Promise<Array<Cliente>> {
+    const clienteList = await this.clienteRepository.find()
 
     return clienteList
   }

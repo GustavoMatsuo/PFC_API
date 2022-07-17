@@ -1,8 +1,9 @@
 import { Usuario } from "@models"
 import { IUsuarioServices } from "@interfaces"
-import { IMailProvider } from '@providers/IMailProvider'
+// import { IMailProvider } from '@providers/IMailProvider'
 import { ICreateUsuarioDTO, ILoginUsuarioDTO, IUpdateUsuarioDTO } from '@dto/UsuarioDTO'
 import { UsuarioRepository } from "@repositories"
+import { Paginationlist } from "src/globalTypes"
 
 export class UsuarioServices implements IUsuarioServices {
   private usuarioRepository: UsuarioRepository
@@ -16,7 +17,7 @@ export class UsuarioServices implements IUsuarioServices {
     // this.mailProvider = mailProvider
   }
 
-  async index(limit, skip):Promise<Array<Usuario>> {
+  async index(limit, skip):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
@@ -25,7 +26,9 @@ export class UsuarioServices implements IUsuarioServices {
       skip: skipNum
     })
 
-    return usuarioList
+    const sumRow = await this.usuarioRepository.count()
+    
+    return {list: usuarioList, total: sumRow}
   }
 
   async login(data:ILoginUsuarioDTO):Promise<Usuario> {
