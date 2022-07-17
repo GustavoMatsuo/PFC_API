@@ -90,7 +90,14 @@ export class UsuarioServices implements IUsuarioServices {
       throw new Error('Usuario not found.')
     }
 
-    const usuario = new Usuario(data)
+    let senha = usuarioExists.senha
+
+    if(data.senha && data.senha.length > 2) {
+      const hash_password = await hash(data.senha, 8)
+      senha = hash_password
+    }
+
+    const usuario = new Usuario({...data, senha: senha})
 
     await this.usuarioRepository.update(data.id_usuario, usuario)
   }
@@ -153,6 +160,7 @@ export class UsuarioServices implements IUsuarioServices {
       `
     })
   }
+
   async newPassword(senha:string, userId: string):Promise<void> {
     let usuarioExists = await this.usuarioRepository.findOneBy({id_usuario: userId})
 

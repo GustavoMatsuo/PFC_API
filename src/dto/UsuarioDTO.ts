@@ -11,7 +11,7 @@ export interface IUpdateUsuarioDTO {
   status:boolean
   cargo:string
   email:string
-  senha:string
+  senha?:string
 }
 
 export interface ILoginUsuarioDTO {
