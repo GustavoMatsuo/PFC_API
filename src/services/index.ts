@@ -18,8 +18,11 @@ import { ClienteServices } from "./ClienteServices"
 import { SaidaServices } from "./SaidaServices"
 import { EstoqueServices } from "./EstoqueServices"
 import { VendaServices } from "./VendaServices"
+import { MailtrapMailProvider } from "@providers/implementations/MailtrapMailProvider"
 
-const usuarioServices = new UsuarioServices(usuarioRepository)
+const mailProvider = new MailtrapMailProvider()
+
+const usuarioServices = new UsuarioServices(usuarioRepository, mailProvider)
 const fornecedorServices = new FornecedorServices(fornecedorRepository)
 const categoriaServices = new CategoriaServices(categoriaRepository)
 const produtoServices = new ProdutoServices(

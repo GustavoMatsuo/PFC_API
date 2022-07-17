@@ -103,4 +103,31 @@ export class UsuarioController {
       })
     }
   }
+
+  async reset(request:Request, response:Response):Promise<Response> {
+    try {
+      const { email } = request.body
+
+      await this.usuarioServices.reset(email)
+
+      return response.status(200).json({msg: 'email sended'})
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
+  async newPassword(request:Request, response:Response):Promise<Response> {
+    try {
+      const { senha } = request.body
+
+      await this.usuarioServices.newPassword(senha, request.userId)
+
+      return response.status(200).json({msg: 'password changed'})
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
 }

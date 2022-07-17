@@ -15,8 +15,17 @@ import { authMiddleware } from "@middleware/auth"
 const router = Router()
 
 //USUARIO
+router.post('/usuario/auth', authMiddleware, 
+  (request, response) => response.status(200).json({msg: "success"})
+)
 router.post('/usuario/login', (request, response) => {
   return usuarioController.login(request, response)
+})
+router.post('/usuario/reset', (request, response) => {
+  return usuarioController.reset(request, response)
+})
+router.put('/usuario/newPassword', authMiddleware, (request, response) => {
+  return usuarioController.newPassword(request, response)
 })
 router.get('/usuario', authMiddleware, (request, response) => 
   usuarioController.index(request, response)
@@ -30,7 +39,7 @@ router.put('/usuario', authMiddleware, (request, response) => {
 router.put('/usuario/status', authMiddleware, (request, response) => {
   return usuarioController.changeStatus(request, response)
 })
-router.delete('/usuario', (request, response) => {
+router.delete('/usuario', authMiddleware, (request, response) => {
   return usuarioController.delete(request, response)
 })
 

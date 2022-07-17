@@ -1,6 +1,6 @@
 import { Usuario } from "@models"
 import { IUsuarioServices } from "@interfaces"
-// import { IMailProvider } from '@providers/IMailProvider'
+import { IMailProvider } from '@providers/IMailProvider'
 import { ICreateUsuarioDTO, ILoginUsuarioDTO, IUpdateUsuarioDTO } from '@dto/UsuarioDTO'
 import { UsuarioRepository } from "@repositories"
 import { Paginationlist } from "src/globalTypes"
@@ -10,14 +10,14 @@ import { loginType } from "src/interfaces/IUsuarioServices"
 
 export class UsuarioServices implements IUsuarioServices {
   private usuarioRepository: UsuarioRepository
-  // private mailProvider:IMailProvider
+  private mailProvider:IMailProvider
 
   constructor(
     usuarioRepository:UsuarioRepository,
-    // mailProvider:IMailProvider,
+    mailProvider:IMailProvider,
   ) {
     this.usuarioRepository = usuarioRepository
-    // this.mailProvider = mailProvider
+    this.mailProvider = mailProvider
   }
 
   async index(limit, skip):Promise<Paginationlist> {
@@ -43,7 +43,11 @@ export class UsuarioServices implements IUsuarioServices {
       })
     }
 
-    if(usuario && !usuario.status){
+    if(!usuario){
+     return null
+    }
+
+    if(!usuario.status){
       throw new Error('Usuario disabled.')
     }
 
@@ -53,7 +57,7 @@ export class UsuarioServices implements IUsuarioServices {
       return null
     }
 
-    const token = sign({id: usuario.id_usuario}, "secret", { expiresIn: "10s" })
+    const token = sign({id: usuario.id_usuario}, "secret", { expiresIn: "1d" })
     
     return {
       id: usuario.id_usuario, 
@@ -111,5 +115,54 @@ export class UsuarioServices implements IUsuarioServices {
     usuarioExists.status = !usuarioExists.status
 
     await this.usuarioRepository.update(id, usuarioExists)
+  }
+
+  async reset(email:string):Promise<void> {
+    let usuario:Usuario = null
+    
+    if(email){
+      usuario = await this.usuarioRepository.findOne({
+        where: { email: email }
+      })
+    }
+
+    if(!usuario) {
+      throw new Error('Usuario not found.')
+    }
+
+    if(!usuario.status){
+      throw new Error('Usuario disabled.')
+    }
+
+    const token = sign({id: usuario.id_usuario}, "secret", { expiresIn: "1h" })
+
+    const urlReset = `http://localhost:3000/reset/${token}`
+    
+    await this.mailProvider.sendMail({
+      to: {
+        name: usuario.nome,
+        email: usuario.email,
+      },
+      from: {
+        name: 'Equipe do Meu App',
+        email: 'equipe@meuapp.com',
+      },
+      subject: 'Soliciatcão de nova senha',
+      body: `
+        <a href="${urlReset}" target="_blank" >Nova senha</a>
+      `
+    })
+  }
+  async newPassword(senha:string, userId: string):Promise<void> {
+    let usuarioExists = await this.usuarioRepository.findOneBy({id_usuario: userId})
+
+    if (!usuarioExists) {
+      throw new Error('Usuario not found.')
+    }
+    
+    const hash_password = await hash(senha, 8)
+    usuarioExists.senha = hash_password
+
+    await this.usuarioRepository.update(userId, usuarioExists)
   }
 }

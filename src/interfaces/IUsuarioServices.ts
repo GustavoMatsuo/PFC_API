@@ -16,4 +16,6 @@ export interface IUsuarioServices {
   update(data:IUpdateUsuarioDTO):Promise<void>
   delete(id:string):Promise<void>
   changeStatus(id:string):Promise<void>
+  reset(email:string):Promise<void>
+  newPassword(senha:string, userId: string):Promise<void>
 }
