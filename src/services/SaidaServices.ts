@@ -19,7 +19,13 @@ export class SaidaServices implements ISaidaServices {
     await this.saidaRepository.save(saida)
   }
 
-  async index(limit:string, skip:string, filterBy:string):Promise<Paginationlist> {
+  async index(
+    limit:string, 
+    skip:string, 
+    filterBy:string,
+    order:string,
+    orderBy:string
+  ):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
@@ -34,6 +40,11 @@ export class SaidaServices implements ISaidaServices {
       query.where("LOWER(produto.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
     }
 
+    if(order && orderBy) {
+      const descOrAsc = String(order).toUpperCase() === "DESC"? "DESC":"ASC"
+      query.orderBy(`saida.${orderBy}`, descOrAsc)
+    }
+    
     const saidaList = await query.getMany()
 
     const sumRow = await query.getCount()

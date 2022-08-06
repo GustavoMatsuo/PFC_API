@@ -21,7 +21,13 @@ export class UsuarioServices implements IUsuarioServices {
     this.mailProvider = mailProvider
   }
 
-  async index(limit:string, skip:string, filterBy:string):Promise<Paginationlist> {
+  async index(
+    limit:string, 
+    skip:string, 
+    filterBy:string,
+    order:string,
+    orderBy:string
+  ):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
@@ -32,6 +38,11 @@ export class UsuarioServices implements IUsuarioServices {
     
     if(filterBy) {
       query.where("LOWER(usuario.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
+    }
+
+    if(order && orderBy) {
+      const descOrAsc = String(order).toUpperCase() === "DESC"? "DESC":"ASC"
+      query.orderBy(`usuario.${orderBy}`, descOrAsc)
     }
 
     const usuarioList = await query.getMany()

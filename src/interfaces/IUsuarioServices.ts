@@ -10,7 +10,13 @@ export type loginType = {
 }
 
 export interface IUsuarioServices {
-  index(limit?:string, skip?: string, filterBy?:string):Promise<Paginationlist>
+  index(
+    limit?:string, 
+    skip?:string, 
+    filterBy?:string,
+    order?:string,
+    orderBy?:string  
+  ):Promise<Paginationlist>
   login(data:ILoginUsuarioDTO):Promise<loginType>
   create(data:ICreateUsuarioDTO):Promise<void>
   update(data:IUpdateUsuarioDTO):Promise<void>

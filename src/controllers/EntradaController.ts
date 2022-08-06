@@ -26,15 +26,19 @@ export class EntradaController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip, filterBy } = request.query
+      const { limit, skip, filterBy, order, orderBy } = request.query
       const formattedLimit = limit? String(limit) : null
       const formattedSkip = skip?  String(skip) : null
       const formattedFilterBy = filterBy? String(filterBy) : null
+      const formattedOrder = order? String(order) : null
+      const formattedOrderBy = orderBy?  String(orderBy) : null
 
       const entradaList = await this.entradaServices.index(
         formattedLimit, 
         formattedSkip,
-        formattedFilterBy
+        formattedFilterBy,
+        formattedOrder,
+        formattedOrderBy
       )
   
       return response.status(200).json(entradaList)
