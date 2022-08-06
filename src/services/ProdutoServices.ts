@@ -1,4 +1,4 @@
-import { Produto } from "@models"
+import { Estoque, Produto } from "@models"
 import { IProdutoServices } from "@interfaces"
 import { CategoriaRepository, FornecedorRepository, ProdutoRepository } from "@repositories"
 import { ICreateProdutoDTO, IUpdateProdutoDTO } from "@dto/ProdutoDTO"
@@ -27,6 +27,12 @@ export class ProdutoServices implements IProdutoServices {
       .createQueryBuilder("produto")
       .leftJoinAndSelect("produto.fornecedor", "fornecedor.id_fornecedor")
       .leftJoinAndSelect("produto.categoria", "categoria.id_categoria")
+      .innerJoinAndMapOne(
+        "produto.estoque",
+        Estoque,
+        "estoque",
+        "estoque.produto = produto.id_produto",
+      )
       .take(limitNum)
       .skip(skipNum)
       .getMany()
