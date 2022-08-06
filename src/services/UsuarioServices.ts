@@ -21,16 +21,22 @@ export class UsuarioServices implements IUsuarioServices {
     this.mailProvider = mailProvider
   }
 
-  async index(limit, skip):Promise<Paginationlist> {
+  async index(limit:string, skip:string, filterBy:string):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
-    const usuarioList = await this.usuarioRepository.find({
-      take: limitNum,
-      skip: skipNum
-    })
+    const query = this.usuarioRepository
+      .createQueryBuilder("usuario")
+      .take(limitNum)
+      .skip(skipNum)
+    
+    if(filterBy) {
+      query.where("LOWER(usuario.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
+    }
 
-    const sumRow = await this.usuarioRepository.count()
+    const usuarioList = await query.getMany()
+
+    const sumRow = await query.getCount()
     
     return {list: usuarioList, total: sumRow}
   }

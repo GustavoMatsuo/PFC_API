@@ -12,18 +12,23 @@ export class FornecedorServices implements IFornecedorServices {
     this.fornecedorRepository = fornecedorRepository
   }
 
-  async index(limit:string, skip:string):Promise<Paginationlist> {
+  async index(limit:string, skip:string, filterBy:string):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
-    const fornecedorList = await this.fornecedorRepository
+    const query = this.fornecedorRepository
       .createQueryBuilder("fornecedor")
       .leftJoinAndSelect("fornecedor.endereco", "endereco.id_endereco")
       .take(limitNum)
       .skip(skipNum)
-      .getMany()
 
-    const sumRow = await this.fornecedorRepository.count()
+    if(filterBy) {
+      query.where("LOWER(fornecedor.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
+    }
+
+    const fornecedorList = await query.getMany()
+
+    const sumRow = await query.getCount()
 
     return {list: fornecedorList, total: sumRow}
   }

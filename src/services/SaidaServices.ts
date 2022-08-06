@@ -1,4 +1,4 @@
-import { Saida } from "@models"
+import { Produto, Saida } from "@models"
 import { ISaidaServices } from "@interfaces"
 import { SaidaRepository } from "@repositories"
 import { ICreateSaidaDTO } from "@dto/SaidaDTO"
@@ -19,19 +19,24 @@ export class SaidaServices implements ISaidaServices {
     await this.saidaRepository.save(saida)
   }
 
-  async index(limit:string, skip:string):Promise<Paginationlist> {
+  async index(limit:string, skip:string, filterBy:string):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
-    const saidaList = await this.saidaRepository
-    .createQueryBuilder("saida")
-    .leftJoinAndSelect("saida.venda", "venda.id_venda")
-    .leftJoinAndSelect("saida.produto", "produto.id_produto")
-    .take(limitNum)
-    .skip(skipNum)
-    .getMany()
+    const query = await this.saidaRepository
+      .createQueryBuilder("saida")
+      .leftJoinAndSelect("saida.venda", "venda")
+      .leftJoinAndSelect("saida.produto", "produto")
+      .take(limitNum)
+      .skip(skipNum)
 
-    const sumRow = await this.saidaRepository.count()
+    if(filterBy) {
+      query.where("LOWER(produto.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
+    }
+
+    const saidaList = await query.getMany()
+
+    const sumRow = await query.getCount()
     
     return {list: saidaList, total: sumRow}
   }

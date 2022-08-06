@@ -11,11 +11,16 @@ export class UsuarioController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.query
+      const { limit, skip, filterBy } = request.query
       const formattedLimit = limit? String(limit) : null
       const formattedSkip = skip?  String(skip) : null
+      const formattedFilterBy = filterBy? String(filterBy) : null
 
-      const usuarioList = await this.usuarioServices.index(formattedLimit, formattedSkip)
+      const usuarioList = await this.usuarioServices.index(
+        formattedLimit, 
+        formattedSkip,
+        formattedFilterBy
+      )
   
       return response.status(200).json(usuarioList)
     } catch (err) {

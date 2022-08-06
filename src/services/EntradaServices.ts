@@ -18,16 +18,22 @@ export class EntradaServices implements IEntradaServices {
     await this.entradaRepository.save(entrada)
   }
 
-  async index(limit:string, skip:string):Promise<Paginationlist> {
+  async index(limit:string, skip:string, filterBy:string):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
-    const entradaList:any[] = await this.entradaRepository.createQueryBuilder("entrada")
-    .leftJoinAndSelect("entrada.produto", "produto.id_produto")
-    .take(limitNum)
-    .skip(skipNum)
-    .getMany()
-    
+    const query = await this.entradaRepository
+      .createQueryBuilder("entrada")
+      .leftJoinAndSelect("entrada.produto", "produto")
+      .take(limitNum)
+      .skip(skipNum)
+
+    if(filterBy) {
+      query.where("LOWER(produto.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
+    }
+
+    const entradaList:any[] = await query.getMany()
+
     const entradaListFormatted:IEntradaFormattedDTO[] = entradaList.map(entrada => {
       return {
         id_entrada: entrada.id_entrada,
@@ -39,7 +45,7 @@ export class EntradaServices implements IEntradaServices {
       }
     })
 
-    const sumRow = await this.entradaRepository.count()
+    const sumRow = await query.getCount()
     
     return {list: entradaListFormatted, total: sumRow}
   }
