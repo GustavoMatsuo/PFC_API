@@ -7,6 +7,7 @@ import { IClienteServices } from "./IClienteServices"
 import { ISaidaServices } from "./ISaidaServices"
 import { IEstoqueServices } from "./IEstoqueServices"
 import { IVendaServices } from "./IVendaServices"
+import { IEmpresaServices } from "./IEmpresaServices"
 
 export {
   IBasicCRUD,
@@ -17,5 +18,6 @@ export {
   IClienteServices,
   ISaidaServices,
   IEstoqueServices,
-  IVendaServices
+  IVendaServices,
+  IEmpresaServices
 }

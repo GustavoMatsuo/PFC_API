@@ -8,7 +8,8 @@ import {
   clienteController,
   saidaController,
   estoqueController,
-  vendaController
+  vendaController,
+  empresaController
 } from "@controllers"
 import { authMiddleware } from "@middleware/auth"
 
@@ -30,7 +31,7 @@ router.put('/usuario/newPassword', authMiddleware, (request, response) => {
 router.get('/usuario', authMiddleware, (request, response) => 
   usuarioController.index(request, response)
 )
-router.post('/usuario', authMiddleware, (request, response) => 
+router.post('/usuario', (request, response) => 
   usuarioController.create(request, response)
 )
 router.put('/usuario', authMiddleware, (request, response) => {
@@ -145,5 +146,15 @@ router.get('/venda', authMiddleware, (request, response) => {
 router.post('/venda', authMiddleware, (request, response) => {
   return vendaController.create(request, response)
 })
+
+//EMPRESA
+router.route('/empresa')
+  .all(authMiddleware)
+  .get((request, response) => empresaController.index(request, response))
+  .post((request, response) => empresaController.create(request, response))
+  .put((request, response) => empresaController.update(request, response))
+router.route('/empresa/status')
+  .all(authMiddleware)
+  .put((request, response) => empresaController.changeStatus(request, response))
 
 export { router }

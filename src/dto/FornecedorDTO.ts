@@ -10,7 +10,7 @@ export interface IEnderecoDTO {
 export interface ICreateFornecedorDTO {
   nome:string
   email:string
-  cnpj:string
+  cnpj:number
   endereco:IEnderecoDTO
 }
 
@@ -28,7 +28,7 @@ export interface IUpdateFornecedorDTO {
   id_fornecedor:string
   nome:string
   email:string
-  cnpj:string
+  cnpj:number
   status:boolean
   endereco:IEnderecoUpdateDTO
 }

@@ -1,7 +1,7 @@
 import { Endereco, Fornecedor } from "@models"
 import { IFornecedorServices } from "@interfaces"
 import { FornecedorRepository } from "@repositories"
-import { ICreateFornecedorDTO, IEnderecoDTO, IUpdateFornecedorDTO } from "@dto/FornecedorDTO"
+import { ICreateFornecedorDTO, IUpdateFornecedorDTO } from "@dto/FornecedorDTO"
 import { db } from "src/config/database"
 import { Paginationlist } from "src/globalTypes"
 
