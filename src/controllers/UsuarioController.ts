@@ -19,7 +19,8 @@ export class UsuarioController {
       const formattedOrderBy = orderBy?  String(orderBy) : null
 
       const usuarioList = await this.usuarioServices.index(
-        formattedLimit, 
+        request.empresaId,
+        formattedLimit,
         formattedSkip,
         formattedFilterBy,
         formattedOrder,
@@ -58,7 +59,13 @@ export class UsuarioController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { nome, email, cargo, senha } = request.body
-      const usuario:ICreateUsuarioDTO = {nome, email, cargo, senha}
+      const usuario:ICreateUsuarioDTO = {
+        nome, 
+        email, 
+        cargo, 
+        senha,
+        empresa: request.empresaId
+      }
 
       await this.usuarioServices.create(usuario)
   
@@ -73,7 +80,15 @@ export class UsuarioController {
   async update(request:Request, response:Response):Promise<Response> {
     try {
       const { id_usuario, nome, status, email, cargo, senha } = request.body
-      const usuario:IUpdateUsuarioDTO = {id_usuario, nome, status, email, cargo, senha}
+      const usuario:IUpdateUsuarioDTO = {
+        id_usuario, 
+        nome, 
+        status, 
+        email, 
+        cargo, 
+        senha,
+        empresa: request.empresaId
+      }
 
       await this.usuarioServices.update(usuario)
   
@@ -103,7 +118,7 @@ export class UsuarioController {
     try {
       const { id } = request.body
 
-      await this.usuarioServices.changeStatus(id)
+      await this.usuarioServices.changeStatus(id, request.empresaId)
   
       return response.status(200).json({msg: "usuario status update."})
     } catch (err) {
@@ -126,6 +141,7 @@ export class UsuarioController {
       })
     }
   }
+
   async newPassword(request:Request, response:Response):Promise<Response> {
     try {
       const { senha } = request.body
@@ -133,6 +149,21 @@ export class UsuarioController {
       await this.usuarioServices.newPassword(senha, request.userId)
 
       return response.status(200).json({msg: 'password changed'})
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
+
+  async firstUsuario(request:Request, response:Response):Promise<Response> {
+    try {
+      const { nome, email, cargo, senha, empresa } = request.body
+      const usuario:ICreateUsuarioDTO = {nome, email, cargo, senha, empresa}
+
+      await this.usuarioServices.create(usuario)
+  
+      return response.status(201).json({msg: "usuario created"})
     } catch (err) {
       return response.status(400).json({
         msg: err.message || 'Unexpected error.'

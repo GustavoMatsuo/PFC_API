@@ -22,6 +22,7 @@ export class UsuarioServices implements IUsuarioServices {
   }
 
   async index(
+    empresa:string,
     limit:string, 
     skip:string, 
     filterBy:string,
@@ -33,11 +34,12 @@ export class UsuarioServices implements IUsuarioServices {
 
     const query = this.usuarioRepository
       .createQueryBuilder("usuario")
+      .where("usuario.empresaId = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
     
     if(filterBy) {
-      query.where("LOWER(usuario.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
+      query.andWhere("LOWER(usuario.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
     }
 
     if(order && orderBy) {
@@ -75,7 +77,15 @@ export class UsuarioServices implements IUsuarioServices {
       return null
     }
 
-    const token = sign({id: usuario.id_usuario}, "secret", { expiresIn: "1d" })
+    const token = sign(
+      {
+        id: usuario.id_usuario,
+        empresa: usuario.empresaId
+        // role: usuario.cargo,
+      }, 
+      "secret", //MODIFY IN FUTURE
+      { expiresIn: "1d" }
+    )
     
     return {
       id: usuario.id_usuario, 
@@ -96,7 +106,13 @@ export class UsuarioServices implements IUsuarioServices {
 
     const hash_password = await hash(data.senha, 8)
 
-    const usuario = new Usuario({...data, senha: hash_password, status: true})
+    const usuario = new Usuario({
+      ...data, 
+      senha: hash_password,
+      status: true,
+      empresa: data.empresa,
+      empresaId: data.empresa
+    })
 
     await this.usuarioRepository.save(usuario)
   }
@@ -115,7 +131,12 @@ export class UsuarioServices implements IUsuarioServices {
       senha = hash_password
     }
 
-    const usuario = new Usuario({...data, senha: senha})
+    const usuario = new Usuario({
+      ...data, 
+      senha: senha,
+      empresa: data.empresa,
+      empresaId: data.empresa
+    })
 
     await this.usuarioRepository.update(data.id_usuario, usuario)
   }
@@ -130,8 +151,11 @@ export class UsuarioServices implements IUsuarioServices {
     await this.usuarioRepository.delete(id)
   }
 
-  async changeStatus(id:string):Promise<void> {
-    let usuarioExists = await this.usuarioRepository.findOneBy({id_usuario: id})
+  async changeStatus(id:string, empresaId:string):Promise<void> {
+    let usuarioExists = await this.usuarioRepository.findOneBy({
+      id_usuario: id, 
+      empresaId
+    })
 
     if (!usuarioExists) {
       throw new Error('Usuario not found.')

@@ -1,5 +1,6 @@
 import { UserRole } from "@enum/userRole"
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Empresa } from "./Empresa"
 
 @Entity('usuario')
 export class Usuario {
@@ -24,6 +25,13 @@ export class Usuario {
 
   @Column()
   senha:string
+
+  @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
+  @JoinColumn({ name: 'empresaId' })
+  empresa:string
+
+  @Column()
+  empresaId:string
 
   constructor(props: Omit<Usuario, 'id_usuario'>) {
     Object.assign(this, props)

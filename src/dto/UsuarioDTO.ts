@@ -3,6 +3,7 @@ export interface ICreateUsuarioDTO {
   email:string
   cargo:string
   senha:string
+  empresa:string
 }
 
 export interface IUpdateUsuarioDTO {
@@ -12,6 +13,7 @@ export interface IUpdateUsuarioDTO {
   cargo:string
   email:string
   senha?:string
+  empresa:string
 }
 
 export interface ILoginUsuarioDTO {

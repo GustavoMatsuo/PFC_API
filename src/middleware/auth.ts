@@ -17,8 +17,9 @@ export function authMiddleware(
   try {
     const decoded = verify(token, "secret")
 
-    const { id } = decoded as JwtPayload
+    const { id, empresa } = decoded as JwtPayload
     request.userId = id
+    request.empresaId = empresa
 
     next()
   } catch (error) {
