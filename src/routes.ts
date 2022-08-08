@@ -16,145 +16,112 @@ import { authMiddleware } from "@middleware/auth"
 const router = Router()
 
 //USUARIO
-router.post('/usuario/auth', authMiddleware, 
-  (request, response) => response.status(200).json({msg: "success"})
-)
-router.post('/usuario/login', (request, response) => {
-  return usuarioController.login(request, response)
-})
-router.post('/usuario/reset', (request, response) => {
-  return usuarioController.reset(request, response)
-})
-router.put('/usuario/newPassword', authMiddleware, (request, response) => {
-  return usuarioController.newPassword(request, response)
-})
-router.get('/usuario', authMiddleware, (request, response) => 
-  usuarioController.index(request, response)
-)
-router.post('/usuario', (request, response) => 
-  usuarioController.create(request, response)
-)
-router.put('/usuario', authMiddleware, (request, response) => {
-  return usuarioController.update(request, response)
-})
-router.put('/usuario/status', authMiddleware, (request, response) => {
-  return usuarioController.changeStatus(request, response)
-})
-router.delete('/usuario', authMiddleware, (request, response) => {
-  return usuarioController.delete(request, response)
-})
+router.route('/usuario')
+  .all(authMiddleware)
+  .get((request, response) => usuarioController.index(request, response))
+  .post((request, response) => usuarioController.create(request, response))
+  .put((request, response) => usuarioController.update(request, response))
+router.route('/usuario/auth')
+  .all(authMiddleware)
+  .post((request, response) => response.status(200).json({msg: "success"}))
+router.route('/usuario/first')
+  .post((request, response) => usuarioController.reset(request, response))
+router.route('/usuario/login')
+  .all(authMiddleware)
+  .post((request, response) => usuarioController.login(request, response))
+router.route('/usuario/reset')
+  .all(authMiddleware)
+  .post((request, response) => usuarioController.reset(request, response))
+router.route('/usuario/newPassword')
+  .put((request, response) => usuarioController.reset(request, response))
+router.route('/usuario/status')
+  .put((request, response) => usuarioController.changeStatus(request, response))
 
 //FORNECEDOR
-router.get('/fornecedor', authMiddleware, (request, response) =>
-  fornecedorController.index(request, response)
-)
-router.post('/fornecedor', authMiddleware, (request, response) => {
-  return fornecedorController.create(request, response)
-})
-router.put('/fornecedor', authMiddleware, (request, response) => {
-  return fornecedorController.update(request, response)
-})
-router.put('/fornecedor/status', authMiddleware, (request, response) => {
-  return fornecedorController.changeStatus(request, response)
-})
-router.get('/fornecedor/simple', authMiddleware, (request, response) => {
-  return fornecedorController.simpleList(request, response)
-})
+router.route('/fornecedor')
+  .all(authMiddleware)
+  .get((request, response) => fornecedorController.index(request, response))
+  .post((request, response) => fornecedorController.create(request, response))
+  .put((request, response) => fornecedorController.update(request, response))
+router.route('/fornecedor/status')
+  .all(authMiddleware)
+  .put((request, response) => fornecedorController.changeStatus(request, response))
+router.route('/fornecedor/simple')
+  .all(authMiddleware)
+  .put((request, response) => fornecedorController.simpleList(request, response))
 
 //CATEGORIA
-router.post('/categoria', authMiddleware, (request, response) => {
-  return categoriaController.create(request, response)
-})
-router.get('/categoria', authMiddleware, (request, response) => {
-  return categoriaController.read(request, response)
-})
-router.put('/categoria', authMiddleware, (request, response) => {
-  return categoriaController.update(request, response)
-})
-router.delete('/categoria', authMiddleware, (request, response) => {
-  return categoriaController.delete(request, response)
-})
-router.get('/categoria/list', authMiddleware, (request, response) => {
-  return categoriaController.index(request, response)
-})
-router.get('/categoria/simple', authMiddleware, (request, response) => {
-  return categoriaController.simpleList(request, response)
-})
-router.put('/categoria/status', authMiddleware, (request, response) => {
-  return categoriaController.changeStatus(request, response)
-})
+router.route('/categoria')
+  .all(authMiddleware)
+  .get((request, response) => categoriaController.read(request, response))
+  .post((request, response) => categoriaController.create(request, response))
+  .put((request, response) => categoriaController.update(request, response))
+  .delete((request, response) => categoriaController.delete(request, response))
+router.route('/categoria/list')
+  .all(authMiddleware)
+  .get((request, response) => categoriaController.index(request, response))
+router.route('/categoria/simple')
+  .all(authMiddleware)
+  .get((request, response) => categoriaController.simpleList(request, response))
+router.route('/categoria/status')
+  .all(authMiddleware)
+  .put((request, response) => categoriaController.changeStatus(request, response))
 
 //PRODUTO
-router.get('/produto', authMiddleware, (request, response) => {
-  return produtoController.index(request, response)
-})
-router.post('/produto', authMiddleware, (request, response) => {
-  return produtoController.create(request, response)
-})
-router.put('/produto', authMiddleware, (request, response) => {
-  return produtoController.update(request, response)
-})
-router.put('/produto/status', authMiddleware, (request, response) => {
-  return produtoController.changeStatus(request, response)
-})
-router.get('/produto/simple', authMiddleware, (request, response) => {
-  return produtoController.simpleList(request, response)
-})
+router.route('/produto')
+  .all(authMiddleware)
+  .get((request, response) => produtoController.index(request, response))
+  .post((request, response) => produtoController.create(request, response))
+  .put((request, response) => produtoController.update(request, response))
+router.route('/produto/simple')
+  .all(authMiddleware)
+  .get((request, response) => produtoController.simpleList(request, response))
+router.route('/produto/status')
+  .all(authMiddleware)
+  .put((request, response) => produtoController.changeStatus(request, response))
 
 //ENTRADA
-router.get('/entrada', authMiddleware, (request, response) => {
-  return entradaController.index(request, response)
-})
-router.post('/entrada', authMiddleware, (request, response) => {
-  return entradaController.create(request, response)
-})
+router.route('/entrada')
+  .all(authMiddleware)
+  .get((request, response) => entradaController.index(request, response))
+  .post((request, response) => entradaController.create(request, response))
 
 //CLIENTE
-router.post('/cliente', authMiddleware, (request, response) => {
-  return clienteController.create(request, response)
-})
-router.get('/cliente', authMiddleware, (request, response) => {
-  return clienteController.read(request, response)
-})
-router.put('/cliente', authMiddleware, (request, response) => {
-  return clienteController.update(request, response)
-})
-router.delete('/cliente', authMiddleware, (request, response) => {
-  return clienteController.delete(request, response)
-})
-router.get('/cliente/list', authMiddleware, (request, response) => {
-  return clienteController.index(request, response)
-})
+router.route('/cliente')
+  .all(authMiddleware)
+  .get((request, response) => clienteController.read(request, response))
+  .post((request, response) => clienteController.create(request, response))
+  .put((request, response) => clienteController.update(request, response))
+  .delete((request, response) => clienteController.delete(request, response))
+router.route('/cliente/list')
+  .all(authMiddleware)
+  .get((request, response) => clienteController.index(request, response))
 
 //SAIDA
-router.get('/saida', authMiddleware, (request, response) => {
-  return saidaController.index(request, response)
-})
-router.post('/saida', authMiddleware, (request, response) => {
-  return saidaController.create(request, response)
-})
+router.route('/saida')
+  .all(authMiddleware)
+  .get((request, response) => saidaController.index(request, response))
+  .post((request, response) => saidaController.create(request, response))
 
 //ESTOQUE
-router.get('/estoque', authMiddleware, (request, response) => {
-  return estoqueController.index(request, response)
-})
+router.route('/estoque')
+  .all(authMiddleware)
+  .get((request, response) => estoqueController.index(request, response))
 
 //VENDA
-router.get('/venda', authMiddleware, (request, response) => {
-  return vendaController.index(request, response)
-})
-router.post('/venda', authMiddleware, (request, response) => {
-  return vendaController.create(request, response)
-})
+router.route('/venda')
+  .all(authMiddleware)
+  .get((request, response) => vendaController.index(request, response))
+  .post((request, response) => vendaController.create(request, response))
 
 //EMPRESA
 router.route('/empresa')
-  .all(authMiddleware)
+  // .all(authMiddleware)
   .get((request, response) => empresaController.index(request, response))
   .post((request, response) => empresaController.create(request, response))
   .put((request, response) => empresaController.update(request, response))
 router.route('/empresa/status')
-  .all(authMiddleware)
+  // .all(authMiddleware)
   .put((request, response) => empresaController.changeStatus(request, response))
 
 export { router }
