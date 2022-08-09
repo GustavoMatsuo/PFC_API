@@ -19,7 +19,7 @@ export class ProdutoServices implements IProdutoServices {
     this.categoriaRepository = categoriaRepository
   }
 
-  async index(limit:string, skip:string):Promise<Paginationlist> {
+  async index(empresa:string, limit:string, skip:string):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
@@ -33,6 +33,7 @@ export class ProdutoServices implements IProdutoServices {
         "estoque",
         "estoque.produto = produto.id_produto",
       )
+      .where("produto.empresaId = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
       .getMany()
@@ -65,7 +66,14 @@ export class ProdutoServices implements IProdutoServices {
       throw new Error('Categoria not found.')
     }
 
-    const produto = new Produto({...data, fornecedor: fornecedor, categoria: categoria, status: true})
+    const produto = new Produto({
+      ...data, 
+      fornecedor: fornecedor,
+      categoria: categoria, 
+      status: true,
+      empresa: data.empresa,
+      empresaId: data.empresa
+    })
 
     await this.produtoRepository.save(produto)
   }
@@ -87,13 +95,21 @@ export class ProdutoServices implements IProdutoServices {
       throw new Error('categoria not found.')
     }
 
-    const produto = new Produto({...data, fornecedor: newFornecedor, categoria: newCategoria})
+    const produto = new Produto({
+      ...data, 
+      fornecedor: newFornecedor, 
+      categoria: newCategoria,
+      empresaId: data.empresa
+    })
 
     await this.produtoRepository.update(data.id_produto, produto)
   }
 
-  async changeStatus(id:string):Promise<void> {
-    let produtoExists = await this.produtoRepository.findOneBy({id_produto: id})
+  async changeStatus(id:string, empresa:string):Promise<void> {
+    let produtoExists = await this.produtoRepository.findOneBy({
+      id_produto: id, 
+      empresaId: empresa 
+    })
 
     if (!produtoExists) {
       throw new Error('Produto not found.')
@@ -104,13 +120,14 @@ export class ProdutoServices implements IProdutoServices {
     await this.produtoRepository.update(id, produtoExists)
   }
 
-  async simpleList():Promise<Array<Object>> {
+  async simpleList(empresa:string):Promise<Array<Object>> {
     const produtoList = await this.produtoRepository
       .createQueryBuilder("produto")
       .select("produto.id_produto")
       .addSelect("produto.nome")
       .addSelect("produto.codigo")
       .addSelect("produto.valor_unitario")
+      .where("produto.empresaId = :empresa", { empresa })
       .getMany()
 
     return produtoList

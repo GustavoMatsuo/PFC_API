@@ -5,6 +5,7 @@ export interface ICreateProdutoDTO {
   valor_unitario:number
   estoque_minimo:number
   categoria:string
+  empresa:string
 }
 
 export interface IUpdateProdutoDTO {
@@ -16,4 +17,5 @@ export interface IUpdateProdutoDTO {
   valor_unitario:number
   estoque_minimo:number
   categoria:string
+  empresa:string
 }

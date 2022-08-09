@@ -45,6 +45,22 @@ END $saida$
 
 LANGUAGE plpgsql
 
+-----------------------------------------
+
+CREATE OR REPLACE FUNCTION SP_AtualizaEstoque_produto()
+RETURNS trigger
+
+AS $produto$  
+DECLARE  
+  contador integer := 0;
+
+BEGIN  
+  INSERT INTO estoque (produto, qtd) values (NEW.id_produto, 0);
+  RETURN NEW;
+END $produto$
+
+LANGUAGE plpgsql
+
 -----------------TRIGGER-----------------
 CREATE TRIGGER entrada
 AFTER INSERT ON entrada
@@ -53,3 +69,7 @@ AFTER INSERT ON entrada
 CREATE TRIGGER saida
 AFTER INSERT ON saida
   FOR EACH ROW EXECUTE PROCEDURE SP_AtualizaEstoque_saida();
+
+CREATE TRIGGER produto
+AFTER INSERT ON produto
+  FOR EACH ROW EXECUTE PROCEDURE SP_AtualizaEstoque_produto();

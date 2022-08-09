@@ -15,7 +15,11 @@ export class ProdutoController {
       const formattedLimit = limit? String(limit) : null
       const formattedSkip = skip?  String(skip) : null
 
-      const produtoList = await this.produtoServices.index(formattedLimit, formattedSkip)
+      const produtoList = await this.produtoServices.index(
+        request.empresaId, 
+        formattedLimit, 
+        formattedSkip
+      )
   
       return response.status(200).json(produtoList)
     } catch (err) {
@@ -28,7 +32,15 @@ export class ProdutoController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { nome, codigo, fornecedor, valor_unitario, estoque_minimo, categoria } = request.body
-      const produto:ICreateProdutoDTO = { nome, codigo,fornecedor, valor_unitario, estoque_minimo, categoria }
+      const produto:ICreateProdutoDTO = { 
+        nome, 
+        codigo,
+        fornecedor, 
+        valor_unitario, 
+        estoque_minimo, 
+        categoria,
+        empresa: request.empresaId
+      }
 
       await this.produtoServices.create(produto)
   
@@ -42,8 +54,28 @@ export class ProdutoController {
 
   async update(request:Request, response:Response):Promise<Response> {
     try {
-      const { id_produto, nome, status, codigo, fornecedor, valor_unitario, estoque_minimo, categoria } = request.body
-      const produto:IUpdateProdutoDTO = { id_produto, nome, status, codigo, fornecedor, valor_unitario, estoque_minimo, categoria }
+      const { 
+        id_produto,
+        nome, 
+        status, 
+        codigo, 
+        fornecedor, 
+        valor_unitario, 
+        estoque_minimo, 
+        categoria 
+      } = request.body
+
+      const produto:IUpdateProdutoDTO = { 
+        id_produto, 
+        nome, 
+        status, 
+        codigo, 
+        fornecedor,
+        valor_unitario, 
+        estoque_minimo,
+        categoria,
+        empresa: request.empresaId
+      }
 
       await this.produtoServices.update(produto)
   
@@ -59,7 +91,7 @@ export class ProdutoController {
     try {
       const { id } = request.body
 
-      await this.produtoServices.changeStatus(id)
+      await this.produtoServices.changeStatus(id, request.empresaId)
   
       return response.status(200).json({msg: "produto status update."})
     } catch (err) {
@@ -71,7 +103,7 @@ export class ProdutoController {
 
   async simpleList(request:Request, response:Response):Promise<Response> {
     try {
-      const produtoList = await this.produtoServices.simpleList()
+      const produtoList = await this.produtoServices.simpleList(request.empresaId)
   
       return response.status(200).json(produtoList)
     } catch (err) {
