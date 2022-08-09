@@ -19,6 +19,7 @@ export class FornecedorController {
       const formattedOrderBy = orderBy?  String(orderBy) : null
       
       const fornecedorList = await this.fornecedorServices.index(
+        request.empresaId,
         formattedLimit, 
         formattedSkip,
         formattedFilterBy,
@@ -37,7 +38,13 @@ export class FornecedorController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { nome, email, cnpj, endereco } = request.body
-      const fornecedor:ICreateFornecedorDTO = {nome, email, cnpj, endereco}
+      const fornecedor:ICreateFornecedorDTO = {
+        nome,
+        email,
+        cnpj, 
+        endereco,
+        empresa: request.empresaId
+      }
 
       await this.fornecedorServices.create(fornecedor)
   
@@ -52,7 +59,15 @@ export class FornecedorController {
   async update(request:Request, response:Response):Promise<Response> {
     try {
       const { id_fornecedor, nome, email, cnpj, status, endereco } = request.body
-      const fornecedor:IUpdateFornecedorDTO = { id_fornecedor, nome, email, cnpj, status, endereco }
+      const fornecedor:IUpdateFornecedorDTO = { 
+        id_fornecedor, 
+        nome, 
+        email,
+        cnpj,
+        status, 
+        endereco,
+        empresa: request.empresaId
+      }
 
       await this.fornecedorServices.update(fornecedor)
   
@@ -68,7 +83,7 @@ export class FornecedorController {
     try {
       const { id } = request.body
 
-      await this.fornecedorServices.changeStatus(id)
+      await this.fornecedorServices.changeStatus(id, request.empresaId)
   
       return response.status(200).json({msg: "fornecedor status update."})
     } catch (err) {
@@ -80,7 +95,7 @@ export class FornecedorController {
 
   async simpleList(request:Request, response:Response):Promise<Response> {
     try {
-      const fornecedorList = await this.fornecedorServices.simpleList()
+      const fornecedorList = await this.fornecedorServices.simpleList(request.empresaId)
   
       return response.status(200).json(fornecedorList)
     } catch (err) {

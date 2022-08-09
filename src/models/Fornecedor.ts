@@ -1,4 +1,5 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Empresa } from "./Empresa"
 import { Endereco } from "./Endereco"
 
 @Entity('fornecedor')
@@ -21,6 +22,13 @@ export class Fornecedor {
   @OneToOne(() => Endereco, {cascade: true})
   @JoinColumn({ name: 'endereco' })
   endereco:Endereco
+
+  @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
+  @JoinColumn({ name: 'empresaId' })
+  empresa:string
+
+  @Column()
+  empresaId:string
 
   constructor(props: Omit<Fornecedor, 'id_fornecedor'>) {
     Object.assign(this, props)

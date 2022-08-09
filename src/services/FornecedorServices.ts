@@ -13,6 +13,7 @@ export class FornecedorServices implements IFornecedorServices {
   }
 
   async index(
+    empresa:string,
     limit:string, 
     skip:string, 
     filterBy:string,
@@ -25,11 +26,12 @@ export class FornecedorServices implements IFornecedorServices {
     const query = this.fornecedorRepository
       .createQueryBuilder("fornecedor")
       .leftJoinAndSelect("fornecedor.endereco", "endereco.id_endereco")
+      .where("fornecedor.empresaId = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
 
     if(filterBy) {
-      query.where("LOWER(fornecedor.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
+      query.andWhere("LOWER(fornecedor.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
     }
 
     if(order && orderBy) {
@@ -46,7 +48,8 @@ export class FornecedorServices implements IFornecedorServices {
 
   async create(data:ICreateFornecedorDTO):Promise<void> {
     const fornecedorAlreadyExists = await this.fornecedorRepository.findOneBy({
-      cnpj: data.cnpj
+      cnpj: data.cnpj,
+      empresaId: data.empresa
     })
 
     if (fornecedorAlreadyExists) {
@@ -54,26 +57,48 @@ export class FornecedorServices implements IFornecedorServices {
     }
 
     const endereco = new Endereco(data.endereco)
-    const fornecedor = new Fornecedor({...data, endereco, status: true})
+    const fornecedor = new Fornecedor({
+      ...data, 
+      endereco, 
+      status: true,
+      empresaId: data.empresa
+    })
 
     await this.fornecedorRepository.save(fornecedor)
   }
 
   async update(data:IUpdateFornecedorDTO):Promise<void> {
-    const fornecedorExists = await this.fornecedorRepository.findOneBy({id_fornecedor: data.id_fornecedor})
+    const fornecedorExists = await this.fornecedorRepository.findOneBy({
+      id_fornecedor: data.id_fornecedor,
+      empresaId: data.empresa
+    })
 
     if (!fornecedorExists) {
       throw new Error('Fornecedor not found.')
     }
 
     await db.manager.transaction(async entityManager => { 
-      await entityManager.update(Endereco, data.endereco.id_endereco, data.endereco)
-      await entityManager.update(Fornecedor, data.id_fornecedor, data) 
+      await entityManager.update(
+        Endereco, 
+        data.endereco.id_endereco, 
+        data.endereco
+      )
+      await entityManager.update(
+        Fornecedor, 
+        data.id_fornecedor, 
+        {
+          ...data,
+          empresaId: data.empresa
+        }
+      ) 
     })
   }
 
-  async changeStatus(id:string):Promise<void> {
-    let fornecedorExists = await this.fornecedorRepository.findOneBy({id_fornecedor: id})
+  async changeStatus(id:string, empresa:string):Promise<void> {
+    let fornecedorExists = await this.fornecedorRepository.findOneBy({
+      id_fornecedor: id,
+      empresaId: empresa
+    })
 
     if (!fornecedorExists) {
       throw new Error('Fornecedor not found.')
@@ -84,11 +109,12 @@ export class FornecedorServices implements IFornecedorServices {
     await this.fornecedorRepository.update(id, fornecedorExists)
   }
 
-  async simpleList():Promise<Array<Object>> {
+  async simpleList(empresa:string):Promise<Array<Object>> {
     const fornecedorList = await this.fornecedorRepository
       .createQueryBuilder("fornecedor")
       .select("fornecedor.id_fornecedor")
       .addSelect("fornecedor.nome")
+      .where("fornecedor.empresaId = :empresa", { empresa })
       .getMany()
 
     return fornecedorList

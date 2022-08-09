@@ -3,6 +3,7 @@ import { Paginationlist } from "src/globalTypes"
 
 export interface IFornecedorServices {
   index(
+    empresa:string,
     limit?:string, 
     skip?:string, 
     filterBy?:string,
@@ -11,6 +12,6 @@ export interface IFornecedorServices {
   ):Promise<Paginationlist>
   create(data:ICreateFornecedorDTO):Promise<void>
   update(data:IUpdateFornecedorDTO):Promise<void>
-  changeStatus(id:string):Promise<void>
-  simpleList():Promise<Array<Object>>
+  changeStatus(id:string, empresa:string):Promise<void>
+  simpleList(empresa:string):Promise<Array<Object>>
 }

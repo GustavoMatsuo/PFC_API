@@ -12,6 +12,7 @@ export interface ICreateFornecedorDTO {
   email:string
   cnpj:number
   endereco:IEnderecoDTO
+  empresa:string
 }
 
 export interface IEnderecoUpdateDTO {
@@ -31,4 +32,5 @@ export interface IUpdateFornecedorDTO {
   cnpj:number
   status:boolean
   endereco:IEnderecoUpdateDTO
+  empresa:string
 }
