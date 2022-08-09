@@ -1,6 +1,6 @@
 import { IBasicCRUD } from "./IBasicCRUD"
 
 export interface ICategoriaServices extends IBasicCRUD {
-  simpleList():Promise<Array<Object>>
-  changeStatus(id:string):Promise<void>
+  simpleList(empresa:string):Promise<Array<Object>>
+  changeStatus(id:string, empresa:string):Promise<void>
 }

@@ -12,7 +12,7 @@ export class CategoriaController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { nome, cor } = request.body
-      const categoria:ICreateCategoriaDTO = { nome, cor }
+      const categoria:ICreateCategoriaDTO = { nome, cor, empresa: request.empresaId }
 
       await this.categoriaServices.create(categoria)
   
@@ -27,8 +27,12 @@ export class CategoriaController {
   async read(request:Request, response:Response):Promise<Response> {
     try {
       const { id } = request.query
+      const formattedId = id? String(id):null
 
-      const categoria = await this.categoriaServices.read(String(id))
+      const categoria = await this.categoriaServices.read(
+        formattedId, 
+        request.empresaId
+      )
 
       return response.status(200).json(categoria)
     } catch (err) {
@@ -41,7 +45,12 @@ export class CategoriaController {
   async update(request:Request, response:Response):Promise<Response> {
     try {
       const { id_categoria, nome, cor } = request.body
-      const categoria:IUpdateCategoriaDTO = { id_categoria, nome, cor }
+      const categoria:IUpdateCategoriaDTO = { 
+        id_categoria, 
+        nome, 
+        cor, 
+        empresa: request.empresaId
+      }
 
       await this.categoriaServices.update(categoria)
   
@@ -56,8 +65,9 @@ export class CategoriaController {
   async delete(request:Request, response:Response):Promise<Response> {
     try {
       const { id } = request.body
+      const formattedId = id? String(id):null
 
-      await this.categoriaServices.delete(id)
+      await this.categoriaServices.delete(formattedId, request.empresaId)
   
       return response.status(200).json({msg: "categoria deleted."})
     } catch (err) {
@@ -70,7 +80,7 @@ export class CategoriaController {
   async index(request:Request, response:Response):Promise<Response> {
     try {
 
-      const categoriaList = await this.categoriaServices.index()
+      const categoriaList = await this.categoriaServices.index(request.empresaId)
   
       return response.status(200).json(categoriaList)
     } catch (err) {
@@ -82,7 +92,7 @@ export class CategoriaController {
 
   async simpleList(request:Request, response:Response):Promise<Response> {
     try {
-      const categoriaList = await this.categoriaServices.simpleList()
+      const categoriaList = await this.categoriaServices.simpleList(request.empresaId)
   
       return response.status(200).json(categoriaList)
     } catch (err) {
@@ -96,7 +106,7 @@ export class CategoriaController {
     try {
       const { id } = request.body
 
-      await this.categoriaServices.changeStatus(id)
+      await this.categoriaServices.changeStatus(id, request.empresaId)
   
       return response.status(200).json({msg: "categoria status update."})
     } catch (err) {
