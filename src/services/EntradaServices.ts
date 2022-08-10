@@ -13,13 +13,18 @@ export class EntradaServices implements IEntradaServices {
 
   async create(data:ICreateEntradaDTO):Promise<void> {
     const date = new Date()
-    const entrada = new Entrada({ ...data, data_entrada: date })
+    const entrada = new Entrada({ 
+      ...data, 
+      data_entrada: date, 
+      empresaId: data.empresa
+    })
 
     await this.entradaRepository.save(entrada)
   }
 
   async index(
-    limit:string, 
+    empresa:string,
+    limit:string,
     skip:string, 
     filterBy:string,
     order:string,
@@ -31,6 +36,7 @@ export class EntradaServices implements IEntradaServices {
     const query = await this.entradaRepository
       .createQueryBuilder("entrada")
       .leftJoinAndSelect("entrada.produto", "produto")
+      .where("usuario.empresaId = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
 

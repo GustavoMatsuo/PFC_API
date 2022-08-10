@@ -12,7 +12,12 @@ export class EntradaController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { produto, qtd, valor_unitario } = request.body
-      const entrada:ICreateEntradaDTO = { produto, qtd, valor_unitario }
+      const entrada:ICreateEntradaDTO = {
+        produto,
+        qtd, 
+        valor_unitario,
+        empresa: request.empresaId
+      }
 
       await this.entradaServices.create(entrada)
   
@@ -34,6 +39,7 @@ export class EntradaController {
       const formattedOrderBy = orderBy?  String(orderBy) : null
 
       const entradaList = await this.entradaServices.index(
+        request.empresaId,
         formattedLimit, 
         formattedSkip,
         formattedFilterBy,

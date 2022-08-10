@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Empresa } from "./Empresa"
 import { Produto } from "./Produto"
 
 @Entity('entrada')
@@ -18,6 +19,13 @@ export class Entrada {
 
   @Column("decimal", { scale: 2 })
   valor_unitario:number
+
+  @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
+  @JoinColumn({ name: 'empresaId' })
+  empresa:string
+
+  @Column()
+  empresaId:string
 
   constructor(props: Omit<Entrada, 'id_entrada'>) {
     Object.assign(this, props)
