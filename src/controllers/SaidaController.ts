@@ -12,7 +12,12 @@ export class SaidaController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { produto, qtd, valor_unitario } = request.body
-      const saida:ICreateSaidaDTO = { produto, qtd, valor_unitario  }
+      const saida:ICreateSaidaDTO = { 
+        produto, 
+        qtd, 
+        valor_unitario,
+        empresa: request.empresaId  
+      }
 
       await this.saidaServices.create(saida)
   
@@ -34,6 +39,7 @@ export class SaidaController {
       const formattedOrderBy = orderBy?  String(orderBy) : null
       
       const saidaList = await this.saidaServices.index(
+        request.empresaId,
         formattedLimit, 
         formattedSkip,
         formattedFilterBy,

@@ -14,12 +14,18 @@ export class SaidaServices implements ISaidaServices {
   async create(data:ICreateSaidaDTO):Promise<void> {
     const date = new Date()
     const venda = data.venda
-    const saida = new Saida({ ...data, venda: venda, data_saida: date })
+    const saida = new Saida({
+      ...data,
+      venda: venda, 
+      data_saida: date,
+      empresaId: data.empresa
+    })
 
     await this.saidaRepository.save(saida)
   }
 
   async index(
+    empresa:string,
     limit:string, 
     skip:string, 
     filterBy:string,
@@ -33,6 +39,7 @@ export class SaidaServices implements ISaidaServices {
       .createQueryBuilder("saida")
       .leftJoinAndSelect("saida.venda", "venda")
       .leftJoinAndSelect("saida.produto", "produto")
+      .where("saida.empresaId = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
 
