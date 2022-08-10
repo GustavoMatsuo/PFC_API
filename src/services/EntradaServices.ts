@@ -36,7 +36,7 @@ export class EntradaServices implements IEntradaServices {
     const query = await this.entradaRepository
       .createQueryBuilder("entrada")
       .leftJoinAndSelect("entrada.produto", "produto")
-      .where("usuario.empresaId = :empresa", { empresa })
+      .where("entrada.empresaId = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
 
