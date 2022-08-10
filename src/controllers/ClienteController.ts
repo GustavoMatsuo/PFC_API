@@ -11,8 +11,13 @@ export class ClienteController {
 
   async create(request:Request, response:Response):Promise<Response> {
     try {
-      const { nome, cpf, cel  } = request.body
-      const cliente:ICreateClienteDTO = { nome, cpf, cel }
+      const { nome, cpf, cel } = request.body
+      const cliente:ICreateClienteDTO = { 
+        nome, 
+        cpf, 
+        cel,
+        empresa: request.empresaId
+      }
 
       const newCliente = await this.clienteServices.create(cliente)
   
@@ -26,8 +31,10 @@ export class ClienteController {
 
   async read(request:Request, response:Response):Promise<Response> {
     try {
-      const { id } = request.query      
-      const cliente = await this.clienteServices.read(String(id))
+      const { id } = request.query
+      const formattedId = id? String(id):null
+
+      const cliente = await this.clienteServices.read(formattedId, request.empresaId)
   
       return response.status(200).json(cliente)
     } catch (err) {
@@ -40,7 +47,13 @@ export class ClienteController {
   async update(request:Request, response:Response):Promise<Response> {
     try {
       const { id_cliente, nome, cpf, cel } = request.body
-      const cliente:IUpdateClienteDTO = { id_cliente, nome, cpf, cel }
+      const cliente:IUpdateClienteDTO = { 
+        id_cliente,
+        nome,
+        cpf,
+        cel,
+        empresa: request.empresaId
+      }
 
       await this.clienteServices.update(cliente)
   
@@ -56,7 +69,7 @@ export class ClienteController {
     try {
       const { id } = request.body
 
-      await this.clienteServices.delete(id)
+      await this.clienteServices.delete(id, request.empresaId)
   
       return response.status(200).json({msg: "cliente deleted."})
     } catch (err) {
@@ -68,7 +81,7 @@ export class ClienteController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const clienteList = await this.clienteServices.index()
+      const clienteList = await this.clienteServices.index(request.empresaId)
   
       return response.status(200).json(clienteList)
     } catch (err) {

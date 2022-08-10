@@ -12,22 +12,24 @@ export class ClienteServices implements IClienteServices {
 
   async create(data:ICreateClienteDTO):Promise<Cliente> {
     const clienteAlreadyExists = await this.clienteRepository.findOneBy({
-      cpf: data.cpf
+      cpf: data.cpf,
+      empresaId: data.empresa
     })
 
     if (clienteAlreadyExists) {
       throw new Error('Cliente already exists.')
     }
-    const cliente = new Cliente({ ...data })
+    const cliente = new Cliente({ ...data, empresaId: data.empresa })
 
     const newCliente = await this.clienteRepository.save(cliente)
 
     return newCliente
   }
 
-  async read(id:string):Promise<Cliente> {    
+  async read(id:string, empresa: string):Promise<Cliente> {    
     const cliente = await this.clienteRepository.findOneBy({
-      id_cliente: id
+      id_cliente: id,
+      empresaId: empresa
     })
 
     return cliente
@@ -35,18 +37,29 @@ export class ClienteServices implements IClienteServices {
 
   async update(data:IUpdateClienteDTO):Promise<void> {
     const clienteExists = await this.clienteRepository.findOneBy({
-      id_cliente: data.id_cliente
+      id_cliente: data.id_cliente,
+      empresaId: data.empresa
     })
 
     if (!clienteExists) {
       throw new Error('Cliente not found.')
     }
 
-    await this.clienteRepository.update(data.id_cliente, data)
+
+    await this.clienteRepository.update(
+      data.id_cliente, 
+      {
+        ...data,
+        empresaId: data.empresa
+      }
+    )
   }
 
-  async delete(id:string):Promise<void> {
-    const clienteExists = await this.clienteRepository.findBy({id_cliente: id})
+  async delete(id:string, empresa: string):Promise<void> {
+    const clienteExists = await this.clienteRepository.findOneBy({
+      id_cliente: id,
+      empresaId: empresa
+    })
 
     if (!clienteExists) {
       throw new Error('Cliente not found.')
@@ -55,8 +68,10 @@ export class ClienteServices implements IClienteServices {
     await this.clienteRepository.delete(id)
   }
 
-  async index():Promise<Array<Cliente>> {
-    const clienteList = await this.clienteRepository.find()
+  async index(empresa:string):Promise<Array<Cliente>> {
+    const clienteList = await this.clienteRepository.findBy({
+      empresaId: empresa
+    })
 
     return clienteList
   }

@@ -2,6 +2,7 @@ export interface ICreateClienteDTO {
   nome:string
   cpf:number
   cel:number
+  empresa:string
 }
 
 export interface IUpdateClienteDTO {
@@ -9,4 +10,5 @@ export interface IUpdateClienteDTO {
   nome:string
   cpf:number
   cel:number
+  empresa:string
 }
