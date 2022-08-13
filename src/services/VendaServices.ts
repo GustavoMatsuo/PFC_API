@@ -23,20 +23,31 @@ export class VendaServices implements IVendaServices {
     }
 
     const date = new Date()
-    const venda = new Venda({ cliente, data_venda: date })
+    const venda = new Venda({ 
+      cliente, 
+      data_venda: date,
+      empresa: data.empresa,
+      empresaId: data.empresa
+    })
 
     await db.manager.transaction(async entityManager => { 
       const savedVenda = await entityManager.save(Venda, venda)
       const idVenda = savedVenda.id_venda
       for(var item in saidas){
-        const saida = new Saida({ ...saidas[item], venda: idVenda, data_saida: date })
+        const saida = new Saida({ 
+          ...saidas[item], 
+          venda: idVenda, 
+          data_saida: date,
+          empresa: data.empresa,
+          empresaId: data.empresa
+        })
         await entityManager.save(Saida, saida)
       }
     })
   }
 
-  async index():Promise<Array<Venda>> {
-    const vendaList = await this.vendaRepository.find()
+  async index(empresa:string):Promise<Array<Venda>> {
+    const vendaList = await this.vendaRepository.findBy({empresaId: empresa})
 
     return vendaList
   }

@@ -12,7 +12,7 @@ export class VendaController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { cliente, saidas } = request.body
-      const venda:ICreateVendaDTO = { cliente, saidas }
+      const venda:ICreateVendaDTO = { cliente, saidas, empresa: request.empresaId }
 
       await this.vendaServices.create(venda)
   
@@ -26,7 +26,7 @@ export class VendaController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const vendaList = await this.vendaServices.index()
+      const vendaList = await this.vendaServices.index(request.empresaId)
   
       return response.status(200).json(vendaList)
     } catch (err) {

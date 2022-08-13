@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 import { Cliente } from "./Cliente"
+import { Empresa } from "./Empresa"
 
 @Entity('venda')
 export class Venda {
@@ -12,6 +13,13 @@ export class Venda {
 
   @Column('timestamptz')
   data_venda:Date
+
+  @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
+  @JoinColumn({ name: 'empresaId' })
+  empresa:string
+
+  @Column()
+  empresaId:string
 
   constructor(props: Omit<Venda, 'id_venda'>) {
     Object.assign(this, props)
