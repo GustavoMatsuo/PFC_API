@@ -6,10 +6,11 @@ import {
 import { Paginationlist } from "src/globalTypes"
 
 export type loginType = {
-  token: string
-  id: string
-  nome: string 
-  email: string
+  token:string
+  id:string
+  nome:string 
+  cargo:string
+  email:string
 }
 
 export interface IUsuarioServices {

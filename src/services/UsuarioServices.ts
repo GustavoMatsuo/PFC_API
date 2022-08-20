@@ -80,8 +80,8 @@ export class UsuarioServices implements IUsuarioServices {
     const token = sign(
       {
         id: usuario.id_usuario,
-        empresa: usuario.empresaId
-        // role: usuario.cargo,
+        empresa: usuario.empresaId,
+        role: usuario.cargo
       }, 
       "secret", //MODIFY IN FUTURE
       { expiresIn: "1d" }
@@ -91,7 +91,8 @@ export class UsuarioServices implements IUsuarioServices {
       id: usuario.id_usuario, 
       nome: usuario.nome, 
       email: usuario.email,
-      token: token 
+      cargo: usuario.cargo,
+      token: token
     }
   }
 
