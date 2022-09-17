@@ -9,6 +9,7 @@ import { Cliente } from "./Cliente"
 import { Saida } from "./Saida"
 import { Venda } from "./Venda"
 import { Empresa } from "./Empresa"
+import { Anuncio } from "./Anuncio"
 
 export {
   Usuario,
@@ -21,5 +22,6 @@ export {
   Cliente,
   Saida,
   Venda,
-  Empresa
+  Empresa,
+  Anuncio
 }
