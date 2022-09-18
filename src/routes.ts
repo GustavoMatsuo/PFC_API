@@ -9,9 +9,11 @@ import {
   saidaController,
   estoqueController,
   vendaController,
-  empresaController
+  empresaController,
+  anuncioController
 } from "@controllers"
 import { authMiddleware } from "@middleware/auth"
+import { AnuncioController } from "./controllers/AnuncioController"
 
 const router = Router()
 
@@ -113,6 +115,10 @@ router.route('/venda')
   .get((request, response) => vendaController.index(request, response))
   .post((request, response) => vendaController.create(request, response))
 
+router.route('/venda/chart')
+  .all(authMiddleware)
+  .get((request, response) => vendaController.getVendasChart(request, response))
+
 //EMPRESA
 router.route('/empresa')
   // .all(authMiddleware)
@@ -122,5 +128,16 @@ router.route('/empresa')
 router.route('/empresa/status')
   // .all(authMiddleware)
   .put((request, response) => empresaController.changeStatus(request, response))
+
+//ANUNCIO
+router.route('/anuncio')
+  .all(authMiddleware)
+  .get((request, response) => anuncioController.read(request, response))
+  .post((request, response) => anuncioController.create(request, response))
+  .put((request, response) => anuncioController.update(request, response))
+  .delete((request, response) => anuncioController.delete(request, response))
+router.route('/anuncio/simple')
+  .all(authMiddleware)
+  .get((request, response) => anuncioController.simpleList(request, response))
 
 export { router }

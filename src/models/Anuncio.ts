@@ -11,7 +11,7 @@ export class Anuncio {
   titulo:string
 
   @Column()
-  texto:boolean
+  texto:string
 
   @Column('timestamptz')
   data:Date

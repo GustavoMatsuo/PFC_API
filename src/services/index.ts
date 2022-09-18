@@ -8,7 +8,8 @@ import {
   saidaRepository,
   estoqueRepository,
   vendaRepository,
-  empresaRepository
+  empresaRepository,
+  anuncioRepository
 } from "@repositories" 
 import { UsuarioServices } from "./UsuarioServices"
 import { FornecedorServices } from "./FornecedorServices"
@@ -22,6 +23,7 @@ import { VendaServices } from "./VendaServices"
 import { EmpresaServices } from "./EmpresaServices"
 
 import { MailtrapMailProvider } from "@providers/implementations/MailtrapMailProvider"
+import { AnuncioServices } from "./AnuncioServices"
 
 const mailProvider = new MailtrapMailProvider()
 
@@ -39,6 +41,7 @@ const saidaServices = new SaidaServices(saidaRepository)
 const estoqueServices = new EstoqueServices(estoqueRepository)
 const vendaServices = new VendaServices(vendaRepository)
 const empresaServices = new EmpresaServices(empresaRepository)
+const anuncioServices = new AnuncioServices(anuncioRepository)
 
 export { 
   usuarioServices,
@@ -50,5 +53,6 @@ export {
   saidaServices,
   estoqueServices,
   vendaServices,
-  empresaServices
+  empresaServices,
+  anuncioServices
 }
