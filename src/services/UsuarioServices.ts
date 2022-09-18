@@ -35,6 +35,7 @@ export class UsuarioServices implements IUsuarioServices {
     const query = this.usuarioRepository
       .createQueryBuilder("usuario")
       .where("usuario.empresaId = :empresa", { empresa })
+      .andWhere("usuario.cargo <> 'admin global'")
       .take(limitNum)
       .skip(skipNum)
     
