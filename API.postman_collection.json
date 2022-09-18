@@ -6,16 +6,53 @@
 	},
 	"item": [
 		{
-			"name": "User",
+			"name": "Usuario",
 			"item": [
 				{
-					"name": "create_user",
+					"name": "create_usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsInJvbGUiOiJlbXBsb3llZSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5MDcwMzAsImV4cCI6MTY1OTk5MzQzMH0.4T5IZjLY0J2LZQhU15-CvQn-gFaLsYkYA0lSiyYaNv8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nome\":\"Gustavo\",\r\n   \"email\":\"g@g.com\",\r\n   \"senha\": \"123\",\r\n   \"cargo\": \"employee\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/usuario",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"usuario"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "create_first_usuario",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n   \"name\":\"Gustavo\",\r\n   \"email\":\"teste@teste.com\",\r\n   \"password\": \"123\",\r\n   \"role\": \"employee\"\r\n}",
+							"raw": "{\r\n   \"nome\":\"Samara\",\r\n   \"email\":\"s@s.com\",\r\n   \"senha\": \"123\",\r\n   \"cargo\": \"employee\",\r\n   \"empresa\": \"d82af157-c2ca-4fa8-80e2-191e7e1ea04d\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -23,12 +60,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/users",
+							"raw": "{{BaseURL}}/usuario/first",
 							"host": [
-								"{{baseURL}}"
+								"{{BaseURL}}"
 							],
 							"path": [
-								"users"
+								"usuario",
+								"first"
 							]
 						},
 						"description": "User"
@@ -36,13 +74,23 @@
 					"response": []
 				},
 				{
-					"name": "update_user",
+					"name": "update_usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzZGZkN2YzLTNjOTktNDllMy05MTJjLTc1OTA3NTk1MjEzYiIsInJvbGUiOiJlbXBsb3llZSIsImVtcHJlc2EiOiJkODJhZjE1Ny1jMmNhLTRmYTgtODBlMi0xOTFlN2UxZWEwNGQiLCJpYXQiOjE2NTk5MDg1NTgsImV4cCI6MTY1OTk5NDk1OH0.s1HZV2V3kzpV7nroRq29UQrfbqusbVQv63EfiDv8LIQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"gustavo0\",\r\n    \"status\": false,\r\n    \"email\": \"gustavo@teste.com\",\r\n    \"password\": \"12345\",\r\n    \"role\": \"role\",\r\n    \"id\": \"15ba76d0-4a55-464b-aa1c-6c14cc16fd53\"\r\n}",
+							"raw": "{\r\n    \"id_usuario\": \"53dfd7f3-3c99-49e3-912c-75907595213b\",\r\n    \"status\": true,\r\n    \"nome\": \"Samara teste\",\r\n    \"cargo\": \"employee\",\r\n    \"email\": \"s@s.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -50,12 +98,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/users",
+							"raw": "{{BaseURL}}/usuario",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
-								"users"
+								"usuario"
 							]
 						},
 						"description": "User"
@@ -63,13 +111,23 @@
 					"response": []
 				},
 				{
-					"name": "change_status_user",
+					"name": "change_status_usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5MDk1MjcsImV4cCI6MTY1OTk5NTkyN30.-A_cpCkuWyys_pxJ02gsh6O4tqWyFbiod1_yp-0xZpk",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"92052b61-d4e7-449d-af7f-305f3ab051cb\"\r\n}",
+							"raw": "{\r\n    \"id\": \"53dfd7f3-3c99-49e3-912c-75907595213b\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -77,12 +135,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/users/status",
+							"raw": "{{BaseURL}}/usuario/status",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
-								"users",
+								"usuario",
 								"status"
 							]
 						},
@@ -91,13 +149,23 @@
 					"response": []
 				},
 				{
-					"name": "delete_user",
+					"name": "delete_usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyNWUyMDEyLTg2ZDMtNDY4My1hZWY1LTk0YjMzODBhMzA1OSIsImlhdCI6MTY1ODA4OTc3NiwiZXhwIjoxNjU4MTc2MTc2fQ.ucHpT0WvURxlfKK5XXMcB7mLElgpH1VXRDj7zznKkiU",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"d167f0b7-6c40-4558-b4a0-6960855b0ef5\"\r\n}",
+							"raw": "{\r\n    \"id\": \"ed791d85-6aa3-420d-9bd5-2c0bf6d0df62\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -105,12 +173,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/users",
+							"raw": "{{BaseURL}}/usuario",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
-								"users"
+								"usuario"
 							]
 						},
 						"description": "User"
@@ -118,11 +186,21 @@
 					"response": []
 				},
 				{
-					"name": "index_user",
+					"name": "index_usuario",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -135,12 +213,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/users?limit=2&skip=0",
+							"raw": "{{BaseURL}}/usuario?limit=2&skip=0",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
-								"users"
+								"usuario"
 							],
 							"query": [
 								{
@@ -150,7 +228,111 @@
 								{
 									"key": "skip",
 									"value": "0"
+								},
+								{
+									"key": "filterBy",
+									"value": "gu",
+									"disabled": true
 								}
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "login_usuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\":\"g@g.com\",\r\n  \"senha\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/usuario/login",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"usuario",
+								"login"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "create_token_usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"t@t.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/usuario/reset",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"usuario",
+								"reset"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "reset_usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"senha\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/usuario/newPassword",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"usuario",
+								"newPassword"
 							]
 						},
 						"description": "User"
@@ -165,6 +347,16 @@
 				{
 					"name": "create_categoria",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -192,11 +384,21 @@
 				{
 					"name": "update_categoria",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "    {\r\n        \"id_categoria\": \"cacb7caa-1171-4765-b8f9-2a424fb684bb\",\r\n        \"nome\": \"Teste\",\r\n        \"cor\": \"FFF\"\r\n    }",
+							"raw": "    {\r\n        \"id_categoria\": \"e8991d96-e279-4b3a-b335-debd5cbf3867\",\r\n        \"nome\": \"Categoria 1\",\r\n        \"cor\": \"FFF\"\r\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -285,6 +487,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -309,6 +521,451 @@
 						"description": "User"
 					},
 					"response": []
+				},
+				{
+					"name": "simple_list_catergoria",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/categoria/simple",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"categoria",
+								"simple"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "change_status_categoria",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"cacb7caa-1171-4765-b8f9-2a424fb684bb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/categoria/status",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"categoria",
+								"status"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Anuncio",
+			"item": [
+				{
+					"name": "create_anuncio",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5YjhiNmE3LTFhNzgtNDQ3Ni04Y2YyLWE4ZDkwZWEwZTUyOSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjM1MTM3NzUsImV4cCI6MTY2MzYwMDE3NX0.zBhvb41dLYpJT9nLNZTVkd9EL-_bOrEslq27oHs-t-Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"titulo\":\"titulo 2\",\r\n   \"texto\":\"texto texto texto texto texto texto texto texto\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/anuncio",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"anuncio"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "update_anuncio",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5YjhiNmE3LTFhNzgtNDQ3Ni04Y2YyLWE4ZDkwZWEwZTUyOSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjM1MTM3NzUsImV4cCI6MTY2MzYwMDE3NX0.zBhvb41dLYpJT9nLNZTVkd9EL-_bOrEslq27oHs-t-Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_anuncio\": \"2bb82f3b-9bfc-4c06-ac4c-6b215c9e8656\",\r\n    \"titulo\":\"titulo 1\",\r\n    \"texto\":\"texto texto texto texto texto texto texto texto 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/anuncio",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"anuncio"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "read_anuncio",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5YjhiNmE3LTFhNzgtNDQ3Ni04Y2YyLWE4ZDkwZWEwZTUyOSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjM1MTM3NzUsImV4cCI6MTY2MzYwMDE3NX0.zBhvb41dLYpJT9nLNZTVkd9EL-_bOrEslq27oHs-t-Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/anuncio?id=bad2a7e1-885f-4dc0-a029-876f963ae0cd",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"anuncio"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "bad2a7e1-885f-4dc0-a029-876f963ae0cd"
+								}
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "delete_anuncio",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"bad2a7e1-885f-4dc0-a029-876f963ae0cd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/anuncio",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"anuncio"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "simple_list_anuncio",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5YjhiNmE3LTFhNzgtNDQ3Ni04Y2YyLWE4ZDkwZWEwZTUyOSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjM1MTM3NzUsImV4cCI6MTY2MzYwMDE3NX0.zBhvb41dLYpJT9nLNZTVkd9EL-_bOrEslq27oHs-t-Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/anuncio/simple",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"anuncio",
+								"simple"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "create_cliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NjAxNjM1OTcsImV4cCI6MTY2MDI0OTk5N30.1HdPo5Qg4Sh9wBmvRW4R-zeKL34lZkgJzFgOgWObF_o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\":\"Cliente 2\",\r\n  \"cpf\":47522299912,\r\n  \"cel\":11985111111\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/cliente",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"cliente"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "update_categoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NjAxNjM1OTcsImV4cCI6MTY2MDI0OTk5N30.1HdPo5Qg4Sh9wBmvRW4R-zeKL34lZkgJzFgOgWObF_o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_cliente\": \"90bf3f34-73b8-4c00-8ed7-166d0facd6b5\",\r\n  \"nome\":\"Gustavo cliente\",\r\n  \"cpf\":47522299911,\r\n  \"cel\":2222222222\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/cliente",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"cliente"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "read_cliente",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NjAxNjM1OTcsImV4cCI6MTY2MDI0OTk5N30.1HdPo5Qg4Sh9wBmvRW4R-zeKL34lZkgJzFgOgWObF_o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/cliente?id=90bf3f34-73b8-4c00-8ed7-166d0facd6b5",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"cliente"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "90bf3f34-73b8-4c00-8ed7-166d0facd6b5"
+								}
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "delete_cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"8ad13ad0-c90d-462c-bab3-836440465825\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/cliente",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"cliente"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "index_cliente",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NjA0MDYzNzYsImV4cCI6MTY2MDQ5Mjc3Nn0.v2OO3YDKKtshTWf07GxoAT7jlkn84WHRYZXVbPfeVo4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/cliente/list",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"cliente",
+								"list"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
 				}
 			]
 		},
@@ -321,6 +978,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -346,13 +1013,64 @@
 					"response": []
 				},
 				{
+					"name": "simple_list_forncecedor",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/fornecedor/simple",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"fornecedor",
+								"simple"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
 					"name": "create_fornecedor",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"empresa fulane\",\r\n    \"email\":\"empresa@email.com\",\r\n    \"cnpj\":\"21247105000110\",\r\n    \"endereco\": {\r\n        \"rua\":\"dois\",\r\n        \"numero\":\"123\",\r\n        \"bairro\":\"bairro um\",\r\n        \"cep\":\"08773500\",\r\n        \"cidade\":\"Mogi das Cruzes\",\r\n        \"uf\":\"SP\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"nome\":\"empresa fulane\",\r\n    \"email\":\"empresa@email.com\",\r\n    \"cnpj\":\"55467364000178\",\r\n    \"empresa\": \"e9582809-aee5-4109-b390-c7609dbe4ca8\",\r\n    \"endereco\": {\r\n        \"rua\":\"dois\",\r\n        \"numero\":\"123\",\r\n        \"bairro\":\"bairro um\",\r\n        \"cep\":\"08773500\",\r\n        \"cidade\":\"Mogi das Cruzes\",\r\n        \"uf\":\"SP\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -375,11 +1093,21 @@
 				{
 					"name": "change_status_fornecedor",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"2c6f448d-3195-455e-8cb9-47f7a5b41518\"\r\n}",
+							"raw": "{\r\n    \"id\": \"0dbb79e4-2fec-454e-a6bf-04f26d14f95e\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -403,11 +1131,21 @@
 				{
 					"name": "update_fornecedor",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_fornecedor\": \"2c6f448d-3195-455e-8cb9-47f7a5b41518\",\r\n    \"nome\": \"empresa fulano\",\r\n    \"email\": \"empresa@email.com\",\r\n    \"cnpj\": \"21247105000110\",\r\n    \"status\": true,\r\n    \"endereco\": {\r\n        \"id_endereco\": \"45ca1de5-bea6-4e3f-828e-512760a3f971\",\r\n        \"rua\": \"um dois\",\r\n        \"numero\": \"123\",\r\n        \"bairro\": \"bairro dois\",\r\n        \"cep\": \"08773500\",\r\n        \"cidade\": \"Mogi das Cruzes\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"id_fornecedor\": \"0dbb79e4-2fec-454e-a6bf-04f26d14f95e\",\r\n    \"nome\": \"empresa 1\",\r\n    \"email\": \"empresa@email.com\",\r\n    \"cnpj\": \"55467364000178\",\r\n    \"status\": false,\r\n    \"empresa\": \"e9582809-aee5-4109-b390-c7609dbe4ca8\",\r\n    \"endereco\": {\r\n        \"id_endereco\": \"bccccee9-4564-4b4f-a907-a97ef7a08387\",\r\n        \"rua\": \"um\",\r\n        \"numero\": \"123\",\r\n        \"bairro\": \"bairro um\",\r\n        \"cep\": \"08773500\",\r\n        \"cidade\": \"Mogi das Cruzes\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -430,6 +1168,153 @@
 			]
 		},
 		{
+			"name": "Empresa",
+			"item": [
+				{
+					"name": "index_empresa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUyZmI4MGUyLWU0MGItNDIzOS05OTFlLTBhOWZlY2JhOGNkMSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTY1OTg5MDExNywiZXhwIjoxNjU5OTc2NTE3fQ.5a_dXxQ6uDRdRFE1Bu4PfQ7Ou6ktMCS-twcvsPQNrZk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/empresa",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"empresa"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "create_empresa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"empresa 2\",\r\n    \"email\":\"empresa@email.com\",\r\n    \"cel\": 11985262222,\r\n    \"cnpj\":\"55467364000179\",\r\n    \"endereco\": {\r\n        \"rua\":\"dois\",\r\n        \"numero\":\"123\",\r\n        \"bairro\":\"bairro um\",\r\n        \"cep\":\"08773500\",\r\n        \"cidade\":\"Mogi das Cruzes\",\r\n        \"uf\":\"SP\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/empresa",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"empresa"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "change_status_empresa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUyZmI4MGUyLWU0MGItNDIzOS05OTFlLTBhOWZlY2JhOGNkMSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTY1OTg5MDExNywiZXhwIjoxNjU5OTc2NTE3fQ.5a_dXxQ6uDRdRFE1Bu4PfQ7Ou6ktMCS-twcvsPQNrZk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"bef09633-9f66-46bc-a5e2-29656a4f990e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/empresa/status",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"empresa",
+								"status"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "update_empresa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUyZmI4MGUyLWU0MGItNDIzOS05OTFlLTBhOWZlY2JhOGNkMSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTY1OTg5MDExNywiZXhwIjoxNjU5OTc2NTE3fQ.5a_dXxQ6uDRdRFE1Bu4PfQ7Ou6ktMCS-twcvsPQNrZk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id_empresa\": \"bef09633-9f66-46bc-a5e2-29656a4f990e\",\r\n    \"nome\": \"empresa\",\r\n    \"cnpj\": \"55467364000178\",\r\n    \"cel\": \"11985262222\",\r\n    \"email\": \"empresa@email.com\",\r\n    \"status\": true,\r\n    \"endereco\": {\r\n        \"id_endereco\": \"d2e5f12c-ee27-469c-9226-414ee1059ecb\",\r\n        \"rua\": \"dois\",\r\n        \"numero\": \"123\",\r\n        \"bairro\": \"bairro um\",\r\n        \"cep\": \"08773500\",\r\n        \"cidade\": \"Mogi das Cruzes\",\r\n        \"uf\": \"SP\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/empresa",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"empresa"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Produto",
 			"item": [
 				{
@@ -438,6 +1323,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NjA0MDYzNzYsImV4cCI6MTY2MDQ5Mjc3Nn0.v2OO3YDKKtshTWf07GxoAT7jlkn84WHRYZXVbPfeVo4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -465,11 +1360,21 @@
 				{
 					"name": "create_produto",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"nome\": \"Produto teste\",\r\n  \"fornecedor\": \"2c6f448d-3195-455e-8cb9-47f7a5b41518\",\r\n  \"qtdEstoque\": 20,\r\n  \"estoqueMinimo\": 10,\r\n  \"categoria\": \"cacb7caa-1171-4765-b8f9-2a424fb684bb\"\r\n}",
+							"raw": "{\r\n  \"nome\": \"Produto_teste\",\r\n  \"codigo\": \"7896173100011\",\r\n  \"valor_unitario\": 10,\r\n  \"estoque_minimo\": 10,\r\n  \"fornecedor\": \"0dbb79e4-2fec-454e-a6bf-04f26d14f95e\",\r\n  \"categoria\": \"e8991d96-e279-4b3a-b335-debd5cbf3867\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -492,11 +1397,21 @@
 				{
 					"name": "change_status_produto",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"5a958b15-159f-4533-8e73-db8b33497bae\"\r\n}",
+							"raw": "{\r\n    \"id\": \"d4ac1732-c4e7-41fa-a662-8d63a206e8e3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -524,7 +1439,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_produto\": \"5a958b15-159f-4533-8e73-db8b33497bae\",\r\n    \"nome\": \"Produto teste\",\r\n    \"status\": false,\r\n    \"qtdEstoque\": 25,\r\n    \"estoqueMinimo\": 10,\r\n    \"fornecedor\": \"2c6f448d-3195-455e-8cb9-47f7a5b41518\",\r\n    \"categoria\": \"cacb7caa-1171-4765-b8f9-2a424fb684bb\"\r\n}",
+							"raw": "{\r\n    \"id_produto\": \"95421d48-27d4-42bd-a71e-08d7db1f625d\",\r\n    \"nome\": \"Produto teste 1\",\r\n    \"codigo\": \"7896173100011\",\r\n    \"status\": false,\r\n    \"estoque_minimo\": 10,\r\n    \"valor_unitario\": 10,\r\n    \"fornecedor\": \"abfcfa66-90c0-422f-9fb7-a773006cd353\",\r\n    \"categoria\": \"991ab745-8e8a-4964-8b75-8790e81633a5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -538,6 +1453,376 @@
 							],
 							"path": [
 								"produto"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "simple_list_produto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/produto/simple",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"produto",
+								"simple"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entrada",
+			"item": [
+				{
+					"name": "create_entrada",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"produto\":\"95421d48-27d4-42bd-a71e-08d7db1f625d\",\r\n  \"qtd\":20,\r\n  \"valor_unitario\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/entrada",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"entrada"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "index_entrada",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyNWUyMDEyLTg2ZDMtNDY4My1hZWY1LTk0YjMzODBhMzA1OSIsImlhdCI6MTY1OTgxNjYwNSwiZXhwIjoxNjU5OTAzMDA1fQ.hb79iPgHHYmZi_PyTFMUUmHvyfKwb4LAoFjfW7XJaU8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/entrada?limit=5&skip=0&order=produto&orderBy=DESC",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"entrada"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "skip",
+									"value": "0"
+								},
+								{
+									"key": "filterBy",
+									"value": "Caixa",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "produto"
+								},
+								{
+									"key": "orderBy",
+									"value": "DESC"
+								}
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estoque",
+			"item": [
+				{
+					"name": "index_estoque",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/estoque",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"estoque"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Saida",
+			"item": [
+				{
+					"name": "create_saida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"produto\":\"2598310c-cfae-48e6-bfb8-7ebeb3d9d82a\",\r\n  \"qtd\":10,\r\n  \"valor_unitario\":10\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/saida",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"saida"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "index_saida",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyNWUyMDEyLTg2ZDMtNDY4My1hZWY1LTk0YjMzODBhMzA1OSIsImlhdCI6MTY1OTgxNjYwNSwiZXhwIjoxNjU5OTAzMDA1fQ.hb79iPgHHYmZi_PyTFMUUmHvyfKwb4LAoFjfW7XJaU8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/saida?limit=5&skip=0&filterBy=Caixa",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"saida"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "skip",
+									"value": "0"
+								},
+								{
+									"key": "filterBy",
+									"value": "Caixa"
+								}
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Venda",
+			"item": [
+				{
+					"name": "create_venda",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NjA0MDYzNzYsImV4cCI6MTY2MDQ5Mjc3Nn0.v2OO3YDKKtshTWf07GxoAT7jlkn84WHRYZXVbPfeVo4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cliente\":\"90bf3f34-73b8-4c00-8ed7-166d0facd6b5\",\r\n  \"saidas\":[\r\n    {\r\n      \"produto\":\"d4ac1732-c4e7-41fa-a662-8d63a206e8e3\",\r\n      \"qtd\":1,\r\n      \"valor_unitario\":10\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/venda",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"venda"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "getVendaChart_venda",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5YjhiNmE3LTFhNzgtNDQ3Ni04Y2YyLWE4ZDkwZWEwZTUyOSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjM1MTI0NzAsImV4cCI6MTY2MzU5ODg3MH0.3n_g2_Qg_GTn5-8K7gDm-MyxHwm9jR8QdkMGfm4472U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/venda/chart",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"venda",
+								"chart"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "index_venda",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/venda",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"venda"
 							]
 						},
 						"description": "User"
