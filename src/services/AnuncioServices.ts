@@ -75,6 +75,7 @@ export class AnuncioServices implements IAnuncioServices {
       .select("anuncio.id_anuncio")
       .addSelect("anuncio.titulo")
       .addSelect("anuncio.texto")
+      .addSelect("anuncio.data")
       .where("anuncio.empresaId = :empresa", { empresa })
       .getMany()
 
