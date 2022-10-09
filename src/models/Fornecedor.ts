@@ -24,11 +24,11 @@ export class Fornecedor {
   endereco:Endereco
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
-  @JoinColumn({ name: 'empresaId' })
+  @JoinColumn({ name: 'empresa_id' })
   empresa:string
 
   @Column()
-  empresaId:string
+  empresa_id:string
 
   constructor(props: Omit<Fornecedor, 'id_fornecedor'>) {
     Object.assign(this, props)

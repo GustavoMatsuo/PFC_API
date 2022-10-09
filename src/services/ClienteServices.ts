@@ -13,13 +13,13 @@ export class ClienteServices implements IClienteServices {
   async create(data:ICreateClienteDTO):Promise<Cliente> {
     const clienteAlreadyExists = await this.clienteRepository.findOneBy({
       cpf: data.cpf,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     if (clienteAlreadyExists) {
       throw new Error('Cliente already exists.')
     }
-    const cliente = new Cliente({ ...data, empresaId: data.empresa })
+    const cliente = new Cliente({ ...data, empresa_id: data.empresa })
 
     const newCliente = await this.clienteRepository.save(cliente)
 
@@ -29,7 +29,7 @@ export class ClienteServices implements IClienteServices {
   async read(id:string, empresa: string):Promise<Cliente> {    
     const cliente = await this.clienteRepository.findOneBy({
       id_cliente: id,
-      empresaId: empresa
+      empresa_id: empresa
     })
 
     return cliente
@@ -38,7 +38,7 @@ export class ClienteServices implements IClienteServices {
   async update(data:IUpdateClienteDTO):Promise<void> {
     const clienteExists = await this.clienteRepository.findOneBy({
       id_cliente: data.id_cliente,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     if (!clienteExists) {
@@ -50,7 +50,7 @@ export class ClienteServices implements IClienteServices {
       data.id_cliente, 
       {
         ...data,
-        empresaId: data.empresa
+        empresa_id: data.empresa
       }
     )
   }
@@ -58,7 +58,7 @@ export class ClienteServices implements IClienteServices {
   async delete(id:string, empresa: string):Promise<void> {
     const clienteExists = await this.clienteRepository.findOneBy({
       id_cliente: id,
-      empresaId: empresa
+      empresa_id: empresa
     })
 
     if (!clienteExists) {
@@ -70,7 +70,7 @@ export class ClienteServices implements IClienteServices {
 
   async index(empresa:string):Promise<Array<Cliente>> {
     const clienteList = await this.clienteRepository.findBy({
-      empresaId: empresa
+      empresa_id: empresa
     })
 
     return clienteList

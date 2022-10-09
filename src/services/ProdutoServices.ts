@@ -33,7 +33,7 @@ export class ProdutoServices implements IProdutoServices {
         "estoque",
         "estoque.produto = produto.id_produto",
       )
-      .where("produto.empresaId = :empresa", { empresa })
+      .where("produto.empresa_id = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
       .getMany()
@@ -72,7 +72,7 @@ export class ProdutoServices implements IProdutoServices {
       categoria: categoria, 
       status: true,
       empresa: data.empresa,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     await this.produtoRepository.save(produto)
@@ -99,7 +99,7 @@ export class ProdutoServices implements IProdutoServices {
       ...data, 
       fornecedor: newFornecedor, 
       categoria: newCategoria,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     await this.produtoRepository.update(data.id_produto, produto)
@@ -108,7 +108,7 @@ export class ProdutoServices implements IProdutoServices {
   async changeStatus(id:string, empresa:string):Promise<void> {
     let produtoExists = await this.produtoRepository.findOneBy({
       id_produto: id, 
-      empresaId: empresa 
+      empresa_id: empresa 
     })
 
     if (!produtoExists) {
@@ -127,7 +127,7 @@ export class ProdutoServices implements IProdutoServices {
       .addSelect("produto.nome")
       .addSelect("produto.codigo")
       .addSelect("produto.valor_unitario")
-      .where("produto.empresaId = :empresa", { empresa })
+      .where("produto.empresa_id = :empresa", { empresa })
       .getMany()
 
     return produtoList

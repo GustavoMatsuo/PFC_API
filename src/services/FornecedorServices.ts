@@ -26,7 +26,7 @@ export class FornecedorServices implements IFornecedorServices {
     const query = this.fornecedorRepository
       .createQueryBuilder("fornecedor")
       .leftJoinAndSelect("fornecedor.endereco", "endereco.id_endereco")
-      .where("fornecedor.empresaId = :empresa", { empresa })
+      .where("fornecedor.empresa_id = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
 
@@ -49,7 +49,7 @@ export class FornecedorServices implements IFornecedorServices {
   async create(data:ICreateFornecedorDTO):Promise<void> {
     const fornecedorAlreadyExists = await this.fornecedorRepository.findOneBy({
       cnpj: data.cnpj,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     if (fornecedorAlreadyExists) {
@@ -61,7 +61,7 @@ export class FornecedorServices implements IFornecedorServices {
       ...data, 
       endereco, 
       status: true,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     await this.fornecedorRepository.save(fornecedor)
@@ -70,7 +70,7 @@ export class FornecedorServices implements IFornecedorServices {
   async update(data:IUpdateFornecedorDTO):Promise<void> {
     const fornecedorExists = await this.fornecedorRepository.findOneBy({
       id_fornecedor: data.id_fornecedor,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     if (!fornecedorExists) {
@@ -88,7 +88,7 @@ export class FornecedorServices implements IFornecedorServices {
         data.id_fornecedor, 
         {
           ...data,
-          empresaId: data.empresa
+          empresa_id: data.empresa
         }
       ) 
     })
@@ -97,7 +97,7 @@ export class FornecedorServices implements IFornecedorServices {
   async changeStatus(id:string, empresa:string):Promise<void> {
     let fornecedorExists = await this.fornecedorRepository.findOneBy({
       id_fornecedor: id,
-      empresaId: empresa
+      empresa_id: empresa
     })
 
     if (!fornecedorExists) {
@@ -114,7 +114,7 @@ export class FornecedorServices implements IFornecedorServices {
       .createQueryBuilder("fornecedor")
       .select("fornecedor.id_fornecedor")
       .addSelect("fornecedor.nome")
-      .where("fornecedor.empresaId = :empresa", { empresa })
+      .where("fornecedor.empresa_id = :empresa", { empresa })
       .getMany()
 
     return fornecedorList

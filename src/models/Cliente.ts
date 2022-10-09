@@ -16,11 +16,11 @@ export class Cliente {
   cel:number
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
-  @JoinColumn({ name: 'empresaId' })
+  @JoinColumn({ name: 'empresa_id' })
   empresa:string
 
   @Column()
-  empresaId:string
+  empresa_id:string
 
   constructor(props: Omit<Cliente, 'id_cliente'>) {
     Object.assign(this, props)

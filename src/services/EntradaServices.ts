@@ -16,7 +16,7 @@ export class EntradaServices implements IEntradaServices {
     const entrada = new Entrada({ 
       ...data, 
       data_entrada: date, 
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     await this.entradaRepository.save(entrada)
@@ -36,7 +36,7 @@ export class EntradaServices implements IEntradaServices {
     const query = await this.entradaRepository
       .createQueryBuilder("entrada")
       .leftJoinAndSelect("entrada.produto", "produto")
-      .where("entrada.empresaId = :empresa", { empresa })
+      .where("entrada.empresa_id = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
 

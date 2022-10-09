@@ -13,7 +13,7 @@ export class CategoriaServices implements ICategoriaServices {
   async create(data:ICreateCategoriaDTO):Promise<void> {
     const categoriaAlreadyExists = await this.categoriaRepository.findOneBy({
       nome: data.nome,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     if (categoriaAlreadyExists) {
@@ -22,7 +22,7 @@ export class CategoriaServices implements ICategoriaServices {
     const categoria = new Categoria({
       ...data, 
       status: true, 
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     await this.categoriaRepository.save(categoria)
@@ -31,7 +31,7 @@ export class CategoriaServices implements ICategoriaServices {
   async read(id:string, empresa:string):Promise<Categoria> {
     const categoria = await this.categoriaRepository.findOneBy({
       id_categoria: id,
-      empresaId: empresa
+      empresa_id: empresa
     })
 
     return categoria
@@ -40,20 +40,20 @@ export class CategoriaServices implements ICategoriaServices {
   async update(data:IUpdateCategoriaDTO):Promise<void> {
     const categoriaExists = await this.categoriaRepository.findOneBy({
       id_categoria: data.id_categoria,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     if (!categoriaExists) {
       throw new Error('Categoria not found.')
     }
 
-    await this.categoriaRepository.update(data.id_categoria, {...data, empresaId: data.empresa})
+    await this.categoriaRepository.update(data.id_categoria, {...data, empresa_id: data.empresa})
   }
 
   async delete(id:string, empresa:string):Promise<void> {
     const categoriaExists = await this.categoriaRepository.findOneBy({
       id_categoria: id, 
-      empresaId: empresa
+      empresa_id: empresa
     })
 
     if (!categoriaExists) {
@@ -74,7 +74,7 @@ export class CategoriaServices implements ICategoriaServices {
       .createQueryBuilder("categoria")
       .select("categoria.id_categoria")
       .addSelect("categoria.nome")
-      .where("categoria.empresaId = :empresa", { empresa })
+      .where("categoria.empresa_id = :empresa", { empresa })
       .getMany()
 
     return categoriaList
@@ -83,7 +83,7 @@ export class CategoriaServices implements ICategoriaServices {
   async changeStatus(id:string, empresa:string):Promise<void> {
     let categoriaExists = await this.categoriaRepository.findOneBy({
       id_categoria: id,
-      empresaId: empresa
+      empresa_id: empresa
     })
 
     if (!categoriaExists) {

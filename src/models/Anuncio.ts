@@ -17,18 +17,18 @@ export class Anuncio {
   data:Date
 
   @ManyToOne(() => Usuario, usuario => usuario.id_usuario)
-  @JoinColumn({ name: 'usuarioId' })
+  @JoinColumn({ name: 'usuario_id' })
   usuario:string
 
   @Column()
-  usuarioId:string
+  usuario_id:string
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
-  @JoinColumn({ name: 'empresaId' })
+  @JoinColumn({ name: 'empresa_id' })
   empresa:string
 
   @Column()
-  empresaId:string
+  empresa_id:string
 
   constructor(props: Omit<Anuncio, 'id_anuncio'>) {
     Object.assign(this, props)

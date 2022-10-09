@@ -32,11 +32,11 @@ export class Produto {
   valor_unitario:number 
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
-  @JoinColumn({ name: 'empresaId' })
+  @JoinColumn({ name: 'empresa_id' })
   empresa:string
 
   @Column()
-  empresaId:string
+  empresa_id:string
 
   constructor(props: Omit<Produto, 'id_produto'>) {
     Object.assign(this, props)

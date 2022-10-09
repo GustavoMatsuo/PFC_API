@@ -26,11 +26,11 @@ export class Saida {
   venda:string
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
-  @JoinColumn({ name: 'empresaId' })
+  @JoinColumn({ name: 'empresa_id' })
   empresa:string
 
   @Column()
-  empresaId:string
+  empresa_id:string
 
   constructor(props: Omit<Saida, 'id_saida'>) {
     Object.assign(this, props)

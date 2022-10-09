@@ -34,7 +34,7 @@ export class UsuarioServices implements IUsuarioServices {
 
     const query = this.usuarioRepository
       .createQueryBuilder("usuario")
-      .where("usuario.empresaId = :empresa", { empresa })
+      .where("usuario.empresa_id = :empresa", { empresa })
       .andWhere("usuario.cargo <> 'admin global'")
       .take(limitNum)
       .skip(skipNum)
@@ -81,7 +81,7 @@ export class UsuarioServices implements IUsuarioServices {
     const token = sign(
       {
         id: usuario.id_usuario,
-        empresa: usuario.empresaId,
+        empresa: usuario.empresa_id,
         role: usuario.cargo
       }, 
       "secret", //MODIFY IN FUTURE
@@ -113,7 +113,7 @@ export class UsuarioServices implements IUsuarioServices {
       senha: hash_password,
       status: true,
       empresa: data.empresa,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     await this.usuarioRepository.save(usuario)
@@ -137,7 +137,7 @@ export class UsuarioServices implements IUsuarioServices {
       ...data, 
       senha: senha,
       empresa: data.empresa,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     await this.usuarioRepository.update(data.id_usuario, usuario)
@@ -156,7 +156,7 @@ export class UsuarioServices implements IUsuarioServices {
   async changeStatus(id:string, empresaId:string):Promise<void> {
     let usuarioExists = await this.usuarioRepository.findOneBy({
       id_usuario: id, 
-      empresaId
+      empresa_id: empresaId
     })
 
     if (!usuarioExists) {

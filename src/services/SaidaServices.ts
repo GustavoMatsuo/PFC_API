@@ -1,4 +1,4 @@
-import { Produto, Saida } from "@models"
+import { Saida } from "@models"
 import { ISaidaServices } from "@interfaces"
 import { SaidaRepository } from "@repositories"
 import { ICreateSaidaDTO } from "@dto/SaidaDTO"
@@ -18,7 +18,7 @@ export class SaidaServices implements ISaidaServices {
       ...data,
       venda: venda, 
       data_saida: date,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     await this.saidaRepository.save(saida)
@@ -39,7 +39,7 @@ export class SaidaServices implements ISaidaServices {
       .createQueryBuilder("saida")
       .leftJoinAndSelect("saida.venda", "venda")
       .leftJoinAndSelect("saida.produto", "produto")
-      .where("saida.empresaId = :empresa", { empresa })
+      .where("saida.empresa_id = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
 
