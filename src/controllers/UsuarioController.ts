@@ -170,4 +170,68 @@ export class UsuarioController {
       })
     }
   }
+
+  async listByAdm(request:Request, response:Response):Promise<Response> {
+    try {
+      const { limit, skip, filterBy, order, orderBy, empresaId } = request.query
+      const empresa = empresaId? String(empresaId) : null
+      const formattedLimit = limit? String(limit) : null
+      const formattedSkip = skip?  String(skip) : null
+      const formattedFilterBy = filterBy? String(filterBy) : null
+      const formattedOrder = order? String(order) : null
+      const formattedOrderBy = orderBy?  String(orderBy) : null
+
+      const usuarioList = await this.usuarioServices.index(
+        empresa,
+        formattedLimit,
+        formattedSkip,
+        formattedFilterBy,
+        formattedOrder,
+        formattedOrderBy
+      )
+  
+      return response.status(200).json(usuarioList)
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
+
+  async updateAdm(request:Request, response:Response):Promise<Response> {
+    try {
+      const { id_usuario, nome, status, email, cargo, senha, empresa } = request.body
+      const usuario:IUpdateUsuarioDTO = {
+        id_usuario, 
+        nome, 
+        status, 
+        email, 
+        cargo, 
+        senha,
+        empresa
+      }
+
+      await this.usuarioServices.update(usuario)
+  
+      return response.status(200).json({msg: "usuario updated"})
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
+
+  async changeStatusAdm(request:Request, response:Response):Promise<Response> {
+    try {
+      const { id, empresa } = request.body
+
+      await this.usuarioServices.changeStatus(id, empresa)
+  
+      return response.status(200).json({msg: "usuario status update."})
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
 }
