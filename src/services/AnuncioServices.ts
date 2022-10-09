@@ -15,8 +15,8 @@ export class AnuncioServices implements IAnuncioServices {
     const anuncio = new Anuncio({
       ...data,
       data: today,
-      usuarioId: data.usuario,
-      empresaId: data.empresa
+      usuario_id: data.usuario,
+      empresa_id: data.empresa
     })
 
     await this.anuncioRepository.save(anuncio)
@@ -25,7 +25,7 @@ export class AnuncioServices implements IAnuncioServices {
   async read(id:string, empresa:string):Promise<Anuncio> {
     const anuncio = await this.anuncioRepository.findOneBy({
       id_anuncio: id,
-      empresaId: empresa
+      empresa_id: empresa
     })
 
     return anuncio
@@ -34,7 +34,7 @@ export class AnuncioServices implements IAnuncioServices {
   async update(data:IUpdateAnuncioDTO):Promise<void> {
     const anuncioExists = await this.anuncioRepository.findOneBy({
       id_anuncio: data.id_anuncio,
-      empresaId: data.empresa
+      empresa_id: data.empresa
     })
 
     if (!anuncioExists) {
@@ -44,8 +44,8 @@ export class AnuncioServices implements IAnuncioServices {
     const anuncio = new Anuncio({
       ...data, 
       data: anuncioExists.data,
-      usuarioId: data.usuario,
-      empresaId: data.empresa
+      usuario_id: data.usuario,
+      empresa_id: data.empresa
     })
     await this.anuncioRepository.update(data.id_anuncio, anuncio)
   }
@@ -53,7 +53,7 @@ export class AnuncioServices implements IAnuncioServices {
   async delete(id:string, empresa:string):Promise<void> {
     const anuncioExists = await this.anuncioRepository.findOneBy({
       id_anuncio: id, 
-      empresaId: empresa
+      empresa_id: empresa
     })
 
     if (!anuncioExists) {
@@ -76,7 +76,7 @@ export class AnuncioServices implements IAnuncioServices {
       .addSelect("anuncio.titulo")
       .addSelect("anuncio.texto")
       .addSelect("anuncio.data")
-      .where("anuncio.empresaId = :empresa", { empresa })
+      .where("anuncio.empresa_id = :empresa", { empresa })
       .getMany()
 
     return anuncioList
