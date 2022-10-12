@@ -13,7 +13,8 @@ BEGIN
     UPDATE estoque SET qtd = qtd + NEW.qtd WHERE produto = NEW.produto;
     RETURN NEW;
   ELSE
-    INSERT INTO estoque (produto, qtd) values (NEW.produto, NEW.qtd);
+    INSERT INTO estoque (produto, qtd, empresa_id) 
+      values (NEW.produto, NEW.qtd, NEW.produto.empresa_id);
     RETURN NEW;
   END IF; 
     RETURN NULL;
@@ -37,7 +38,8 @@ BEGIN
     UPDATE estoque SET qtd = qtd + (NEW.qtd * -1) WHERE produto = NEW.produto;
     RETURN NEW;
   ELSE
-    INSERT INTO estoque (produto, qtd) values (NEW.produto, NEW.qtd);
+    INSERT INTO estoque (produto, qtd, empresa_id) 
+      values (NEW.produto, NEW.qtd, NEW.produto.empresa_id);
     RETURN NEW;
   END IF; 
     RETURN NULL;
@@ -55,7 +57,8 @@ DECLARE
   contador integer := 0;
 
 BEGIN  
-  INSERT INTO estoque (produto, qtd) values (NEW.id_produto, 0);
+  INSERT INTO estoque (produto, qtd, empresa_id) 
+    values (NEW.id_produto, 0, NEW.empresa_id);
   RETURN NEW;
 END $produto$
 
