@@ -119,6 +119,9 @@ router.route('/estoque')
 router.route('/estoque/inventario')
   .all(authMiddleware)
   .get((request, response) => estoqueController.getInventario(request, response))
+router.route('/estoque/daily')
+  .all(authMiddleware)
+  .get((request, response) => estoqueController.getDaily(request, response))
 
 //VENDA
 router.route('/venda')

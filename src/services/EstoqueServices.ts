@@ -1,6 +1,7 @@
 import { Entrada, Estoque, Produto, Saida } from "@models"
 import { IEstoqueServices } from "@interfaces"
 import { EstoqueRepository } from "@repositories"
+import { fDateSimple } from "src/utils/formatTime"
 import ExcelJS from 'exceljs'
 
 export class EstoqueServices implements IEstoqueServices {
@@ -102,6 +103,165 @@ export class EstoqueServices implements IEstoqueServices {
     }
 
     sheet.columns.forEach(function (column, i) {
+      var maxLength = 0
+      column["eachCell"]({ includeEmpty: true }, function (cell) {
+        var columnLength = cell.value ? cell.value.toString().length : 15
+        if (columnLength > maxLength ) {
+            maxLength = columnLength
+        }
+      })
+      column.width = maxLength < 15 ? 15 : maxLength
+    })
+
+    return workbook
+  }
+
+  async getDaily(empresa:string):Promise<ExcelJS.Workbook> {
+    const todaySimple = fDateSimple(new Date())
+
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    const tomorrowSimple = fDateSimple(tomorrow)
+
+    let entradaList:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
+      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
+      .innerJoinAndMapMany(
+        "estoque.entrada",
+        Entrada,
+        "entrada",
+        `entrada.produto = estoque.produto and entrada.data_entrada between '${todaySimple}' and '${tomorrowSimple}'`,
+      )
+      .where("estoque.empresa_id = :empresa", { empresa })
+      .getMany()
+    
+    let saidaList:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
+      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
+      .innerJoinAndMapMany(
+        "estoque.saida",
+        Saida,
+        "saida",
+        `saida.produto = estoque.produto and saida.data_saida between '${todaySimple}' and '${tomorrowSimple}'`,
+      )
+      .where("estoque.empresa_id = :empresa", { empresa })
+      .getMany()
+    
+
+    const workbook = new ExcelJS.Workbook()
+
+    // SAIDA SHEET
+    const sheetSaida = workbook.addWorksheet(`Saida (${todaySimple})`)
+
+    sheetSaida.columns = [
+      { header: 'Nome', key: 'nome' },
+      { header: 'Cod. de barras', key: 'cod' },
+      { header: 'Saída', key: 'saida' },
+      { header: 'Quantidade atual', key: 'qtd' },
+    ]
+
+    const formattedSaida:any[] = []
+    
+    for(let i = 0; i < saidaList.length; i++) {
+      const estoque = saidaList[i]     
+      if(!formattedSaida.some(item => item.id_estoque === estoque.id_estoque)){
+        formattedSaida.push({
+          ...estoque,
+          saida: estoque.saida? estoque.saida.reduce((prev, current) => prev + current.qtd, 0):0
+        })
+      }
+    }
+
+    formattedSaida.map(item => {
+      const produto:Produto = item.produto 
+      sheetSaida.addRow({ 
+        nome: produto.nome, 
+        cod: produto.codigo, 
+        saida: item.saida,
+        qtd: item.qtd
+      })
+    })
+
+    //COLUMN STYLES
+    sheetSaida.getColumn(2).alignment = { horizontal: 'center' }
+    sheetSaida.getColumn(3).alignment = { horizontal: 'center' }
+    sheetSaida.getColumn(4).alignment = { horizontal: 'center' }
+    sheetSaida.getColumn(5).alignment = { horizontal: 'center' }
+
+    //ROW STYLES
+    sheetSaida.getRow(1).height = 20
+    sheetSaida.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' }
+    sheetSaida.getRow(1).fill = {
+      type: 'pattern',
+      pattern:'solid',
+      fgColor:{argb:'FF4842'},
+    }
+    sheetSaida.getRow(1).font = {
+      color: { argb: 'FFFFFF' },
+      bold: true
+    }
+
+    sheetSaida.columns.forEach(function (column, i) {
+      var maxLength = 0
+      column["eachCell"]({ includeEmpty: true }, function (cell) {
+        var columnLength = cell.value ? cell.value.toString().length : 15
+        if (columnLength > maxLength ) {
+            maxLength = columnLength
+        }
+      })
+      column.width = maxLength < 15 ? 15 : maxLength
+    })
+
+    // ENTRADA SHEET
+    const sheetEntrada = workbook.addWorksheet(`Entrada (${todaySimple})`)
+
+    sheetEntrada.columns = [
+      { header: 'Nome', key: 'nome' },
+      { header: 'Cod. de barras', key: 'cod' },
+      { header: 'Entrada', key: 'entrada' },
+      { header: 'Quantidade atual', key: 'qtd' },
+    ]
+
+    const formattedEntrada:any[] = []
+    
+    for(let i = 0; i < entradaList.length; i++) {
+      const estoque = entradaList[i]     
+      if(!formattedEntrada.some(item => item.id_estoque === estoque.id_estoque)){
+        formattedEntrada.push({
+          ...estoque,
+          entrada: estoque.entrada? estoque.entrada.reduce((prev, current) => prev + current.qtd, 0):0,
+        })
+      }
+    }
+
+    formattedEntrada.map(item => {
+      const produto:Produto = item.produto 
+      sheetEntrada.addRow({ 
+        nome: produto.nome, 
+        cod: produto.codigo, 
+        entrada: item.entrada,
+        qtd: item.qtd
+      })
+    })
+
+    //COLUMN STYLES
+    sheetEntrada.getColumn(2).alignment = { horizontal: 'center' }
+    sheetEntrada.getColumn(3).alignment = { horizontal: 'center' }
+    sheetEntrada.getColumn(4).alignment = { horizontal: 'center' }
+    sheetEntrada.getColumn(5).alignment = { horizontal: 'center' }
+
+    //ROW STYLES
+    sheetEntrada.getRow(1).height = 20
+    sheetEntrada.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' }
+    sheetEntrada.getRow(1).fill = {
+      type: 'pattern',
+      pattern:'solid',
+      fgColor:{argb:'54D62C'},
+    }
+    sheetEntrada.getRow(1).font = {
+      color: { argb: 'FFFFFF' },
+      bold: true
+    }
+
+    sheetEntrada.columns.forEach(function (column, i) {
       var maxLength = 0
       column["eachCell"]({ includeEmpty: true }, function (cell) {
         var columnLength = cell.value ? cell.value.toString().length : 15

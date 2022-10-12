@@ -33,4 +33,18 @@ export class EstoqueController {
       })
     }
   }
+
+  async getDaily(request:Request, response:Response):Promise<Response> {
+    try {
+      const workbook = await this.estoqueServices.getDaily(request.empresaId)
+    
+      await workbook.xlsx.write(response)
+
+      return response.status(200).end()
+    } catch (err) {
+      return response.status(400).json({
+        msg: err.message || 'Unexpected error.'
+      })
+    }
+  }
 }
