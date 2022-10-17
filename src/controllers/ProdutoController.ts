@@ -31,12 +31,13 @@ export class ProdutoController {
 
   async create(request:Request, response:Response):Promise<Response> {
     try {
-      const { nome, codigo, fornecedor, valor_unitario, estoque_minimo, categoria } = request.body
+      const { nome, codigo, fornecedor, valor_unitario, estoque_minimo, categoria, desconto } = request.body
       const produto:ICreateProdutoDTO = { 
         nome, 
         codigo,
         fornecedor, 
         valor_unitario, 
+        desconto,
         estoque_minimo, 
         categoria,
         empresa: request.empresaId
@@ -60,7 +61,8 @@ export class ProdutoController {
         status, 
         codigo, 
         fornecedor, 
-        valor_unitario, 
+        valor_unitario,
+        desconto,
         estoque_minimo, 
         categoria 
       } = request.body
@@ -71,7 +73,8 @@ export class ProdutoController {
         status, 
         codigo, 
         fornecedor,
-        valor_unitario, 
+        valor_unitario,
+        desconto,
         estoque_minimo,
         categoria,
         empresa: request.empresaId

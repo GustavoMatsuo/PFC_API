@@ -31,6 +31,9 @@ export class Produto {
   @Column("decimal", { scale: 2 })
   valor_unitario:number 
 
+  @Column("decimal", { scale: 2, nullable: true })
+  desconto:number 
+
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
   @JoinColumn({ name: 'empresa_id' })
   empresa:string

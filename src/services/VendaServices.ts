@@ -41,6 +41,7 @@ export class VendaServices implements IVendaServices {
           ...saidas[item], 
           venda: idVenda, 
           data_saida: date,
+          desconto: saidas[item].desconto,
           empresa: data.empresa,
           empresa_id: data.empresa
         })

@@ -3,6 +3,7 @@ export interface ICreateProdutoDTO {
   codigo:string
   fornecedor:string
   valor_unitario:number
+  desconto:number
   estoque_minimo:number
   categoria:string
   empresa:string
@@ -15,6 +16,7 @@ export interface IUpdateProdutoDTO {
   codigo:string
   fornecedor:string
   valor_unitario:number
+  desconto:number
   estoque_minimo:number
   categoria:string
   empresa:string

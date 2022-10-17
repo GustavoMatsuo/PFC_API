@@ -21,6 +21,9 @@ export class Saida {
   @Column("decimal", { scale: 2 })
   valor_unitario:number
 
+  @Column("decimal", { scale: 2, nullable: true })
+  desconto:number
+
   @ManyToOne(() => Venda, venda => venda.id_venda, { nullable: true })
   @JoinColumn({ name: 'venda' })
   venda:string

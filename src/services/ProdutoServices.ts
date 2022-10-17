@@ -127,6 +127,7 @@ export class ProdutoServices implements IProdutoServices {
       .addSelect("produto.nome")
       .addSelect("produto.codigo")
       .addSelect("produto.valor_unitario")
+      .addSelect("produto.desconto")
       .where("produto.empresa_id = :empresa", { empresa })
       .getMany()
 
