@@ -4,6 +4,8 @@ import { VendaRepository } from "@repositories"
 import { ICreateVendaDTO, ResponseVendasChart } from "@dto/VendaDTO"
 import { db } from "@config/database"
 import { Between } from "typeorm"
+import { subMonths, startOfMonth } from 'date-fns'
+import { fDateMonthYear } from "src/utils/formatTime"
 
 export class VendaServices implements IVendaServices {
   private vendaRepository: VendaRepository
@@ -58,8 +60,17 @@ export class VendaServices implements IVendaServices {
 
   async getVendasChart(usuario:string, empresa:string): Promise<ResponseVendasChart> {
     const today:Date = new Date()
-    const six_month_ago:Date = new Date()
-    six_month_ago.setMonth(today.getMonth() - 6)
+    const six_month_ago:Date = subMonths(startOfMonth(today), 5)
+  
+    const data = [0,0,0,0,0,0]
+    const label:string[] = [
+      fDateMonthYear(six_month_ago),    
+      fDateMonthYear(subMonths(today, 4)),
+      fDateMonthYear(subMonths(today, 3)),
+      fDateMonthYear(subMonths(today, 2)),
+      fDateMonthYear(subMonths(today, 1)),
+      fDateMonthYear(today),
+    ]
 
     const vendaList = await this.vendaRepository.find({
       where: {
@@ -72,19 +83,10 @@ export class VendaServices implements IVendaServices {
       }
     })
 
-    const label = []
-    const data = []
-
     vendaList.map(item => {
-      const currentMonth = item.data_venda.getMonth() + 1
-      
-      if(label.includes(currentMonth)) {
-        const index = label.indexOf(currentMonth)
-        data[index] = data[index] + 1
-      } else {
-        label.push(currentMonth)
-        data.push(1)
-      }
+      const currentMonth = fDateMonthYear(item.data_venda)
+      const index = label.indexOf(currentMonth)
+      data[index] = data[index] + 1
     })
 
     const chartData:ResponseVendasChart = {

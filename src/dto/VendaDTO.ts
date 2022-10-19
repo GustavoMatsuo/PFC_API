@@ -1,7 +1,13 @@
 import { ICreateSaidaDTO } from "./SaidaDTO"
 
-export interface ICreateVendaDTO {
+export type ICreateVendaDTO = {
   cliente:string
   saidas:ICreateSaidaDTO[]
   empresa:string
+  usuario:string
+}
+
+export type ResponseVendasChart = {
+  label:string[],
+  data:number[]
 }
