@@ -274,4 +274,70 @@ export class EstoqueServices implements IEstoqueServices {
 
     return workbook
   }
+
+  async getEstoqueMinimo(empresa:string):Promise<ExcelJS.Workbook> {
+    let estoqueMinimo:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
+      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
+      .innerJoinAndMapMany(
+        "estoque.estoque_minimo",
+        Produto,
+        "produto",
+        "produto.estoque_minimo >= estoque.qtd and estoque.produto = produto.id_produto",
+      )
+      .where("estoque.empresa_id = :empresa", { empresa })
+      .getMany()    
+
+    const workbook = new ExcelJS.Workbook()
+
+    const sheet = workbook.addWorksheet(`Estoque mínimo`)
+  
+    sheet.columns = [
+      { header: 'Nome', key: 'nome' },
+      { header: 'Cod. de barras', key: 'cod' },
+      { header: 'Estoque minimo', key: 'estoque' },
+      { header: 'Quantidade atual', key: 'qtd' }
+    ]
+
+    estoqueMinimo.map(item => {
+      const produto:Produto = item.produto 
+      sheet.addRow({ 
+        nome: produto.nome, 
+        cod: produto.codigo, 
+        estoque: produto.estoque_minimo,
+        qtd: item.qtd
+      })
+    })
+
+    //COLUMN STYLES
+    sheet.getColumn(2).alignment = { horizontal: 'center' }
+    sheet.getColumn(3).alignment = { horizontal: 'center' }
+    sheet.getColumn(4).alignment = { horizontal: 'center' }
+    sheet.getColumn(5).alignment = { horizontal: 'center' }
+
+    //ROW STYLES
+    sheet.getRow(1).height = 20
+    sheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' }
+    sheet.getRow(1).fill = {
+      type: 'pattern',
+      pattern:'solid',
+      fgColor:{argb:'FF4842'},
+    }
+    sheet.getRow(1).font = {
+      color: { argb: 'FFFFFF' },
+      bold: true
+    }
+
+    sheet.columns.forEach(function (column, i) {
+      var maxLength = 0
+      column["eachCell"]({ includeEmpty: true }, function (cell) {
+        var columnLength = cell.value ? cell.value.toString().length : 15
+        if (columnLength > maxLength ) {
+            maxLength = columnLength
+        }
+      })
+      column.width = maxLength < 15 ? 15 : maxLength
+    })
+
+    return workbook
+  }
 }

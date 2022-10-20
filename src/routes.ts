@@ -122,6 +122,9 @@ router.route('/estoque/inventario')
 router.route('/estoque/daily')
   .all(authMiddleware)
   .get((request, response) => estoqueController.getDaily(request, response))
+router.route('/estoque/estoque_minimo')
+  .all(authMiddleware)
+  .get((request, response) => estoqueController.getEstoqueMinimo(request, response))
 
 //VENDA
 router.route('/venda')
