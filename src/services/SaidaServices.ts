@@ -18,6 +18,7 @@ export class SaidaServices implements ISaidaServices {
       ...data,
       venda: venda, 
       data_saida: date,
+      desconto: data.desconto,
       empresa_id: data.empresa
     })
 

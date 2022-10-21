@@ -19,10 +19,14 @@
       "@providers/*": ["./src/providers/*"],
       "@enum/*": ["./src/enum/*"],
       "@dto/*": ["src/dto/*"],
-      "@config/*": ["src/config/*"],
+      "@config/*": ["src/config/*"]
     } 
   },
   "include": [
     "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules", 
+    "dist"
   ]
 }

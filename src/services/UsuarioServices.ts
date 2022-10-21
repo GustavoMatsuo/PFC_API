@@ -8,6 +8,7 @@ import { hash, compare } from "bcryptjs"
 import { sign } from "jsonwebtoken"
 import { loginType } from "src/interfaces/IUsuarioServices"
 import { resetPassword } from "../templates/resetPassword"
+import { newUser } from "../templates/newUser"
 
 export class UsuarioServices implements IUsuarioServices {
   private usuarioRepository: UsuarioRepository
@@ -116,7 +117,29 @@ export class UsuarioServices implements IUsuarioServices {
       empresa_id: data.empresa
     })
 
-    await this.usuarioRepository.save(usuario)
+    const usuarioRegistred = await this.usuarioRepository.save(usuario)
+
+    const token = sign({id: usuarioRegistred.id_usuario}, "secret", { expiresIn: "1h" })
+
+    const urlReset = `http://localhost:3000/verificar/${token}`
+    
+    const templateEmail = newUser
+      .replaceAll("{{email}}", usuarioRegistred.email)
+      .replaceAll("{{nome}}", usuarioRegistred.nome)
+      .replaceAll("{{link}}", urlReset)
+
+    await this.mailProvider.sendMail({
+      to: {
+        name: usuarioRegistred.nome,
+        email: usuarioRegistred.email,
+      },
+      from: {
+        name: 'Equipe TAG',
+        email: 'equipe@tag.com',
+      },
+      subject: 'Verificação de conta',
+      body: templateEmail
+    })
   }
 
   async update(data:IUpdateUsuarioDTO):Promise<void> {
@@ -211,13 +234,13 @@ export class UsuarioServices implements IUsuarioServices {
   async newPassword(senha:string, userId: string):Promise<void> {
     let usuarioExists = await this.usuarioRepository.findOneBy({id_usuario: userId})
 
-    if (!usuarioExists) {
+    if (!usuarioExists && !(usuarioExists.id_usuario === userId)) {
       throw new Error('Usuario not found.')
     }
     
     const hash_password = await hash(senha, 8)
     usuarioExists.senha = hash_password
 
-    await this.usuarioRepository.update(userId, usuarioExists)
+    await this.usuarioRepository.update(usuarioExists.id_usuario, usuarioExists)
   }
 }
