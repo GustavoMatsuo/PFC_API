@@ -1,4 +1,4 @@
-export const resetPassword = `
+export const resetPassword:string = `
 <!DOCTYPE html>
 <html>
 <head>

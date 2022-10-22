@@ -1,4 +1,4 @@
-export const newUser = `
+export const newUser:string = `
 <!DOCTYPE html>
 <html>
 <head>
