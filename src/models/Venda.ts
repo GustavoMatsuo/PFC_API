@@ -19,7 +19,7 @@ export class Venda {
   @JoinColumn({ name: 'cliente' })
   cliente:string
 
-  @Column('timestamptz')
+  @Column('datetime')
   data_venda:Date
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)

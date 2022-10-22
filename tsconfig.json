@@ -9,6 +9,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
+    "outDir": "./dist",
+    "rootDir": "./",
     "paths": {
       "@models": ["./src/models/index.ts"],
       "@controllers": ["./src/controllers/index.ts"],

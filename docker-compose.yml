@@ -14,6 +14,8 @@ services:
       - default
     volumes:
     - .:/usr/src/app
+    networks:
+      - compose-network
 
   postgres-compose:
     image: postgres

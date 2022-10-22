@@ -14,7 +14,7 @@ export class Entrada {
   @Column()
   qtd:number
 
-  @Column('timestamptz')
+  @Column('datetime')
   data_entrada:Date
 
   @Column("decimal", { scale: 2 })
