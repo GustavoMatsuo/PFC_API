@@ -18,10 +18,10 @@ import {
 const db = new DataSource({
   type: "postgres",
   host: "ec2-34-194-40-194.compute-1.amazonaws.com",
-  port: 5432,//Number.parseInt(process.env.POSTGRES_PORT),
-  username: "inqzofzmhnuozj",//String(process.env.POSTGRES_USER),
-  password: "14e59781c8c972c69c7188d99edbd432d7ba9692562ac26e85838063d55c2308",//String(process.env.POSTGRES_PASSWORD),
-  database: "dfb761j36rsa1e",
+  port: Number.parseInt(process.env.POSTGRES_PORT),
+  username: String(process.env.POSTGRES_USER),
+  password: String(process.env.POSTGRES_PASSWORD),
+  database: String(process.env.POSTGRES_DATABASE),
   ssl: true,
   extra: {
     ssl: {
@@ -125,7 +125,8 @@ db.initialize()
       AFTER INSERT ON produto
         FOR EACH ROW EXECUTE PROCEDURE SP_AtualizaEstoque_produto();
     `)
-    console.log("Database connected!")
+    console.log("RUNNING PORT ==> " + process.env.PORT )
+    console.log("DB STATUS ==> connected")
   })
   .catch((error) => console.log(error))
 
