@@ -131,12 +131,3 @@ db.initialize()
   .catch((error) => console.log(error))
 
 export { db }
-
-/*
-  type: "mssql",
-  host: "tag-project.database.windows.net",
-  port: 1433,//Number.parseInt(process.env.POSTGRES_PORT),
-  username: "tag-root",//String(process.env.POSTGRES_USER),
-  password: "Db123@pass",//String(process.env.POSTGRES_PASSWORD),
-  database: "tag",
-*/
