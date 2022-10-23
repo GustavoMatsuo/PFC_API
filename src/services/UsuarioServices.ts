@@ -1,6 +1,6 @@
 import { Usuario } from "@models"
 import { IUsuarioServices } from "@interfaces"
-import { IMailProvider } from '@providers/IMailProvider'
+import { IMailProvider } from '../providers/IMailProvider'
 import { ICreateUsuarioDTO, ILoginUsuarioDTO, IUpdateUsuarioDTO } from '@dto/UsuarioDTO'
 import { UsuarioRepository } from "@repositories"
 import { Paginationlist } from "src/globalTypes"
@@ -9,6 +9,8 @@ import { sign } from "jsonwebtoken"
 import { loginType } from "src/interfaces/IUsuarioServices"
 import { resetPassword } from "../templates/resetPassword"
 import { newUser } from "../templates/newUser"
+
+const API_URL = "https://tag-project.azurewebsites.net" 
 
 export class UsuarioServices implements IUsuarioServices {
   private usuarioRepository: UsuarioRepository
@@ -121,7 +123,7 @@ export class UsuarioServices implements IUsuarioServices {
 
     const token = sign({id: usuarioRegistred.id_usuario}, "secret", { expiresIn: "1h" })
 
-    const urlReset = `http://localhost:3000/verificar/${token}`
+    const urlReset = `${API_URL}/verificar/${token}`
     
     const templateEmail = newUser
       .replaceAll("{{email}}", usuarioRegistred.email)
@@ -210,7 +212,7 @@ export class UsuarioServices implements IUsuarioServices {
 
     const token = sign({id: usuario.id_usuario}, "secret", { expiresIn: "1h" })
 
-    const urlReset = `http://localhost:3000/reset/${token}`
+    const urlReset = `${API_URL}/reset/${token}`
     
     const templateEmail = resetPassword
       .replaceAll("{{email}}", usuario.email)

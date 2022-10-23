@@ -12,7 +12,7 @@ import {
   Usuario,
   Venda
 } from "@models"
-import { db } from "@config/database"
+import { db } from "../config/database"
 import { CategoriaRepository } from "./CategoriaRepository"
 import { EnderecoRepository } from "./EnderecoRepository"
 import { FornecedorRepository } from "./FornecedorRepository"

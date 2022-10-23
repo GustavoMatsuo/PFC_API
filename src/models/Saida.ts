@@ -12,7 +12,7 @@ export class Saida {
   @JoinColumn({ name: 'produto' })
   produto:string
 
-  @Column('datetime')
+  @Column('timestamptz')
   data_saida:Date
 
   @Column()

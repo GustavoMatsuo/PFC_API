@@ -22,7 +22,7 @@ import { EstoqueServices } from "./EstoqueServices"
 import { VendaServices } from "./VendaServices"
 import { EmpresaServices } from "./EmpresaServices"
 
-import { MailtrapMailProvider } from "@providers/implementations/MailtrapMailProvider"
+import { MailtrapMailProvider } from "../providers/implementations/MailtrapMailProvider"
 import { AnuncioServices } from "./AnuncioServices"
 
 const mailProvider = new MailtrapMailProvider()

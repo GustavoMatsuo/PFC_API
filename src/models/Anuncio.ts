@@ -13,7 +13,7 @@ export class Anuncio {
   @Column()
   texto:string
 
-  @Column('datetime')
+  @Column('timestamptz')
   data:Date
 
   @ManyToOne(() => Usuario, usuario => usuario.id_usuario)
