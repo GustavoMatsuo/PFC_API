@@ -12,8 +12,7 @@ import {
   empresaController,
   anuncioController
 } from "@controllers"
-import { authMiddleware } from "@middleware/auth"
-import { AnuncioController } from "./controllers/AnuncioController"
+import { authMiddleware } from "./middleware/auth"
 
 const router = Router()
 

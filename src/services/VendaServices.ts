@@ -2,7 +2,7 @@ import { Saida, Venda } from "@models"
 import { IVendaServices } from "@interfaces"
 import { VendaRepository } from "@repositories"
 import { ICreateVendaDTO, ResponseVendasChart } from "@dto/VendaDTO"
-import { db } from "@config/database"
+import { db } from "src/config/database"
 import { Between } from "typeorm"
 import { subMonths, startOfMonth } from 'date-fns'
 import { fDateMonthYear } from "src/utils/formatTime"

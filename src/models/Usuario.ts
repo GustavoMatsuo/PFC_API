@@ -1,5 +1,5 @@
-import { UserRole } from "@enum/userRole"
-import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { UserRole } from "../enum/userRole"
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 import { Empresa } from "./Empresa"
 
 @Entity('usuario')
@@ -13,10 +13,10 @@ export class Usuario {
   @Column()
   nome:string
 
-  // @Check(`"name" IS NOT NULL AND "title" <> 'asd'`)
   @Column({
-    type: "simple-enum",
-    enum: UserRole
+    type: "enum",
+    enum: UserRole,
+    default: UserRole.EMP
   })
   cargo:string
 
