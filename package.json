@@ -5,12 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "tsnd -r tsconfig-paths/register --transpile-only --respawn --ignore-watch node_modules src/server.ts",
-    "infra": "docker-compose --profile infra up",
-    "build:docker": "docker build -t app .",
-    "step:1": "az login",
-    "step:2": "az acr login --name tagcontainer.azurecr.io",
-    "step:3": "docker tag app tagcontainer.azurecr.io/app",
-    "step:4": "docker push tagcontainer.azurecr.io/app"
+    "infra:dev": "docker-compose --profile dev up",
+    "build:docker": "docker build -t app ."
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

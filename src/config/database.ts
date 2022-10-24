@@ -17,7 +17,7 @@ import {
 
 const db = new DataSource({
   type: "postgres",
-  host: "ec2-34-194-40-194.compute-1.amazonaws.com",
+  host: String(process.env.POSTGRES_HOST),
   port: Number.parseInt(process.env.POSTGRES_PORT),
   username: String(process.env.POSTGRES_USER),
   password: String(process.env.POSTGRES_PASSWORD),
