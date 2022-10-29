@@ -68,7 +68,7 @@ export class UsuarioServices implements IUsuarioServices {
     
     if(data.email){
       usuario = await this.usuarioRepository.findOne({
-        where: { email: data.email }
+        where: { email: data.email.toLowerCase() }
       })
     }
 
@@ -118,6 +118,7 @@ export class UsuarioServices implements IUsuarioServices {
 
     const usuario = new Usuario({
       ...data, 
+      email: data.email.toLowerCase(),
       senha: hash_password,
       status: true,
       empresa: data.empresa,
