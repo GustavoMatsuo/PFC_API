@@ -99,7 +99,8 @@ export class ProdutoServices implements IProdutoServices {
       ...data, 
       fornecedor: newFornecedor, 
       categoria: newCategoria,
-      empresa_id: data.empresa
+      empresa_id: data.empresa,
+      desconto: data.desconto? data.desconto:0
     })
 
     await this.produtoRepository.update(data.id_produto, produto)
