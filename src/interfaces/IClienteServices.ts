@@ -4,5 +4,5 @@ import { IBasicCRUD } from "./IBasicCRUD"
 
 export interface IClienteServices extends Omit<IBasicCRUD, 'create'> {
   create(data:ICreateClienteDTO):Promise<Cliente>
-  update(data:IUpdateClienteDTO):Promise<void>
+  update(data:IUpdateClienteDTO):Promise<boolean>
 }

@@ -1,5 +1,5 @@
 import { Categoria } from "@models"
-import { ICategoriaServices } from "src/interfaces/ICategoriaServices"
+import { ICategoriaServices } from "@interfaces"
 import { CategoriaRepository } from "@repositories"
 import { ICreateCategoriaDTO, IUpdateCategoriaDTO } from "@dto/CategoriaDTO"
 

@@ -2,8 +2,8 @@ import { Endereco, Empresa } from "@models"
 import { IEmpresaServices } from "@interfaces"
 import { EmpresaRepository } from "@repositories"
 import { ICreateEmpresaDTO, IUpdateEmpresaDTO } from "@dto/EmpresaDTO"
-import { db } from "src/config/database"
-import { Paginationlist } from "src/globalTypes"
+import { db } from "../config/database"
+import { Paginationlist } from "../globalTypes"
 
 export class EmpresaServices implements IEmpresaServices {
   private empresaRepository: EmpresaRepository

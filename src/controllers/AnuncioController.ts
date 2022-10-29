@@ -1,5 +1,5 @@
 import { Response, Request } from "express"
-import { IAnuncioServices } from "src/interfaces/IAnuncioServices"
+import { IAnuncioServices } from "@interfaces"
 import { ICreateAnuncioDTO, IUpdateAnuncioDTO } from "@dto/AnuncioDTO"
 
 export class AnuncioController {

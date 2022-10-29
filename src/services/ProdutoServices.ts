@@ -2,7 +2,7 @@ import { Estoque, Produto } from "@models"
 import { IProdutoServices } from "@interfaces"
 import { CategoriaRepository, FornecedorRepository, ProdutoRepository } from "@repositories"
 import { ICreateProdutoDTO, IUpdateProdutoDTO } from "@dto/ProdutoDTO"
-import { Paginationlist } from "src/globalTypes"
+import { Paginationlist } from "../globalTypes"
 
 export class ProdutoServices implements IProdutoServices {
   private produtoRepository:ProdutoRepository

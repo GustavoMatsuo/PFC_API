@@ -3,7 +3,7 @@ import {
   IUpdateUsuarioDTO, 
   ILoginUsuarioDTO,
 } from "@dto/UsuarioDTO"
-import { Paginationlist } from "src/globalTypes"
+import { Paginationlist } from "../globalTypes"
 
 export type loginType = {
   token:string

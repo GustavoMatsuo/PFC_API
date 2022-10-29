@@ -1,5 +1,5 @@
 import { Response, Request } from "express"
-import { IEstoqueServices } from "src/interfaces/IEstoqueServices"
+import { IEstoqueServices } from "@interfaces"
 
 export class EstoqueController {
   private estoqueServices:IEstoqueServices

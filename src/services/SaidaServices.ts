@@ -2,7 +2,7 @@ import { Saida } from "@models"
 import { ISaidaServices } from "@interfaces"
 import { SaidaRepository } from "@repositories"
 import { ICreateSaidaDTO } from "@dto/SaidaDTO"
-import { Paginationlist } from "src/globalTypes"
+import { Paginationlist } from "../globalTypes"
 
 export class SaidaServices implements ISaidaServices {
   private saidaRepository: SaidaRepository

@@ -1,5 +1,5 @@
 import { ICreateSaidaDTO } from "@dto/SaidaDTO"
-import { Paginationlist } from "src/globalTypes"
+import { Paginationlist } from "../globalTypes"
 
 export interface ISaidaServices {
   create(data:ICreateSaidaDTO):Promise<void>
