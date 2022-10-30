@@ -8,3 +8,7 @@ export function fDateSimple(date:Date) {
 export function fDateMonthYear(date:Date) {
   return format(new Date(date), 'yyyy-MM', { locale: ptBR })
 }
+
+export function fDateTime(date) {
+  return format(new Date(date), 'dd MMM yyyy HH:mm', { locale: ptBR })
+}

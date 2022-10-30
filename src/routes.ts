@@ -112,6 +112,9 @@ router.route('/saida')
   .all(authMiddleware)
   .get((request, response) => saidaController.index(request, response))
   .post((request, response) => saidaController.create(request, response))
+router.route('/saida/relatorio')
+  .all(authMiddleware)
+  .get((request, response) => saidaController.getRelatorio(request, response))
 
 //ESTOQUE
 router.route('/estoque')
