@@ -26,6 +26,9 @@ export class Usuario {
   @Column()
   senha:string
 
+  @Column({default: false})
+  verificado:boolean
+
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
   @JoinColumn({ name: 'empresa_id' })
   empresa:string

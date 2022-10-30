@@ -1,8 +1,7 @@
 import { Usuario } from "@models"
 import { loginType } from "@interfaces"
-import { IUsuarioServices } from "@interfaces"
+import { IUsuarioServices, IMailProvider } from "@interfaces"
 import { UsuarioRepository } from "@repositories"
-import { IMailProvider } from '../providers/IMailProvider'
 import { 
   ICreateUsuarioDTO, 
   ILoginUsuarioDTO,
@@ -107,7 +106,7 @@ export class UsuarioServices implements IUsuarioServices {
 
   async create(data:ICreateUsuarioDTO):Promise<void> {
     const usuarioAlreadyExists = await this.usuarioRepository.findOneBy({
-      email: data.email
+      email: data.email.toLowerCase()
     })
 
     if (usuarioAlreadyExists) {
@@ -122,7 +121,8 @@ export class UsuarioServices implements IUsuarioServices {
       senha: hash_password,
       status: true,
       empresa: data.empresa,
-      empresa_id: data.empresa
+      empresa_id: data.empresa,
+      verificado: false
     })
 
     const usuarioRegistred = await this.usuarioRepository.save(usuario)
@@ -141,10 +141,6 @@ export class UsuarioServices implements IUsuarioServices {
         name: usuarioRegistred.nome,
         email: usuarioRegistred.email,
       },
-      from: {
-        name: 'Equipe TAG',
-        email: 'equipe@tag.com',
-      },
       subject: 'Verificação de conta',
       body: templateEmail
     })
@@ -153,7 +149,7 @@ export class UsuarioServices implements IUsuarioServices {
   async update(data:IUpdateUsuarioDTO):Promise<void> {
     const usuarioExists = await this.usuarioRepository.findOneBy({id_usuario: data.id_usuario})
 
-    if (!usuarioExists) {
+    if (!usuarioExists || !(usuarioExists.id_usuario === data.id_usuario)) {
       throw new Error('Usuario not found.')
     }
 
@@ -174,65 +170,68 @@ export class UsuarioServices implements IUsuarioServices {
     await this.usuarioRepository.update(data.id_usuario, usuario)
   }
 
-  async delete(id:string):Promise<void> {
-    const usuarioExists = await this.usuarioRepository.findBy({id_usuario: id})
-
-    if (!usuarioExists) {
-      throw new Error('Usuario not found.')
-    }
-
-    await this.usuarioRepository.delete(id)
-  }
-
-  async changeStatus(id:string, empresaId:string):Promise<void> {
-    let usuarioExists = await this.usuarioRepository.findOneBy({
-      id_usuario: id, 
+  async delete(userId:string, empresaId:string):Promise<void> {
+    const usuarioExists = await this.usuarioRepository.findOneBy({
+      id_usuario: userId, 
       empresa_id: empresaId
     })
 
-    if (!usuarioExists) {
+    if (!usuarioExists || !(usuarioExists.id_usuario === userId)) {
+      throw new Error('Usuario not found.')
+    }
+
+    if (usuarioExists.verificado) {
+      throw new Error('Usuario is not able to delete.')
+    }
+
+    await this.usuarioRepository.delete(userId)
+  }
+
+  async changeStatus(userId:string, empresaId:string):Promise<void> {
+    let usuarioExists = await this.usuarioRepository.findOneBy({
+      id_usuario: userId, 
+      empresa_id: empresaId
+    })
+
+    if (!usuarioExists || !(usuarioExists.id_usuario === userId)) {
       throw new Error('Usuario not found.')
     }
 
     usuarioExists.status = !usuarioExists.status
 
-    await this.usuarioRepository.update(id, usuarioExists)
+    await this.usuarioRepository.update(userId, usuarioExists)
   }
 
   async reset(email:string):Promise<void> {
-    let usuario:Usuario = null
+    let usuarioExists:Usuario = null
     
     if(email){
-      usuario = await this.usuarioRepository.findOne({
+      usuarioExists = await this.usuarioRepository.findOne({
         where: { email: email }
       })
     }
 
-    if(!usuario) {
+    if (!usuarioExists || !(usuarioExists.email === email)) {
       throw new Error('Usuario not found.')
     }
 
-    if(!usuario.status){
+    if(!usuarioExists.status){
       throw new Error('Usuario disabled.')
     }
 
-    const token = sign({id: usuario.id_usuario}, "secret", { expiresIn: "1h" })
+    const token = sign({id: usuarioExists.id_usuario}, "secret", { expiresIn: "1h" })
 
     const urlReset = `${API_URL}/reset/${token}`
     
     const templateEmail = resetPassword
-      .replaceAll("{{email}}", usuario.email)
-      .replaceAll("{{nome}}", usuario.nome)
+      .replaceAll("{{email}}", usuarioExists.email)
+      .replaceAll("{{nome}}", usuarioExists.nome)
       .replaceAll("{{link}}", urlReset)
 
     await this.mailProvider.sendMail({
       to: {
-        name: usuario.nome,
-        email: usuario.email,
-      },
-      from: {
-        name: 'Equipe do Meu App',
-        email: 'equipe@meuapp.com',
+        name: usuarioExists.nome,
+        email: usuarioExists.email,
       },
       subject: 'Soliciatcão de nova senha',
       body: templateEmail
@@ -248,6 +247,7 @@ export class UsuarioServices implements IUsuarioServices {
     
     const hash_password = await hash(senha, 8)
     usuarioExists.senha = hash_password
+    usuarioExists.verificado = true
 
     await this.usuarioRepository.update(usuarioExists.id_usuario, usuarioExists)
   }

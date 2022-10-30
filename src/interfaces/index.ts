@@ -10,6 +10,7 @@ import { IVendaServices } from "./IVendaServices"
 import { IEmpresaServices } from "./IEmpresaServices"
 import { IAnuncioServices } from "./IAnuncioServices"
 import { ICategoriaServices } from "./ICategoriaServices"
+import { IMailProvider, IMessage } from "./IMailProvider"
 
 export {
   IBasicCRUD,
@@ -23,7 +24,9 @@ export {
   IVendaServices,
   IEmpresaServices,
   IAnuncioServices,
-  ICategoriaServices
+  ICategoriaServices,
+  IMailProvider,
+  IMessage
 }
 
 export {

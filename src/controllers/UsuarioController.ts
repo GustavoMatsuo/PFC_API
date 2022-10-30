@@ -79,7 +79,7 @@ export class UsuarioController {
 
   async update(request:Request, response:Response):Promise<Response> {
     try {
-      const { id_usuario, nome, status, email, cargo, senha } = request.body
+      const { id_usuario, nome, status, email, cargo, senha, verificado } = request.body
       const usuario:IUpdateUsuarioDTO = {
         id_usuario, 
         nome, 
@@ -87,7 +87,8 @@ export class UsuarioController {
         email, 
         cargo, 
         senha,
-        empresa: request.empresaId
+        empresa: request.empresaId,
+        verificado
       }
 
       await this.usuarioServices.update(usuario)
@@ -102,9 +103,11 @@ export class UsuarioController {
 
   async delete(request:Request, response:Response):Promise<Response> {    
     try {
-      const { id } = request.body
+      const { id } = request.query
 
-      await this.usuarioServices.delete(id)
+      const formattedId = id? String(id) : null
+
+      await this.usuarioServices.delete(formattedId, request.empresaId)
   
       return response.status(200).json({msg: "usuario deleted"})
     } catch (err) {
@@ -200,7 +203,7 @@ export class UsuarioController {
 
   async updateAdm(request:Request, response:Response):Promise<Response> {
     try {
-      const { id_usuario, nome, status, email, cargo, senha, empresa } = request.body
+      const { id_usuario, nome, status, email, cargo, senha, empresa, verificado } = request.body
       const usuario:IUpdateUsuarioDTO = {
         id_usuario, 
         nome, 
@@ -208,7 +211,8 @@ export class UsuarioController {
         email, 
         cargo, 
         senha,
-        empresa
+        empresa,
+        verificado
       }
 
       await this.usuarioServices.update(usuario)

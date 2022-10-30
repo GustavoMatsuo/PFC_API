@@ -14,6 +14,7 @@ export interface IUpdateUsuarioDTO {
   email:string
   senha?:string
   empresa:string
+  verificado:boolean
 }
 
 export interface ILoginUsuarioDTO {

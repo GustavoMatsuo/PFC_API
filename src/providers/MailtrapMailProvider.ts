@@ -1,4 +1,4 @@
-import { IMailProvider, IMessage } from "../IMailProvider"
+import { IMailProvider, IMessage } from "@interfaces"
 import nodemailer from 'nodemailer'
 import Mail from "nodemailer/lib/mailer"
 
@@ -7,11 +7,10 @@ export class MailtrapMailProvider implements IMailProvider {
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-      host: "smtp.mailtrap.io",
-      port: 2525,
+      service: "hotmail",
       auth: {
-        user: "04ab7f53b1dd2c",
-        pass: "0950332b4dd5ca"
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     })
   }
@@ -23,8 +22,8 @@ export class MailtrapMailProvider implements IMailProvider {
         address: message.to.email,
       },
       from: {
-        name: message.from.name,
-        address: message.from.email,
+        name: process.env.EMIAL_NAME,
+        address: process.env.EMAIL_USER
       },
       subject: message.subject,
       html: message.body,
