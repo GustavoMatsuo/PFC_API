@@ -1,5 +1,5 @@
 import { ICreateProdutoDTO, IUpdateProdutoDTO } from "@dto/ProdutoDTO"
-import { Paginationlist } from "src/globalTypes"
+import { Paginationlist } from "../globalTypes"
 
 export interface IProdutoServices {
   index(

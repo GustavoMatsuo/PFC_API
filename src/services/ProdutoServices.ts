@@ -2,7 +2,7 @@ import { Estoque, Produto } from "@models"
 import { IProdutoServices } from "@interfaces"
 import { CategoriaRepository, FornecedorRepository, ProdutoRepository } from "@repositories"
 import { ICreateProdutoDTO, IUpdateProdutoDTO } from "@dto/ProdutoDTO"
-import { Paginationlist } from "src/globalTypes"
+import { Paginationlist } from "../globalTypes"
 
 export class ProdutoServices implements IProdutoServices {
   private produtoRepository:ProdutoRepository
@@ -99,7 +99,8 @@ export class ProdutoServices implements IProdutoServices {
       ...data, 
       fornecedor: newFornecedor, 
       categoria: newCategoria,
-      empresa_id: data.empresa
+      empresa_id: data.empresa,
+      desconto: data.desconto? data.desconto:0
     })
 
     await this.produtoRepository.update(data.id_produto, produto)

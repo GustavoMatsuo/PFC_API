@@ -32,10 +32,14 @@ export class ClienteServices implements IClienteServices {
       empresa_id: empresa
     })
 
+    if (!cliente) {
+      throw new Error('Cliente not found.')
+    }
+
     return cliente
   }
 
-  async update(data:IUpdateClienteDTO):Promise<void> {
+  async update(data:IUpdateClienteDTO):Promise<boolean> {
     const clienteExists = await this.clienteRepository.findOneBy({
       id_cliente: data.id_cliente,
       empresa_id: data.empresa
@@ -46,16 +50,18 @@ export class ClienteServices implements IClienteServices {
     }
 
 
-    await this.clienteRepository.update(
+    const result = await this.clienteRepository.update(
       data.id_cliente, 
       {
         ...data,
         empresa_id: data.empresa
       }
     )
+
+    return !!result.affected
   }
 
-  async delete(id:string, empresa: string):Promise<void> {
+  async delete(id:string, empresa: string):Promise<boolean> {
     const clienteExists = await this.clienteRepository.findOneBy({
       id_cliente: id,
       empresa_id: empresa
@@ -65,7 +71,9 @@ export class ClienteServices implements IClienteServices {
       throw new Error('Cliente not found.')
     }
 
-    await this.clienteRepository.delete(id)
+    const result = await this.clienteRepository.delete(id)
+
+    return !!result.affected
   }
 
   async index(empresa:string):Promise<Array<Cliente>> {

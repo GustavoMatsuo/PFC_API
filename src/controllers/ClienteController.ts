@@ -1,5 +1,5 @@
 import { Response, Request } from "express"
-import { IClienteServices } from "src/interfaces/IClienteServices"
+import { IClienteServices } from "@interfaces"
 import { ICreateClienteDTO, IUpdateClienteDTO } from "@dto/ClienteDTO"
 
 export class ClienteController {

@@ -1,12 +1,17 @@
 import { Usuario } from "@models"
+import { loginType } from "@interfaces"
 import { IUsuarioServices } from "@interfaces"
-import { IMailProvider } from '../providers/IMailProvider'
-import { ICreateUsuarioDTO, ILoginUsuarioDTO, IUpdateUsuarioDTO } from '@dto/UsuarioDTO'
 import { UsuarioRepository } from "@repositories"
-import { Paginationlist } from "src/globalTypes"
+import { IMailProvider } from '../providers/IMailProvider'
+import { 
+  ICreateUsuarioDTO, 
+  ILoginUsuarioDTO,
+  IUpdateUsuarioDTO 
+} from '@dto/UsuarioDTO'
+import { Paginationlist } from "../globalTypes"
 import { hash, compare } from "bcryptjs"
 import { sign } from "jsonwebtoken"
-import { loginType } from "src/interfaces/IUsuarioServices"
+
 import { resetPassword } from "../templates/resetPassword"
 import { newUser } from "../templates/newUser"
 
@@ -63,7 +68,7 @@ export class UsuarioServices implements IUsuarioServices {
     
     if(data.email){
       usuario = await this.usuarioRepository.findOne({
-        where: { email: data.email }
+        where: { email: data.email.toLowerCase() }
       })
     }
 
@@ -113,6 +118,7 @@ export class UsuarioServices implements IUsuarioServices {
 
     const usuario = new Usuario({
       ...data, 
+      email: data.email.toLowerCase(),
       senha: hash_password,
       status: true,
       empresa: data.empresa,

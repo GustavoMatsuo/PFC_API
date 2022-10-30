@@ -1,5 +1,5 @@
 import { Response, Request } from "express"
-import { IEntradaServices } from "src/interfaces/IEntradaServices"
+import { IEntradaServices } from "@interfaces"
 import { ICreateEntradaDTO } from "@dto/EntradaDTO"
 
 export class EntradaController {

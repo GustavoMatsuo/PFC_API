@@ -1,5 +1,5 @@
 import { Response, Request } from "express"
-import { ICategoriaServices } from "src/interfaces/ICategoriaServices"
+import { ICategoriaServices } from "@interfaces"
 import { ICreateCategoriaDTO, IUpdateCategoriaDTO } from "@dto/CategoriaDTO"
 
 export class CategoriaController {

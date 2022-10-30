@@ -1,7 +1,7 @@
 import { Entrada, Estoque, Produto, Saida } from "@models"
 import { IEstoqueServices } from "@interfaces"
 import { EstoqueRepository } from "@repositories"
-import { fDateSimple } from "src/utils/formatTime"
+import { fDateSimple } from "../utils/formatTime"
 import ExcelJS from 'exceljs'
 
 export class EstoqueServices implements IEstoqueServices {

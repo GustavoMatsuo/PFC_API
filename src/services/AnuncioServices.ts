@@ -1,5 +1,5 @@
 import { Anuncio } from "@models"
-import { IAnuncioServices } from "src/interfaces/IAnuncioServices"
+import { IAnuncioServices } from "@interfaces"
 import { AnuncioRepository } from "@repositories"
 import { ICreateAnuncioDTO, IUpdateAnuncioDTO } from "@dto/AnuncioDTO"
 

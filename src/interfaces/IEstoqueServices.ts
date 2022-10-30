@@ -1,4 +1,4 @@
-import { Estoque } from "src/models/Estoque"
+import { Estoque } from "@models"
 import ExcelJS from 'exceljs'
 
 export interface IEstoqueServices {

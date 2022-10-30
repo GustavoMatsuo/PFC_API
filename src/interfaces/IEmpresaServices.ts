@@ -1,5 +1,5 @@
 import { ICreateEmpresaDTO, IUpdateEmpresaDTO } from "@dto/EmpresaDTO"
-import { Paginationlist } from "src/globalTypes"
+import { Paginationlist } from "../globalTypes"
 
 export interface IEmpresaServices {
   index(
