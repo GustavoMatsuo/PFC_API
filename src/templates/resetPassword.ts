@@ -4,7 +4,7 @@ export const resetPassword:string = `
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Password Reset</title>
+<title>New User</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style type="text/css">
   @media screen {
@@ -29,12 +29,6 @@ export const resetPassword:string = `
   a {
     -ms-text-size-adjust: 100%; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
-  }
-
-  table,
-  td {
-    mso-table-rspace: 0pt;
-    mso-table-lspace: 0pt;
   }
 
   img {
@@ -87,9 +81,9 @@ export const resetPassword:string = `
       <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
         <tr>
           <td align="center" valign="top" style="padding: 36px 24px;">
-            <!-- <a href="https://sendgrid.com" target="_blank" style="display: inline-block;">
-              <img src="./img/paste-logo-light@2x.png" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
-            </a> -->
+            <a href="http://tag-project.azurewebsites.net" target="_blank" style="display: inline-block;">
+              <img src="https://i.imgur.com/LoKB5bX.png" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
+            </a>
           </td>
         </tr>
       </table>
@@ -102,8 +96,8 @@ export const resetPassword:string = `
     <td align="center" bgcolor="#e9ecef">
       <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
         <tr>
-          <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;">
-            <h1 style="margin: 0px; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Redefina sua senha</h1>
+          <td align="left" bgcolor="#ffffff" style="border-radius: 16px 16px 0px 0px; padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;">
+            <h1 style="margin: 0px; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Bem vindo !</h1>
           </td>
         </tr>
       </table>
@@ -122,7 +116,7 @@ export const resetPassword:string = `
             <p style="margin: 0px;">
               Olá {{nome}}
               <br/>
-              Alguém solicitou um link para alterar sua senha. Você pode fazer isso através do botão abaixo.
+              Parece que você foi cadastrado no nosso sistema e para finalizar o processo precisamos que você crie uma senha.
             </p>
           </td>
         </tr>
@@ -138,7 +132,7 @@ export const resetPassword:string = `
                     <tr>
                       <td align="center" bgcolor="#2065D1" style="border-radius: 6px;">
                         <a href="{{link}}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">
-                          Nova senha
+                          Finalizar cadastro
                         </a>
                       </td>
                     </tr>
@@ -161,8 +155,9 @@ export const resetPassword:string = `
 
         <!-- start copy -->
         <tr>
-          <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-            <p style="margin: 0px;">Obrigado,<br> NOME DA EMPRESA</p>
+          <td align="left" bgcolor="#ffffff" style="border-radius: 0px 0px 16px 16px; padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
+            <p style="margin: 0px;">Obrigado,</p>
+            <p style="margin: 0px; font-weight: bold;">Equipe TAG</p>
           </td>
         </tr>
         <!-- end copy -->
@@ -181,7 +176,7 @@ export const resetPassword:string = `
         <tr>
           <td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
             <p style="margin: 0px;">
-              Você recebeu este e-mail porque recebemos uma solicitação de redefinição de senha para sua conta. Se você não solicitou esta ação, pode excluir este e-mail com segurança.
+              Você recebeu este e-mail porque recebemos uma solicitação de criação de conta. Se você não solicitou esta ação, pode excluir este e-mail com segurança.
             </p>
           </td>
         </tr>

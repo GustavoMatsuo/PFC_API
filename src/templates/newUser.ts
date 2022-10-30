@@ -81,9 +81,9 @@ export const newUser:string = `
       <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
         <tr>
           <td align="center" valign="top" style="padding: 36px 24px;">
-            <!-- <a href="https://sendgrid.com" target="_blank" style="display: inline-block;"> -->
-              <img src="./img/icon.png" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
-            <!-- </a> -->
+            <a href="http://tag-project.azurewebsites.net" target="_blank" style="display: inline-block;">
+              <img src="https://i.imgur.com/LoKB5bX.png" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
+            </a>
           </td>
         </tr>
       </table>
@@ -116,7 +116,7 @@ export const newUser:string = `
             <p style="margin: 0px;">
               Olá {{nome}}
               <br/>
-              Parece que você foi cadastrado no nosso sistema e para finalizar o processo precismos que você crie uma senha.
+              Parece que você foi cadastrado no nosso sistema e para finalizar o processo precisamos que você crie uma senha.
             </p>
           </td>
         </tr>
@@ -157,7 +157,7 @@ export const newUser:string = `
         <tr>
           <td align="left" bgcolor="#ffffff" style="border-radius: 0px 0px 16px 16px; padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
             <p style="margin: 0px;">Obrigado,</p>
-            <p style="margin: 0px; font-weight: bold;">TAG</p>
+            <p style="margin: 0px; font-weight: bold;">Equipe TAG</p>
           </td>
         </tr>
         <!-- end copy -->
@@ -176,7 +176,7 @@ export const newUser:string = `
         <tr>
           <td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
             <p style="margin: 0px;">
-              Você recebeu este e-mail porque recebemos uma solicitação de redefinição de senha para sua conta. Se você não solicitou esta ação, pode excluir este e-mail com segurança.
+              Você recebeu este e-mail porque recebemos uma solicitação de criação de conta. Se você não solicitou esta ação, pode excluir este e-mail com segurança.
             </p>
           </td>
         </tr>
