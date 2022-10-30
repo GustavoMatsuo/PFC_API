@@ -1,6 +1,15 @@
 import { ICreateProdutoDTO, IUpdateProdutoDTO } from "@dto/ProdutoDTO"
 import { Paginationlist } from "../globalTypes"
 
+export type simpleProdutoType = {
+  id_produto:string
+  nome:string
+  codigo:string
+  valor_unitario:number
+  desconto:number
+  estoque:number
+}
+
 export interface IProdutoServices {
   index(
     empresa:string,

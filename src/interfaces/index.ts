@@ -1,6 +1,6 @@
 import { IBasicCRUD } from "./IBasicCRUD"
 import { IFornecedorServices } from "./IFornecedorServices"
-import { IProdutoServices } from "./IProdutoServices"
+import { IProdutoServices, simpleProdutoType } from "./IProdutoServices"
 import { IUsuarioServices, loginType } from "./IUsuarioServices"
 import { IEntradaServices } from "./IEntradaServices"
 import { IClienteServices } from "./IClienteServices"
@@ -30,5 +30,6 @@ export {
 }
 
 export {
-  loginType
+  loginType,
+  simpleProdutoType
 }

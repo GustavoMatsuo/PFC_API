@@ -1,5 +1,5 @@
 import { Estoque, Produto } from "@models"
-import { IProdutoServices } from "@interfaces"
+import { IProdutoServices, simpleProdutoType } from "@interfaces"
 import { CategoriaRepository, FornecedorRepository, ProdutoRepository } from "@repositories"
 import { ICreateProdutoDTO, IUpdateProdutoDTO } from "@dto/ProdutoDTO"
 import { Paginationlist } from "../globalTypes"
@@ -121,17 +121,32 @@ export class ProdutoServices implements IProdutoServices {
     await this.produtoRepository.update(id, produtoExists)
   }
 
-  async simpleList(empresa:string):Promise<Array<Object>> {
-    const produtoList = await this.produtoRepository
+  async simpleList(empresa:string):Promise<simpleProdutoType[]> {
+    const produtoList:Array<any> = await this.produtoRepository
       .createQueryBuilder("produto")
       .select("produto.id_produto")
       .addSelect("produto.nome")
       .addSelect("produto.codigo")
       .addSelect("produto.valor_unitario")
       .addSelect("produto.desconto")
+      .innerJoinAndMapOne(
+        "produto.estoque",
+        Estoque,
+        "estoque",
+        "estoque.produto = produto.id_produto",
+      )
       .where("produto.empresa_id = :empresa", { empresa })
       .getMany()
 
-    return produtoList
+    const formattedList:simpleProdutoType[] = []
+
+    produtoList.map(item => {
+      formattedList.push({
+        ...item,
+        estoque: item.estoque.qtd
+      })
+    })
+    
+    return formattedList
   }
 }
