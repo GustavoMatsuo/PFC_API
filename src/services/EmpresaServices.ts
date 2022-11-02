@@ -1,53 +1,36 @@
 import { Endereco, Empresa } from "@models"
 import { IEmpresaServices } from "@interfaces"
-import { EmpresaRepository } from "@repositories"
-import { ICreateEmpresaDTO, IUpdateEmpresaDTO } from "@dto/EmpresaDTO"
-import { db } from "../config/database"
+import { CreateEmpresaDTO, UpdateEmpresaDTO } from "@dto/EmpresaDTO"
 import { Paginationlist } from "../globalTypes"
+import { IEmpresaRepository } from "src/interfaces/Repositories/IEmpresaRepository"
 
 export class EmpresaServices implements IEmpresaServices {
-  private empresaRepository: EmpresaRepository
+  private empresaRepository: IEmpresaRepository
 
-  constructor(empresaRepository:EmpresaRepository) {
+  constructor(empresaRepository:IEmpresaRepository) {
     this.empresaRepository = empresaRepository
   }
 
   async index(
-    limit:string, 
-    skip:string, 
+    limit:number, 
+    skip:number, 
     filterBy:string,
     order:string,
     orderBy:string
   ):Promise<Paginationlist> {
-    const limitNum = limit? Number.parseInt(limit) : null
-    const skipNum = skip? Number.parseInt(skip) : null
+    const empresaList = this.empresaRepository.listEmpresa(
+      limit, 
+      skip, 
+      filterBy,
+      order,
+      orderBy
+    )
 
-    const query = this.empresaRepository
-      .createQueryBuilder("empresa")
-      .leftJoinAndSelect("empresa.endereco", "endereco.id_endereco")
-      .take(limitNum)
-      .skip(skipNum)
-
-    if(filterBy) {
-      query.where("LOWER(empresa.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
-    }
-
-    if(order && orderBy) {
-      const descOrAsc = String(order).toUpperCase() === "DESC"? "DESC":"ASC"
-      query.orderBy(`empresa.${orderBy}`, descOrAsc)
-    }
-
-    const empresaList = await query.getMany()
-
-    const sumRow = await query.getCount()
-
-    return {list: empresaList, total: sumRow}
+    return empresaList
   }
 
-  async create(data:ICreateEmpresaDTO):Promise<void> {
-    const empresaAlreadyExists = await this.empresaRepository.findOneBy({
-      cnpj: data.cnpj
-    })
+  async create(data:CreateEmpresaDTO):Promise<void> {
+    const empresaAlreadyExists = await this.empresaRepository.findByCNPJ(data.cnpj)
 
     if (empresaAlreadyExists) {
       throw new Error('empresa already exists.')
@@ -56,24 +39,21 @@ export class EmpresaServices implements IEmpresaServices {
     const endereco = new Endereco(data.endereco)
     const empresa = new Empresa({...data, endereco, status: true})
 
-    await this.empresaRepository.save(empresa)
+    await this.empresaRepository.saveEmpresa(empresa)
   }
 
-  async update(data:IUpdateEmpresaDTO):Promise<void> {
-    const empresaExists = await this.empresaRepository.findOneBy({id_empresa: data.id_empresa})
+  async update(data:UpdateEmpresaDTO):Promise<void> {
+    const empresaExists = await this.empresaRepository.findById(data.id_empresa)
 
     if (!empresaExists) {
       throw new Error('Empresa not found.')
     }
 
-    await db.manager.transaction(async entityManager => { 
-      await entityManager.update(Endereco, data.endereco.id_endereco, data.endereco)
-      await entityManager.update(Empresa, data.id_empresa, data) 
-    })
+    await this.empresaRepository.updateEmpresa(data, data.endereco)
   }
 
   async changeStatus(id:string):Promise<void> {
-    let empresaExists = await this.empresaRepository.findOneBy({id_empresa: id})
+    let empresaExists = await this.empresaRepository.findById(id)
 
     if (!empresaExists) {
       throw new Error('Empresa not found.')
@@ -81,6 +61,6 @@ export class EmpresaServices implements IEmpresaServices {
 
     empresaExists.status = !empresaExists.status
 
-    await this.empresaRepository.update(id, empresaExists)
+    await this.empresaRepository.updateEmpresaSimple(empresaExists)
   }
 }

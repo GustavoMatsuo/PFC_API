@@ -15,7 +15,7 @@ export interface ICreateFornecedorDTO {
   empresa:string
 }
 
-export interface IEnderecoUpdateDTO {
+export interface EnderecoUpdateDTO {
   id_endereco:string
   rua:string
   numero:string
@@ -31,6 +31,6 @@ export interface IUpdateFornecedorDTO {
   email:string
   cnpj:number
   status:boolean
-  endereco:IEnderecoUpdateDTO
+  endereco:EnderecoUpdateDTO
   empresa:string
 }

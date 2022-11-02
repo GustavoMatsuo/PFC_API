@@ -1,6 +1,6 @@
 import { IEnderecoDTO } from "./FornecedorDTO"
 
-export interface ICreateEmpresaDTO {
+export class CreateEmpresaDTO {
   nome:string
   cnpj:number
   cel:number
@@ -8,7 +8,7 @@ export interface ICreateEmpresaDTO {
   endereco:IEnderecoDTO
 }
 
-export interface IEnderecoUpdateDTO {
+export class EnderecoUpdateDTO {
   id_endereco:string
   rua:string
   numero:string
@@ -18,12 +18,12 @@ export interface IEnderecoUpdateDTO {
   uf:string
 }
 
-export interface IUpdateEmpresaDTO {
+export class UpdateEmpresaDTO {
   id_empresa:string
   nome:string
   cnpj:number
   cel:number
   email:string
-  endereco:IEnderecoUpdateDTO
+  endereco:EnderecoUpdateDTO
   status:boolean
 }

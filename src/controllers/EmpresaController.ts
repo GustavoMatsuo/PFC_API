@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { IEmpresaServices } from '@interfaces'
-import { ICreateEmpresaDTO, IUpdateEmpresaDTO } from "@dto/EmpresaDTO"
+import { CreateEmpresaDTO, UpdateEmpresaDTO } from "@dto/EmpresaDTO"
 
 export class EmpresaController {
   private empresaServices:IEmpresaServices
@@ -12,8 +12,8 @@ export class EmpresaController {
   async index(request:Request, response:Response):Promise<Response> {
     try {
       const { limit, skip, filterBy, order, orderBy } = request.query
-      const formattedLimit = limit? String(limit) : null
-      const formattedSkip = skip?  String(skip) : null
+      const formattedLimit = limit? Number(limit) : null
+      const formattedSkip = skip?  Number(skip) : null
       const formattedFilterBy = filterBy? String(filterBy) : null
       const formattedOrder = order? String(order) : null
       const formattedOrderBy = orderBy?  String(orderBy) : null
@@ -37,7 +37,7 @@ export class EmpresaController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { nome, email, cel, cnpj, endereco } = request.body
-      const empresa:ICreateEmpresaDTO = {nome, email, cel, cnpj, endereco}
+      const empresa:CreateEmpresaDTO = {nome, email, cel, cnpj, endereco}
 
       await this.empresaServices.create(empresa)
   
@@ -52,7 +52,7 @@ export class EmpresaController {
   async update(request:Request, response:Response):Promise<Response> {
     try {
       const { id_empresa, nome, email, cel, cnpj, status, endereco } = request.body
-      const empresa:IUpdateEmpresaDTO = { id_empresa, nome, email, cel, cnpj, status, endereco }
+      const empresa:UpdateEmpresaDTO = { id_empresa, nome, email, cel, cnpj, status, endereco }
 
       await this.empresaServices.update(empresa)
   
