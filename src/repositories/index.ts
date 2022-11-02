@@ -31,12 +31,10 @@ const enderecoRepository = db.getRepository(Endereco)
 const fornecedorRepository = db.getRepository(Fornecedor)
 const produtoRepository = db.getRepository(Produto)
 const entradaRepository = db.getRepository(Entrada)
-const clienteRepository = db.getRepository(Cliente)
 const saidaRepository = db.getRepository(Saida)
 const estoqueRepository = db.getRepository(Estoque)
 const vendaRepository = db.getRepository(Venda)
 const empresaRepository = db.getRepository(Empresa)
-const anuncioRepository = db.getRepository(Anuncio)
 
 export {
   usuarioRepository,
@@ -44,12 +42,10 @@ export {
   fornecedorRepository,
   produtoRepository,
   entradaRepository,
-  clienteRepository,
   saidaRepository,
   estoqueRepository,
   vendaRepository,
   empresaRepository,
-  anuncioRepository
 }
 
 export {
@@ -58,18 +54,25 @@ export {
   FornecedorRepository,
   ProdutoRepository,
   EntradaRepository,
-  ClienteRepository,
   SaidaRepository,
   EstoqueRepository,
   VendaRepository,
   EmpresaRepository,
-  AnuncioRepository
 }
 
 const categoriaRepository = new CategoriaRepository(
   db.getRepository(Categoria)
 )
+const anuncioRepository = new AnuncioRepository(
+  db.getRepository(Anuncio)
+)
+
+const clienteRepository = new ClienteRepository(
+  db.getRepository(Cliente)
+)
 
 export {
-  categoriaRepository
+  categoriaRepository,
+  anuncioRepository,
+  clienteRepository
 }

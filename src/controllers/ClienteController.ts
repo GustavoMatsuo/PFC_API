@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { IClienteServices } from "@interfaces"
-import { ICreateClienteDTO, IUpdateClienteDTO } from "@dto/ClienteDTO"
+import { CreateClienteDTO, UpdateClienteDTO } from "@dto/ClienteDTO"
 
 export class ClienteController {
   private clienteServices:IClienteServices
@@ -12,7 +12,7 @@ export class ClienteController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { nome, cpf, cel } = request.body
-      const cliente:ICreateClienteDTO = { 
+      const cliente:CreateClienteDTO = { 
         nome, 
         cpf, 
         cel,
@@ -47,7 +47,7 @@ export class ClienteController {
   async update(request:Request, response:Response):Promise<Response> {
     try {
       const { id_cliente, nome, cpf, cel } = request.body
-      const cliente:IUpdateClienteDTO = { 
+      const cliente:UpdateClienteDTO = { 
         id_cliente,
         nome,
         cpf,

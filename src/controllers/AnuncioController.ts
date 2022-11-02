@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { IAnuncioServices } from "@interfaces"
-import { ICreateAnuncioDTO, IUpdateAnuncioDTO } from "@dto/AnuncioDTO"
+import { CreateAnuncioDTO, UpdateAnuncioDTO } from "@dto/AnuncioDTO"
 
 export class AnuncioController {
   private anuncioServices:IAnuncioServices
@@ -12,7 +12,7 @@ export class AnuncioController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { titulo, texto } = request.body
-      const anuncio:ICreateAnuncioDTO = { 
+      const anuncio:CreateAnuncioDTO = { 
         titulo,
         texto,
         usuario: request.userId,
@@ -50,7 +50,7 @@ export class AnuncioController {
   async update(request:Request, response:Response):Promise<Response> {
     try {
       const { id_anuncio, titulo, texto } = request.body
-      const anuncio:IUpdateAnuncioDTO = {
+      const anuncio:UpdateAnuncioDTO = {
         id_anuncio,
         titulo,
         texto,

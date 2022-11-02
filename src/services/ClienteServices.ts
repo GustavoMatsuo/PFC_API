@@ -1,36 +1,33 @@
 import { Cliente } from "@models"
 import { IClienteServices } from "@interfaces"
-import { ClienteRepository } from "@repositories"
-import { ICreateClienteDTO, IUpdateClienteDTO } from "@dto/ClienteDTO"
+import { CreateClienteDTO, UpdateClienteDTO } from "@dto/ClienteDTO"
+import { IClienteRepository } from "src/interfaces/Repositories/IClienteRepository"
 
 export class ClienteServices implements IClienteServices {
-  private clienteRepository: ClienteRepository
+  private clienteRepository: IClienteRepository
 
-  constructor(clienteRepository:ClienteRepository) {
+  constructor(clienteRepository:IClienteRepository) {
     this.clienteRepository = clienteRepository
   }
 
-  async create(data:ICreateClienteDTO):Promise<Cliente> {
-    const clienteAlreadyExists = await this.clienteRepository.findOneBy({
-      cpf: data.cpf,
-      empresa_id: data.empresa
-    })
+  async create(data:CreateClienteDTO):Promise<Cliente> {
+    const clienteAlreadyExists = await this.clienteRepository.findByCPF(
+      data.cpf,
+      data.empresa
+    )
 
     if (clienteAlreadyExists) {
       throw new Error('Cliente already exists.')
     }
     const cliente = new Cliente({ ...data, empresa_id: data.empresa })
 
-    const newCliente = await this.clienteRepository.save(cliente)
+    const newCliente = await this.clienteRepository.saveCliente(cliente)
 
     return newCliente
   }
 
   async read(id:string, empresa: string):Promise<Cliente> {    
-    const cliente = await this.clienteRepository.findOneBy({
-      id_cliente: id,
-      empresa_id: empresa
-    })
+    const cliente = await this.clienteRepository.findById(id, empresa)
 
     if (!cliente) {
       throw new Error('Cliente not found.')
@@ -39,47 +36,36 @@ export class ClienteServices implements IClienteServices {
     return cliente
   }
 
-  async update(data:IUpdateClienteDTO):Promise<boolean> {
-    const clienteExists = await this.clienteRepository.findOneBy({
-      id_cliente: data.id_cliente,
+  async update(data:UpdateClienteDTO):Promise<boolean> {
+    const clienteExists = await this.clienteRepository.findById(
+      data.id_cliente,
+      data.empresa
+    )
+
+    if (!clienteExists) {
+      throw new Error('Cliente not found.')
+    }
+
+    const cliente = new Cliente({
+      ...data, 
       empresa_id: data.empresa
     })
 
-    if (!clienteExists) {
-      throw new Error('Cliente not found.')
-    }
-
-
-    const result = await this.clienteRepository.update(
-      data.id_cliente, 
-      {
-        ...data,
-        empresa_id: data.empresa
-      }
-    )
-
-    return !!result.affected
+    return await this.clienteRepository.updateCliente(cliente)
   }
 
   async delete(id:string, empresa: string):Promise<boolean> {
-    const clienteExists = await this.clienteRepository.findOneBy({
-      id_cliente: id,
-      empresa_id: empresa
-    })
+    const clienteExists = await this.clienteRepository.findById(id, empresa)
 
     if (!clienteExists) {
       throw new Error('Cliente not found.')
     }
 
-    const result = await this.clienteRepository.delete(id)
-
-    return !!result.affected
+    return await this.clienteRepository.delete(id)
   }
 
   async index(empresa:string):Promise<Array<Cliente>> {
-    const clienteList = await this.clienteRepository.findBy({
-      empresa_id: empresa
-    })
+    const clienteList = await this.clienteRepository.listCliente(empresa)
 
     return clienteList
   }

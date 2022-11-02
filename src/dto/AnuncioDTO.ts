@@ -1,11 +1,11 @@
-export interface ICreateAnuncioDTO {
+export class CreateAnuncioDTO {
   titulo:string
   texto:string
   usuario: string
   empresa:string
 }
 
-export interface IUpdateAnuncioDTO {
+export class UpdateAnuncioDTO {
   id_anuncio:string
   titulo:string
   texto:string

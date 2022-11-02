@@ -1,16 +1,16 @@
 import { Anuncio } from "@models"
 import { IAnuncioServices } from "@interfaces"
-import { AnuncioRepository } from "@repositories"
-import { ICreateAnuncioDTO, IUpdateAnuncioDTO } from "@dto/AnuncioDTO"
+import { CreateAnuncioDTO, UpdateAnuncioDTO } from "@dto/AnuncioDTO"
+import { IAnuncioRepository } from "src/interfaces/Repositories/IAnuncioRepository"
 
 export class AnuncioServices implements IAnuncioServices {
-  private anuncioRepository: AnuncioRepository
+  private anuncioRepository: IAnuncioRepository
 
-  constructor(anuncioRepository:AnuncioRepository) {
+  constructor(anuncioRepository:IAnuncioRepository) {
     this.anuncioRepository = anuncioRepository
   }
 
-  async create(data:ICreateAnuncioDTO):Promise<void> {
+  async create(data:CreateAnuncioDTO):Promise<void> {
     const today:Date = new Date()
     const anuncio = new Anuncio({
       ...data,
@@ -19,23 +19,20 @@ export class AnuncioServices implements IAnuncioServices {
       empresa_id: data.empresa
     })
 
-    await this.anuncioRepository.save(anuncio)
+    await this.anuncioRepository.saveAnuncio(anuncio)
   }
 
   async read(id:string, empresa:string):Promise<Anuncio> {
-    const anuncio = await this.anuncioRepository.findOneBy({
-      id_anuncio: id,
-      empresa_id: empresa
-    })
+    const anuncio = await this.anuncioRepository.findById(id, empresa)
 
     return anuncio
   }
 
-  async update(data:IUpdateAnuncioDTO):Promise<void> {
-    const anuncioExists = await this.anuncioRepository.findOneBy({
-      id_anuncio: data.id_anuncio,
-      empresa_id: data.empresa
-    })
+  async update(data:UpdateAnuncioDTO):Promise<void> {
+    const anuncioExists = await this.anuncioRepository.findById(
+      data.id_anuncio,
+      data.empresa
+    )
 
     if (!anuncioExists) {
       throw new Error('Anuncio not found.')
@@ -47,14 +44,12 @@ export class AnuncioServices implements IAnuncioServices {
       usuario_id: data.usuario,
       empresa_id: data.empresa
     })
-    await this.anuncioRepository.update(data.id_anuncio, anuncio)
+
+    await this.anuncioRepository.updateAnuncio(anuncio)
   }
 
   async delete(id:string, empresa:string):Promise<void> {
-    const anuncioExists = await this.anuncioRepository.findOneBy({
-      id_anuncio: id, 
-      empresa_id: empresa
-    })
+    const anuncioExists = await this.anuncioRepository.findById(id, empresa)
 
     if (!anuncioExists) {
       throw new Error('Anuncio not found.')
@@ -63,21 +58,14 @@ export class AnuncioServices implements IAnuncioServices {
     await this.anuncioRepository.delete(anuncioExists.id_anuncio)
   }
 
-  async index():Promise<Array<Anuncio>> {
-    const anuncioList = await this.anuncioRepository.find()
+  async index(empresa):Promise<Array<Anuncio>> {
+    const anuncioList = await this.anuncioRepository.listAnuncio(empresa)
 
     return anuncioList
   }
 
   async simpleList(empresa:string):Promise<Array<Object>> {
-    const anuncioList = await this.anuncioRepository
-      .createQueryBuilder("anuncio")
-      .select("anuncio.id_anuncio")
-      .addSelect("anuncio.titulo")
-      .addSelect("anuncio.texto")
-      .addSelect("anuncio.data")
-      .where("anuncio.empresa_id = :empresa", { empresa })
-      .getMany()
+    const anuncioList = await this.anuncioRepository.simpleList(empresa)
 
     return anuncioList
   }

@@ -1,11 +1,11 @@
-export interface ICreateClienteDTO {
+export class CreateClienteDTO {
   nome:string
   cpf:number
   cel:number
   empresa:string
 }
 
-export interface IUpdateClienteDTO {
+export class UpdateClienteDTO {
   id_cliente:string
   nome:string
   cpf:number
