@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { ICategoriaServices } from "@interfaces"
-import { ICreateCategoriaDTO, IUpdateCategoriaDTO } from "@dto/CategoriaDTO"
+import { CreateCategoriaDTO, UpdateCategoriaDTO } from "@dto/CategoriaDTO"
 
 export class CategoriaController {
   private categoriaServices:ICategoriaServices
@@ -12,7 +12,7 @@ export class CategoriaController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { nome, cor } = request.body
-      const categoria:ICreateCategoriaDTO = { nome, cor, empresa: request.empresaId }
+      const categoria:CreateCategoriaDTO = { nome, cor, empresa: request.empresaId }
 
       await this.categoriaServices.create(categoria)
   
@@ -44,11 +44,12 @@ export class CategoriaController {
 
   async update(request:Request, response:Response):Promise<Response> {
     try {
-      const { id_categoria, nome, cor } = request.body
-      const categoria:IUpdateCategoriaDTO = { 
+      const { id_categoria, nome, cor, status } = request.body
+      const categoria:UpdateCategoriaDTO = { 
         id_categoria, 
         nome, 
-        cor, 
+        cor,
+        status,
         empresa: request.empresaId
       }
 

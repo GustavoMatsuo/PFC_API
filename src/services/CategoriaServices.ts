@@ -1,60 +1,60 @@
 import { Categoria } from "@models"
 import { ICategoriaServices } from "@interfaces"
-import { CategoriaRepository } from "@repositories"
-import { ICreateCategoriaDTO, IUpdateCategoriaDTO } from "@dto/CategoriaDTO"
+import { CreateCategoriaDTO, UpdateCategoriaDTO } from "@dto/CategoriaDTO"
+import { ICategoriaRepository } from "src/interfaces/Repositories/ICategoriaRepository"
 
 export class CategoriaServices implements ICategoriaServices {
-  private categoriaRepository: CategoriaRepository
+  private categoriaRepository: ICategoriaRepository
 
-  constructor(categoriaRepository:CategoriaRepository) {
+  constructor(categoriaRepository:ICategoriaRepository) {
     this.categoriaRepository = categoriaRepository
   }
 
-  async create(data:ICreateCategoriaDTO):Promise<void> {
-    const categoriaAlreadyExists = await this.categoriaRepository.findOneBy({
-      nome: data.nome,
-      empresa_id: data.empresa
-    })
+  async create(data:CreateCategoriaDTO):Promise<void> {
+    const categoriaAlreadyExists = await this.categoriaRepository.findByNome(
+      data.nome, 
+      data.empresa
+    )
 
     if (categoriaAlreadyExists) {
       throw new Error('Categoria already exists.')
     }
+
     const categoria = new Categoria({
       ...data, 
       status: true, 
       empresa_id: data.empresa
     })
 
-    await this.categoriaRepository.save(categoria)
+    await this.categoriaRepository.saveCategoria(categoria)
   }
 
   async read(id:string, empresa:string):Promise<Categoria> {
-    const categoria = await this.categoriaRepository.findOneBy({
-      id_categoria: id,
-      empresa_id: empresa
-    })
+    const categoria = await this.categoriaRepository.findById(id, empresa)
 
     return categoria
   }
 
-  async update(data:IUpdateCategoriaDTO):Promise<void> {
-    const categoriaExists = await this.categoriaRepository.findOneBy({
-      id_categoria: data.id_categoria,
-      empresa_id: data.empresa
-    })
+  async update(data:UpdateCategoriaDTO):Promise<void> {
+    const categoriaExists = await this.categoriaRepository.findById(
+      data.id_categoria, 
+      data.empresa
+    )
 
     if (!categoriaExists) {
       throw new Error('Categoria not found.')
     }
 
-    await this.categoriaRepository.update(data.id_categoria, {...data, empresa_id: data.empresa})
+    const categoria = new Categoria({
+      ...data, 
+      empresa_id: data.empresa
+    })
+
+    await this.categoriaRepository.updateCategoria(categoria)
   }
 
   async delete(id:string, empresa:string):Promise<void> {
-    const categoriaExists = await this.categoriaRepository.findOneBy({
-      id_categoria: id, 
-      empresa_id: empresa
-    })
+    const categoriaExists = await this.categoriaRepository.findById(id, empresa)
 
     if (!categoriaExists) {
       throw new Error('Categoria not found.')
@@ -63,28 +63,20 @@ export class CategoriaServices implements ICategoriaServices {
     await this.categoriaRepository.delete(categoriaExists.id_categoria)
   }
 
-  async index():Promise<Array<Categoria>> {
-    const categoriaList = await this.categoriaRepository.find()
+  async index(empresa:string):Promise<Array<Categoria>> {
+    const categoriaList = await this.categoriaRepository.listCategoria(empresa)
 
     return categoriaList
   }
 
   async simpleList(empresa:string):Promise<Array<Object>> {
-    const categoriaList = await this.categoriaRepository
-      .createQueryBuilder("categoria")
-      .select("categoria.id_categoria")
-      .addSelect("categoria.nome")
-      .where("categoria.empresa_id = :empresa", { empresa })
-      .getMany()
+    const categoriaList = await this.categoriaRepository.simpleList(empresa)
 
     return categoriaList
   }
 
   async changeStatus(id:string, empresa:string):Promise<void> {
-    let categoriaExists = await this.categoriaRepository.findOneBy({
-      id_categoria: id,
-      empresa_id: empresa
-    })
+    let categoriaExists = await this.categoriaRepository.findById( id,empresa)
 
     if (!categoriaExists) {
       throw new Error('Categoria not found.')
@@ -92,6 +84,6 @@ export class CategoriaServices implements ICategoriaServices {
 
     categoriaExists.status = !categoriaExists.status
 
-    await this.categoriaRepository.update(id, categoriaExists)
+    await this.categoriaRepository.updateCategoria(categoriaExists)
   }
 }

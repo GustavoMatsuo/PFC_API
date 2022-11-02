@@ -29,7 +29,6 @@ import { AnuncioRepository } from "./AnuncioRepository"
 const usuarioRepository = db.getRepository(Usuario)
 const enderecoRepository = db.getRepository(Endereco)
 const fornecedorRepository = db.getRepository(Fornecedor)
-const categoriaRepository = db.getRepository(Categoria)
 const produtoRepository = db.getRepository(Produto)
 const entradaRepository = db.getRepository(Entrada)
 const clienteRepository = db.getRepository(Cliente)
@@ -43,7 +42,6 @@ export {
   usuarioRepository,
   enderecoRepository,
   fornecedorRepository,
-  categoriaRepository,
   produtoRepository,
   entradaRepository,
   clienteRepository,
@@ -58,7 +56,6 @@ export {
   UsuarioRepository,
   EnderecoRepository,
   FornecedorRepository,
-  CategoriaRepository,
   ProdutoRepository,
   EntradaRepository,
   ClienteRepository,
@@ -67,4 +64,12 @@ export {
   VendaRepository,
   EmpresaRepository,
   AnuncioRepository
+}
+
+const categoriaRepository = new CategoriaRepository(
+  db.getRepository(Categoria)
+)
+
+export {
+  categoriaRepository
 }

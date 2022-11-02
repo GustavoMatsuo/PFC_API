@@ -1,12 +1,13 @@
-export interface ICreateCategoriaDTO {
+export class CreateCategoriaDTO {
   nome:string
   cor:string
   empresa:string
 }
 
-export interface IUpdateCategoriaDTO {
+export class UpdateCategoriaDTO {
   id_categoria:string
   nome:string
   cor:string
+  status:boolean
   empresa:string
 }
