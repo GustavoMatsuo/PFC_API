@@ -19,11 +19,18 @@ export class ProdutoServices implements IProdutoServices {
     this.categoriaRepository = categoriaRepository
   }
 
-  async index(empresa:string, limit:string, skip:string):Promise<Paginationlist> {
+  async index(
+    empresa:string, 
+    limit?:string, 
+    skip?:string,
+    name?:string,
+    order?:string,
+    tags?:string[]
+  ):Promise<Paginationlist> {
     const limitNum = limit? Number.parseInt(limit) : null
     const skipNum = skip? Number.parseInt(skip) : null
 
-    const produtoList = await this.produtoRepository
+    const query = this.produtoRepository
       .createQueryBuilder("produto")
       .leftJoinAndSelect("produto.fornecedor", "fornecedor.id_fornecedor")
       .leftJoinAndSelect("produto.categoria", "categoria.id_categoria")
@@ -36,7 +43,37 @@ export class ProdutoServices implements IProdutoServices {
       .where("produto.empresa_id = :empresa", { empresa })
       .take(limitNum)
       .skip(skipNum)
-      .getMany()
+
+    if(name) {
+      query.andWhere("LOWER(produto.nome) like LOWER(:nome)", { nome: `%${name}%` })
+    }
+      
+    if(tags && tags.length > 0) {
+      let whereSQL = ""
+      tags.map((categoria, index) => {
+        if(index === 0){
+          if(tags.length === (index+1)) {
+            whereSQL = whereSQL + `( produto.categoria.id_categoria = '${categoria}' )`
+          } else {
+            whereSQL = whereSQL + `( produto.categoria.id_categoria = '${categoria}'`
+          }
+        }else {
+          if(tags.length === (index+1)) {
+            whereSQL = whereSQL + ` OR  produto.categoria.id_categoria = '${categoria}' )`
+          } else {
+            whereSQL = whereSQL + ` OR  produto.categoria.id_categoria = '${categoria}'`
+          }
+        }
+      })
+      query.andWhere(whereSQL)
+    }
+
+    if(order) {
+      const descOrAsc = String(order).toUpperCase() === "DESC"? "DESC":"ASC"
+      query.orderBy('produto.nome', descOrAsc)
+    }
+
+    const produtoList = await query.getMany()
 
     const sumRow = await this.produtoRepository.count()
   

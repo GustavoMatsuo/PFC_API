@@ -14,7 +14,10 @@ export interface IProdutoServices {
   index(
     empresa:string,
     limit?:string, 
-    skip?: string
+    skip?: string,
+    name?:string,
+    order?:string,
+    tags?:string[]
   ):Promise<Paginationlist>
   create(data:ICreateProdutoDTO):Promise<void>
   update(data:IUpdateProdutoDTO):Promise<void>

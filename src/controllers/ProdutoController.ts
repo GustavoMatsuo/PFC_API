@@ -11,14 +11,20 @@ export class ProdutoController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const { limit, skip } = request.query
+      const { limit, skip, name, order, tags } = request.query
       const formattedLimit = limit? String(limit) : null
       const formattedSkip = skip?  String(skip) : null
+      const formattedName = name?  String(name) : null
+      const formattedOrder = order?  String(order) : null
+      const formattedTags = tags?  String(tags).split(";") : null
 
       const produtoList = await this.produtoServices.index(
         request.empresaId, 
         formattedLimit, 
-        formattedSkip
+        formattedSkip,
+        formattedName,
+        formattedOrder,
+        formattedTags
       )
   
       return response.status(200).json(produtoList)
