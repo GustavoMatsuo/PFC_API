@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { IEntradaServices } from "@interfaces"
-import { ICreateEntradaDTO } from "@dto/EntradaDTO"
+import { CreateEntradaDTO } from "@dto/EntradaDTO"
 
 export class EntradaController {
   private entradaServices:IEntradaServices
@@ -12,7 +12,7 @@ export class EntradaController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { produto, qtd, valor_unitario } = request.body
-      const entrada:ICreateEntradaDTO = {
+      const entrada:CreateEntradaDTO = {
         produto,
         qtd, 
         valor_unitario,
@@ -32,8 +32,8 @@ export class EntradaController {
   async index(request:Request, response:Response):Promise<Response> {
     try {
       const { limit, skip, filterBy, order, orderBy } = request.query
-      const formattedLimit = limit? String(limit) : null
-      const formattedSkip = skip?  String(skip) : null
+      const formattedLimit = limit? Number(limit) : null
+      const formattedSkip = skip?  Number(skip) : null
       const formattedFilterBy = filterBy? String(filterBy) : null
       const formattedOrder = order? String(order) : null
       const formattedOrderBy = orderBy?  String(orderBy) : null

@@ -1,12 +1,12 @@
-import { ICreateEntradaDTO } from "@dto/EntradaDTO"
+import { CreateEntradaDTO } from "@dto/EntradaDTO"
 import { Paginationlist } from "../globalTypes"
 
 export interface IEntradaServices {
-  create(data:ICreateEntradaDTO):Promise<void>
+  create(data:CreateEntradaDTO):Promise<void>
   index(
     empresa:string,
-    limit?:string, 
-    skip?:string, 
+    limit?:number, 
+    skip?:number, 
     filterBy?:string,
     order?:string,
     orderBy?:string

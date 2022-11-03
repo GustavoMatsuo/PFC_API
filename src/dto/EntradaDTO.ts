@@ -1,11 +1,11 @@
-export interface ICreateEntradaDTO {
+export interface CreateEntradaDTO {
   produto:string
   qtd:number
   valor_unitario:number
   empresa:string
 }
 
-export interface IEntradaFormattedDTO {
+export interface EntradaFormattedDTO {
   id_entrada:string
   id_produto:string
   nome_produto:string
