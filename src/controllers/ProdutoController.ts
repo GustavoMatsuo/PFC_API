@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { IProdutoServices } from '@interfaces'
-import { ICreateProdutoDTO, IUpdateProdutoDTO } from "@dto/ProdutoDTO"
+import { CreateProdutoDTO, UpdateProdutoDTO } from "@dto/ProdutoDTO"
 
 export class ProdutoController {
   private produtoServices:IProdutoServices
@@ -12,8 +12,8 @@ export class ProdutoController {
   async index(request:Request, response:Response):Promise<Response> {
     try {
       const { limit, skip, name, order, tags } = request.query
-      const formattedLimit = limit? String(limit) : null
-      const formattedSkip = skip?  String(skip) : null
+      const formattedLimit = limit? Number(limit) : null
+      const formattedSkip = skip?  Number(skip) : null
       const formattedName = name?  String(name) : null
       const formattedOrder = order?  String(order) : null
       const formattedTags = tags?  String(tags).split(";") : null
@@ -38,7 +38,7 @@ export class ProdutoController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { nome, codigo, fornecedor, valor_unitario, estoque_minimo, categoria, desconto } = request.body
-      const produto:ICreateProdutoDTO = { 
+      const produto:CreateProdutoDTO = { 
         nome, 
         codigo,
         fornecedor, 
@@ -73,7 +73,7 @@ export class ProdutoController {
         categoria 
       } = request.body
 
-      const produto:IUpdateProdutoDTO = { 
+      const produto:UpdateProdutoDTO = { 
         id_produto, 
         nome, 
         status, 

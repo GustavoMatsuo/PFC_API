@@ -1,4 +1,6 @@
-export interface ICreateProdutoDTO {
+import { Estoque } from "@models"
+
+export class CreateProdutoDTO {
   nome:string
   codigo:string
   fornecedor:string
@@ -9,7 +11,7 @@ export interface ICreateProdutoDTO {
   empresa:string
 }
 
-export interface IUpdateProdutoDTO {
+export class UpdateProdutoDTO {
   id_produto:string
   nome:string
   status:boolean
@@ -20,4 +22,13 @@ export interface IUpdateProdutoDTO {
   estoque_minimo:number
   categoria:string
   empresa:string
+}
+
+export class SimpleProdutoDTO {
+  id_produto:string
+  nome:string
+  codigo:string
+  valor_unitario:number
+  desconto:number
+  estoque:Estoque
 }

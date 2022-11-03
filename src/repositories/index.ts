@@ -14,7 +14,6 @@ import {
 } from "@models"
 import { db } from "../config/database"
 import { CategoriaRepository } from "./CategoriaRepository"
-import { EnderecoRepository } from "./EnderecoRepository"
 import { FornecedorRepository } from "./FornecedorRepository"
 import { ProdutoRepository } from "./ProdutoRepository"
 import { UsuarioRepository } from "./UsuarioRepository"
@@ -27,9 +26,6 @@ import { EmpresaRepository } from "./EmpresaRepository"
 import { AnuncioRepository } from "./AnuncioRepository"
 
 const usuarioRepository = db.getRepository(Usuario)
-const enderecoRepository = db.getRepository(Endereco)
-const fornecedorRepository = db.getRepository(Fornecedor)
-const produtoRepository = db.getRepository(Produto)
 const entradaRepository = db.getRepository(Entrada)
 const saidaRepository = db.getRepository(Saida)
 const estoqueRepository = db.getRepository(Estoque)
@@ -37,9 +33,6 @@ const vendaRepository = db.getRepository(Venda)
 
 export {
   usuarioRepository,
-  enderecoRepository,
-  fornecedorRepository,
-  produtoRepository,
   entradaRepository,
   saidaRepository,
   estoqueRepository,
@@ -48,9 +41,6 @@ export {
 
 export {
   UsuarioRepository,
-  EnderecoRepository,
-  FornecedorRepository,
-  ProdutoRepository,
   EntradaRepository,
   SaidaRepository,
   EstoqueRepository,
@@ -72,9 +62,19 @@ const empresaRepository = new EmpresaRepository(
   db.getRepository(Empresa)
 )
 
+const fornecedorRepository = new FornecedorRepository(
+  db.getRepository(Fornecedor)
+)
+
+const produtoRepository = new ProdutoRepository(
+  db.getRepository(Produto)
+)
+
 export {
   categoriaRepository,
   anuncioRepository,
   clienteRepository,
-  empresaRepository
+  empresaRepository,
+  fornecedorRepository,
+  produtoRepository
 }

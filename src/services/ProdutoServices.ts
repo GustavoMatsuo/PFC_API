@@ -1,18 +1,20 @@
-import { Estoque, Produto } from "@models"
-import { IProdutoServices, simpleProdutoType } from "@interfaces"
-import { CategoriaRepository, FornecedorRepository, ProdutoRepository } from "@repositories"
-import { ICreateProdutoDTO, IUpdateProdutoDTO } from "@dto/ProdutoDTO"
+import { Produto } from "@models"
+import { IProdutoServices } from "@interfaces"
+import { CreateProdutoDTO, UpdateProdutoDTO } from "@dto/ProdutoDTO"
 import { Paginationlist } from "../globalTypes"
+import { IFornecedorRepository } from "src/interfaces/Repositories/IFornecedorRepository"
+import { ICategoriaRepository } from "src/interfaces/Repositories/ICategoriaRepository"
+import { IProdutoRepository } from "src/interfaces/Repositories/IProdutoRepository"
 
 export class ProdutoServices implements IProdutoServices {
-  private produtoRepository:ProdutoRepository
-  private fornecedorRepository:FornecedorRepository
-  private categoriaRepository:CategoriaRepository
+  private produtoRepository:IProdutoRepository
+  private fornecedorRepository:IFornecedorRepository
+  private categoriaRepository:ICategoriaRepository
 
   constructor(
-    produtoRepository:ProdutoRepository,
-    fornecedorRepository:FornecedorRepository,
-    categoriaRepository:CategoriaRepository
+    produtoRepository:IProdutoRepository,
+    fornecedorRepository:IFornecedorRepository,
+    categoriaRepository:ICategoriaRepository
   ) {
     this.produtoRepository = produtoRepository
     this.fornecedorRepository = fornecedorRepository
@@ -21,84 +23,45 @@ export class ProdutoServices implements IProdutoServices {
 
   async index(
     empresa:string, 
-    limit?:string, 
-    skip?:string,
+    limit?:number, 
+    skip?:number,
     name?:string,
     order?:string,
     tags?:string[]
   ):Promise<Paginationlist> {
-    const limitNum = limit? Number.parseInt(limit) : null
-    const skipNum = skip? Number.parseInt(skip) : null
-
-    const query = this.produtoRepository
-      .createQueryBuilder("produto")
-      .leftJoinAndSelect("produto.fornecedor", "fornecedor.id_fornecedor")
-      .leftJoinAndSelect("produto.categoria", "categoria.id_categoria")
-      .innerJoinAndMapOne(
-        "produto.estoque",
-        Estoque,
-        "estoque",
-        "estoque.produto = produto.id_produto",
-      )
-      .where("produto.empresa_id = :empresa", { empresa })
-      .take(limitNum)
-      .skip(skipNum)
-
-    if(name) {
-      query.andWhere("LOWER(produto.nome) like LOWER(:nome)", { nome: `%${name}%` })
-    }
-      
-    if(tags && tags.length > 0) {
-      let whereSQL = ""
-      tags.map((categoria, index) => {
-        if(index === 0){
-          if(tags.length === (index+1)) {
-            whereSQL = whereSQL + `( produto.categoria.id_categoria = '${categoria}' )`
-          } else {
-            whereSQL = whereSQL + `( produto.categoria.id_categoria = '${categoria}'`
-          }
-        }else {
-          if(tags.length === (index+1)) {
-            whereSQL = whereSQL + ` OR  produto.categoria.id_categoria = '${categoria}' )`
-          } else {
-            whereSQL = whereSQL + ` OR  produto.categoria.id_categoria = '${categoria}'`
-          }
-        }
-      })
-      query.andWhere(whereSQL)
-    }
-
-    if(order) {
-      const descOrAsc = String(order).toUpperCase() === "DESC"? "DESC":"ASC"
-      query.orderBy('produto.nome', descOrAsc)
-    }
-
-    const produtoList = await query.getMany()
-
-    const sumRow = await this.produtoRepository.count()
-  
-    return {list: produtoList, total: sumRow}
+    const produtoList = this.produtoRepository.listProdutos(
+      empresa, 
+      limit, 
+      skip,
+      name,
+      order,
+      tags
+    )
+    
+    return produtoList
   }
 
-  async create(data:ICreateProdutoDTO):Promise<void> {
-      const produtoAlreadyExistsByName = await this.produtoRepository.findOneBy({
-      nome: data.nome
-    })
+  async create(data:CreateProdutoDTO):Promise<void> {
+    const produtoAlreadyExistsByName = await this.produtoRepository.findByNome(
+      data.nome,
+      data.empresa
+    )
 
-    const produtoAlreadyExistsByCodigo = await this.produtoRepository.findOneBy({
-      codigo: data.codigo
-    })
+    const produtoAlreadyExistsByCodigo = await this.produtoRepository.findByCodigo(
+      data.codigo, 
+      data.empresa
+    )
 
     if (produtoAlreadyExistsByName || produtoAlreadyExistsByCodigo) {
       throw new Error('Produto already exists.')
     }
 
-    const fornecedor = await this.fornecedorRepository.findOneBy({id_fornecedor: data.fornecedor})
+    const fornecedor = await this.fornecedorRepository.findById(data.fornecedor, data.empresa)
     if(!fornecedor) {
       throw new Error('Fornecedor not found.')
     }
 
-    const categoria = await this.categoriaRepository.findOneBy({id_categoria: data.categoria})
+    const categoria = await this.categoriaRepository.findById(data.categoria, data.empresa)
     if(!categoria) {
       throw new Error('Categoria not found.')
     }
@@ -112,22 +75,31 @@ export class ProdutoServices implements IProdutoServices {
       empresa_id: data.empresa
     })
 
-    await this.produtoRepository.save(produto)
+    await this.produtoRepository.saveProduto(produto)
   }
 
-  async update(data:IUpdateProdutoDTO):Promise<void> {
-    const produtoExists = await this.produtoRepository.findOneBy({id_produto: data.id_produto})
+  async update(data:UpdateProdutoDTO):Promise<void> {
+    const produtoExists = await this.produtoRepository.findById(
+      data.id_produto, 
+      data.empresa
+    )
 
     if (!produtoExists) {
       throw new Error('Produto not found.')
     }
 
-    const newFornecedor = await this.fornecedorRepository.findOneBy({id_fornecedor: data.fornecedor})
+    const newFornecedor = await this.fornecedorRepository.findById(
+      data.fornecedor, 
+      data.empresa
+    )
     if(!newFornecedor) {
       throw new Error('fornecedor not found.')
     }
 
-    const newCategoria = await this.categoriaRepository.findOneBy({id_categoria: data.categoria})
+    const newCategoria = await this.categoriaRepository.findById(
+      data.categoria, 
+      data.empresa
+    )
     if(!newCategoria) {
       throw new Error('categoria not found.')
     }
@@ -140,14 +112,11 @@ export class ProdutoServices implements IProdutoServices {
       desconto: data.desconto? data.desconto:0
     })
 
-    await this.produtoRepository.update(data.id_produto, produto)
+    await this.produtoRepository.updateProduto(produto)
   }
 
   async changeStatus(id:string, empresa:string):Promise<void> {
-    let produtoExists = await this.produtoRepository.findOneBy({
-      id_produto: id, 
-      empresa_id: empresa 
-    })
+    let produtoExists = await this.produtoRepository.findById(id, empresa)
 
     if (!produtoExists) {
       throw new Error('Produto not found.')
@@ -155,27 +124,13 @@ export class ProdutoServices implements IProdutoServices {
 
     produtoExists.status = !produtoExists.status
 
-    await this.produtoRepository.update(id, produtoExists)
+    await this.produtoRepository.updateProduto(produtoExists)
   }
 
-  async simpleList(empresa:string):Promise<simpleProdutoType[]> {
-    const produtoList:Array<any> = await this.produtoRepository
-      .createQueryBuilder("produto")
-      .select("produto.id_produto")
-      .addSelect("produto.nome")
-      .addSelect("produto.codigo")
-      .addSelect("produto.valor_unitario")
-      .addSelect("produto.desconto")
-      .innerJoinAndMapOne(
-        "produto.estoque",
-        Estoque,
-        "estoque",
-        "estoque.produto = produto.id_produto",
-      )
-      .where("produto.empresa_id = :empresa", { empresa })
-      .getMany()
+  async simpleList(empresa:string):Promise<Object[]> {
+    const produtoList = await this.produtoRepository.simpleList(empresa)
 
-    const formattedList:simpleProdutoType[] = []
+    const formattedList:Object[] = []
 
     produtoList.map(item => {
       formattedList.push({
