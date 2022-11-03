@@ -1,11 +1,11 @@
-import { IEnderecoDTO } from "./FornecedorDTO"
+import { EnderecoDTO } from "./FornecedorDTO"
 
 export class CreateEmpresaDTO {
   nome:string
   cnpj:number
   cel:number
   email:string
-  endereco:IEnderecoDTO
+  endereco:EnderecoDTO
 }
 
 export class EnderecoUpdateDTO {

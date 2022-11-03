@@ -1,4 +1,4 @@
-export interface IEnderecoDTO {
+export class EnderecoDTO {
   rua:string
   numero:string
   bairro:string
@@ -7,15 +7,15 @@ export interface IEnderecoDTO {
   uf:string
 }
 
-export interface ICreateFornecedorDTO {
+export class CreateFornecedorDTO {
   nome:string
   email:string
   cnpj:number
-  endereco:IEnderecoDTO
+  endereco:EnderecoDTO
   empresa:string
 }
 
-export interface EnderecoUpdateDTO {
+export class EnderecoUpdateDTO {
   id_endereco:string
   rua:string
   numero:string
@@ -25,7 +25,7 @@ export interface EnderecoUpdateDTO {
   uf:string
 }
 
-export interface IUpdateFornecedorDTO {
+export class UpdateFornecedorDTO {
   id_fornecedor:string
   nome:string
   email:string

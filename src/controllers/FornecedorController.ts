@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { IFornecedorServices } from '@interfaces'
-import { ICreateFornecedorDTO, IUpdateFornecedorDTO } from "@dto/FornecedorDTO"
+import { CreateFornecedorDTO, UpdateFornecedorDTO } from "@dto/FornecedorDTO"
 
 export class FornecedorController {
   private fornecedorServices:IFornecedorServices
@@ -12,8 +12,8 @@ export class FornecedorController {
   async index(request:Request, response:Response):Promise<Response> {
     try {
       const { limit, skip, filterBy, order, orderBy } = request.query
-      const formattedLimit = limit? String(limit) : null
-      const formattedSkip = skip?  String(skip) : null
+      const formattedLimit = limit? Number(limit) : null
+      const formattedSkip = skip?  Number(skip) : null
       const formattedFilterBy = filterBy? String(filterBy) : null
       const formattedOrder = order? String(order) : null
       const formattedOrderBy = orderBy?  String(orderBy) : null
@@ -38,7 +38,7 @@ export class FornecedorController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { nome, email, cnpj, endereco } = request.body
-      const fornecedor:ICreateFornecedorDTO = {
+      const fornecedor:CreateFornecedorDTO = {
         nome,
         email,
         cnpj, 
@@ -59,7 +59,7 @@ export class FornecedorController {
   async update(request:Request, response:Response):Promise<Response> {
     try {
       const { id_fornecedor, nome, email, cnpj, status, endereco } = request.body
-      const fornecedor:IUpdateFornecedorDTO = { 
+      const fornecedor:UpdateFornecedorDTO = { 
         id_fornecedor, 
         nome, 
         email,

@@ -1,17 +1,17 @@
-import { ICreateFornecedorDTO, IUpdateFornecedorDTO } from "@dto/FornecedorDTO"
+import { CreateFornecedorDTO, UpdateFornecedorDTO } from "@dto/FornecedorDTO"
 import { Paginationlist } from "../globalTypes"
 
 export interface IFornecedorServices {
   index(
     empresa:string,
-    limit?:string, 
-    skip?:string, 
+    limit?:number, 
+    skip?:number, 
     filterBy?:string,
     order?:string,
     orderBy?:string
   ):Promise<Paginationlist>
-  create(data:ICreateFornecedorDTO):Promise<void>
-  update(data:IUpdateFornecedorDTO):Promise<void>
+  create(data:CreateFornecedorDTO):Promise<void>
+  update(data:UpdateFornecedorDTO):Promise<void>
   changeStatus(id:string, empresa:string):Promise<void>
   simpleList(empresa:string):Promise<Array<Object>>
 }

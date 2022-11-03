@@ -1,56 +1,41 @@
 import { Endereco, Fornecedor } from "@models"
 import { IFornecedorServices } from "@interfaces"
-import { FornecedorRepository } from "@repositories"
-import { ICreateFornecedorDTO, IUpdateFornecedorDTO } from "@dto/FornecedorDTO"
-import { db } from "../config/database"
+import { CreateFornecedorDTO, UpdateFornecedorDTO } from "@dto/FornecedorDTO"
 import { Paginationlist } from "../globalTypes"
+import { IFornecedorRepository } from "src/interfaces/Repositories/IFornecedorRepository"
 
 export class FornecedorServices implements IFornecedorServices {
-  private fornecedorRepository: FornecedorRepository
+  private fornecedorRepository: IFornecedorRepository
 
-  constructor(fornecedorRepository:FornecedorRepository) {
+  constructor(fornecedorRepository:IFornecedorRepository) {
     this.fornecedorRepository = fornecedorRepository
   }
 
   async index(
     empresa:string,
-    limit:string, 
-    skip:string, 
-    filterBy:string,
-    order:string,
-    orderBy:string
+    limit?:number, 
+    skip?:number, 
+    filterBy?:string,
+    order?:string,
+    orderBy?:string
   ):Promise<Paginationlist> {
-    const limitNum = limit? Number.parseInt(limit) : null
-    const skipNum = skip? Number.parseInt(skip) : null
+    const fornecedorList = this.fornecedorRepository.listFornecedor(
+      empresa,
+      limit, 
+      skip, 
+      filterBy,
+      order,
+      orderBy
+    )
 
-    const query = this.fornecedorRepository
-      .createQueryBuilder("fornecedor")
-      .leftJoinAndSelect("fornecedor.endereco", "endereco.id_endereco")
-      .where("fornecedor.empresa_id = :empresa", { empresa })
-      .take(limitNum)
-      .skip(skipNum)
-
-    if(filterBy) {
-      query.andWhere("LOWER(fornecedor.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
-    }
-
-    if(order && orderBy) {
-      const descOrAsc = String(order).toUpperCase() === "DESC"? "DESC":"ASC"
-      query.orderBy(`fornecedor.${orderBy}`, descOrAsc)
-    }
-
-    const fornecedorList = await query.getMany()
-
-    const sumRow = await query.getCount()
-
-    return {list: fornecedorList, total: sumRow}
+    return fornecedorList
   }
 
-  async create(data:ICreateFornecedorDTO):Promise<void> {
-    const fornecedorAlreadyExists = await this.fornecedorRepository.findOneBy({
-      cnpj: data.cnpj,
-      empresa_id: data.empresa
-    })
+  async create(data:CreateFornecedorDTO):Promise<void> {
+    const fornecedorAlreadyExists = await this.fornecedorRepository.findByCNPJ(
+      data.cnpj,
+      data.empresa
+    )
 
     if (fornecedorAlreadyExists) {
       throw new Error('fornecedor already exists.')
@@ -64,41 +49,27 @@ export class FornecedorServices implements IFornecedorServices {
       empresa_id: data.empresa
     })
 
-    await this.fornecedorRepository.save(fornecedor)
+    await this.fornecedorRepository.saveFornecedor(fornecedor)
   }
 
-  async update(data:IUpdateFornecedorDTO):Promise<void> {
-    const fornecedorExists = await this.fornecedorRepository.findOneBy({
-      id_fornecedor: data.id_fornecedor,
-      empresa_id: data.empresa
-    })
+  async update(data:UpdateFornecedorDTO):Promise<void> {
+    const fornecedorExists = await this.fornecedorRepository.findById(
+      data.id_fornecedor,
+      data.empresa
+    )
 
     if (!fornecedorExists) {
       throw new Error('Fornecedor not found.')
     }
 
-    await db.manager.transaction(async entityManager => { 
-      await entityManager.update(
-        Endereco, 
-        data.endereco.id_endereco, 
-        data.endereco
-      )
-      await entityManager.update(
-        Fornecedor, 
-        data.id_fornecedor, 
-        {
-          ...data,
-          empresa_id: data.empresa
-        }
-      ) 
-    })
+    const fornecedor = new Fornecedor({...data, empresa_id: fornecedorExists.empresa_id})
+    const endereco = new Endereco(data.endereco)
+
+    await this.fornecedorRepository.updateFornecedor(fornecedor, endereco)
   }
 
   async changeStatus(id:string, empresa:string):Promise<void> {
-    let fornecedorExists = await this.fornecedorRepository.findOneBy({
-      id_fornecedor: id,
-      empresa_id: empresa
-    })
+    let fornecedorExists = await this.fornecedorRepository.findById(id, empresa)
 
     if (!fornecedorExists) {
       throw new Error('Fornecedor not found.')
@@ -106,16 +77,14 @@ export class FornecedorServices implements IFornecedorServices {
 
     fornecedorExists.status = !fornecedorExists.status
 
-    await this.fornecedorRepository.update(id, fornecedorExists)
+    await this.fornecedorRepository.updateFornecedor(
+      fornecedorExists, 
+      fornecedorExists.endereco
+    )
   }
 
   async simpleList(empresa:string):Promise<Array<Object>> {
-    const fornecedorList = await this.fornecedorRepository
-      .createQueryBuilder("fornecedor")
-      .select("fornecedor.id_fornecedor")
-      .addSelect("fornecedor.nome")
-      .where("fornecedor.empresa_id = :empresa", { empresa })
-      .getMany()
+    const fornecedorList = await this.fornecedorRepository.simpleList(empresa)
 
     return fornecedorList
   }
