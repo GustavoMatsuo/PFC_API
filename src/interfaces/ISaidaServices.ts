@@ -1,13 +1,13 @@
-import { ICreateSaidaDTO } from "@dto/SaidaDTO"
+import { CreateSaidaDTO } from "@dto/SaidaDTO"
 import { Paginationlist } from "../globalTypes"
 import ExcelJS from 'exceljs'
 
 export interface ISaidaServices {
-  create(data:ICreateSaidaDTO):Promise<void>
+  create(data:CreateSaidaDTO):Promise<void>
   index(
     empresa:string,
-    limit?:string, 
-    skip?:string, 
+    limit?:number, 
+    skip?:number, 
     filterBy?:string,
     order?:string,
     orderBy?:string

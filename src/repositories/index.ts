@@ -25,22 +25,16 @@ import { EmpresaRepository } from "./EmpresaRepository"
 import { AnuncioRepository } from "./AnuncioRepository"
 
 const usuarioRepository = db.getRepository(Usuario)
-const saidaRepository = db.getRepository(Saida)
 const estoqueRepository = db.getRepository(Estoque)
-const vendaRepository = db.getRepository(Venda)
 
 export {
   usuarioRepository,
-  saidaRepository,
   estoqueRepository,
-  vendaRepository,
 }
 
 export {
   UsuarioRepository,
-  SaidaRepository,
   EstoqueRepository,
-  VendaRepository,
 }
 
 const categoriaRepository = new CategoriaRepository(
@@ -70,6 +64,14 @@ const entradaRepository = new EntradaRepository(
   db.getRepository(Entrada)
 )
 
+const saidaRepository = new SaidaRepository(
+  db.getRepository(Saida)
+)
+
+const vendaRepository = new VendaRepository (
+  db.getRepository(Venda)
+)
+
 export {
   categoriaRepository,
   anuncioRepository,
@@ -77,5 +79,7 @@ export {
   empresaRepository,
   fornecedorRepository,
   produtoRepository,
-  entradaRepository
+  entradaRepository,
+  saidaRepository,
+  vendaRepository
 }

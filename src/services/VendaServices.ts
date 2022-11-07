@@ -1,20 +1,29 @@
-import { Saida, Venda } from "@models"
+import { Venda } from "@models"
 import { IVendaServices } from "@interfaces"
-import { VendaRepository } from "@repositories"
-import { ICreateVendaDTO, ResponseVendasChart } from "@dto/VendaDTO"
-import { db } from "../config/database"
+import { CreateVendaDTO, ResponseVendasChart } from "@dto/VendaDTO"
 import { fDateMonthYear } from "../utils/formatTime"
-import { Between } from "typeorm"
 import { subMonths, startOfMonth } from 'date-fns'
+import { IVendaRepository } from "src/interfaces/Repositories/IVendaRepository"
+import { IProdutoRepository } from "src/interfaces/Repositories/IProdutoRepository"
+import { IClienteRepository } from "src/interfaces/Repositories/IClienteRepository"
+import { VendaSaidaDTO } from "@dto/SaidaDTO"
 
 export class VendaServices implements IVendaServices {
-  private vendaRepository: VendaRepository
+  private vendaRepository:IVendaRepository
+  private produtoRepository:IProdutoRepository
+  private clienteRepository:IClienteRepository
 
-  constructor(vendaRepository:VendaRepository) {
+  constructor(
+    vendaRepository:IVendaRepository,
+    produtoRepository:IProdutoRepository,
+    clienteRepository:IClienteRepository
+  ) {
     this.vendaRepository = vendaRepository
+    this.produtoRepository = produtoRepository,
+    this.clienteRepository = clienteRepository
   }
 
-  async create(data:ICreateVendaDTO):Promise<void> {
+  async create(data:CreateVendaDTO):Promise<void> {
     const { cliente, saidas } = data 
 
     if(!saidas || saidas.length < 1) {
@@ -25,35 +34,44 @@ export class VendaServices implements IVendaServices {
       throw new Error('Cliente is empty.')
     }
 
+    const existeCliente = await this.clienteRepository.findById(cliente, data.empresa)
+
+    if(!existeCliente) {
+      throw new Error('Cliente not found.')
+    }
+
     const date = new Date()
+
     const venda = new Venda({ 
-      cliente, 
+      cliente: existeCliente, 
       data_venda: date,
-      empresa: data.empresa,
       empresa_id: data.empresa,
-      usuario: data.usuario,
       usuario_id: data.usuario
     })
 
-    await db.manager.transaction(async entityManager => { 
-      const savedVenda = await entityManager.save(Venda, venda)
-      const idVenda = savedVenda.id_venda
-      for(var item in saidas){
-        const saida = new Saida({ 
-          ...saidas[item], 
-          venda: idVenda, 
-          data_saida: date,
-          desconto: saidas[item].desconto,
-          empresa: data.empresa,
-          empresa_id: data.empresa
-        })
-        await entityManager.save(Saida, saida)
+    const vendaSaida = []
+    saidas.forEach(async(item) => {
+      const produto = await this.produtoRepository.findById(
+        item.produto, 
+        data.empresa
+      )
+
+      const saida:VendaSaidaDTO = { 
+        ...item, 
+        produto: produto,
+        desconto: item.desconto,
+        empresa: data.empresa,
+        data: date
       }
+
+      vendaSaida.push(saida)
     })
+
+    this.vendaRepository.saveVenda(venda, vendaSaida)
   }
 
   async index(empresa:string):Promise<Array<Venda>> {
-    const vendaList = await this.vendaRepository.findBy({empresa_id: empresa})
+    const vendaList = await this.vendaRepository.listVenda(empresa)
 
     return vendaList
   }
@@ -72,16 +90,12 @@ export class VendaServices implements IVendaServices {
       fDateMonthYear(today),
     ]
 
-    const vendaList = await this.vendaRepository.find({
-      where: {
-        usuario_id: usuario,
-        empresa_id: empresa,
-        data_venda: Between(
-          six_month_ago,
-          today
-        )
-      }
-    })
+    const vendaList = await this.vendaRepository.findBetweenDate(
+      usuario,
+      empresa,
+      six_month_ago,
+      today
+    )
 
     vendaList.map(item => {
       const currentMonth = fDateMonthYear(item.data_venda)

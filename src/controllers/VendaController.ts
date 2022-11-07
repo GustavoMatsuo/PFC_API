@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { IVendaServices } from "@interfaces"
-import { ICreateVendaDTO } from "@dto/VendaDTO"
+import { CreateVendaDTO } from "@dto/VendaDTO"
 
 export class VendaController {
   private vendaServices:IVendaServices
@@ -12,7 +12,7 @@ export class VendaController {
   async create(request:Request, response:Response):Promise<Response> {
     try {
       const { cliente, saidas } = request.body
-      const venda:ICreateVendaDTO = { 
+      const venda:CreateVendaDTO = { 
         cliente, 
         saidas, 
         empresa: request.empresaId,

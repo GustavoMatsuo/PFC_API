@@ -36,7 +36,7 @@ export class Usuario {
   @Column()
   empresa_id:string
 
-  constructor(props: Omit<Usuario, 'id_usuario'>) {
+  constructor(props: Omit<Usuario, 'id_usuario'| 'empresa'>) {
     Object.assign(this, props)
   }
 }

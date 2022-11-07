@@ -1,75 +1,83 @@
 import { Produto, Saida } from "@models"
 import { ISaidaServices } from "@interfaces"
-import { SaidaRepository } from "@repositories"
-import { ICreateSaidaDTO } from "@dto/SaidaDTO"
+import { CreateSaidaDTO } from "@dto/SaidaDTO"
 import { Paginationlist } from "../globalTypes"
 import { fDateSimple, fDateTime } from "../utils/formatTime"
 import ExcelJS from 'exceljs'
+import { ISaidaRepository } from "src/interfaces/Repositories/ISaidaRepository"
+import { IProdutoRepository } from "src/interfaces/Repositories/IProdutoRepository"
+import { IVendaRepository } from "src/interfaces/Repositories/IVendaRepository"
 
 export class SaidaServices implements ISaidaServices {
-  private saidaRepository: SaidaRepository
+  private saidaRepository: ISaidaRepository
+  private vendaRepository: IVendaRepository
+  private produtoRepository: IProdutoRepository
 
-  constructor(saidaRepository:SaidaRepository) {
+  constructor(
+    saidaRepository:ISaidaRepository,
+    vendaRepository: IVendaRepository,
+    produtoRepository: IProdutoRepository
+
+  ) {
     this.saidaRepository = saidaRepository
+    this.vendaRepository = vendaRepository
+    this.produtoRepository = produtoRepository
   }
 
-  async create(data:ICreateSaidaDTO):Promise<void> {
+  async create(data:CreateSaidaDTO):Promise<void> {
     const date = new Date()
-    const venda = data.venda
+
+    let existVenda = await this.vendaRepository.findById(data.venda, data.empresa)
+
+    if(!existVenda) {
+      existVenda = null
+    }
+
+    const existProduto = await this.produtoRepository.findById(data.produto, data.empresa)
+
+    if(!existProduto) {
+      throw new Error('produto not found.')
+    }
+
     const saida = new Saida({
       ...data,
-      venda: venda, 
+      produto: existProduto,
+      venda: existVenda,
       data_saida: date,
       desconto: data.desconto,
       empresa_id: data.empresa
     })
 
-    await this.saidaRepository.save(saida)
+    await this.saidaRepository.saveSaida(saida)
   }
 
   async index(
     empresa:string,
-    limit:string, 
-    skip:string, 
-    filterBy:string,
-    order:string,
-    orderBy:string
+    limit?:number, 
+    skip?:number, 
+    filterBy?:string,
+    order?:string,
+    orderBy?:string
   ):Promise<Paginationlist> {
-    const limitNum = limit? Number.parseInt(limit) : null
-    const skipNum = skip? Number.parseInt(skip) : null
+    const saidaList = this.saidaRepository.listSaida(
+      empresa,
+      limit, 
+      skip, 
+      filterBy,
+      order,
+      orderBy
+    )
 
-    const query = await this.saidaRepository
-      .createQueryBuilder("saida")
-      .leftJoinAndSelect("saida.venda", "venda")
-      .leftJoinAndSelect("saida.produto", "produto")
-      .where("saida.empresa_id = :empresa", { empresa })
-      .take(limitNum)
-      .skip(skipNum)
-
-    if(filterBy) {
-      query.where("LOWER(produto.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
-    }
-
-    if(order && orderBy) {
-      const descOrAsc = String(order).toUpperCase() === "DESC"? "DESC":"ASC"
-      query.orderBy(`saida.${orderBy}`, descOrAsc)
-    }
-    
-    const saidaList = await query.getMany()
-
-    const sumRow = await query.getCount()
-    
-    return {list: saidaList, total: sumRow}
+    return saidaList
   }
 
   
   async getRelatorio(inicio:string, fim:string, empresa:string):Promise<ExcelJS.Workbook> {
-    let saidaList:any[] = await this.saidaRepository
-      .createQueryBuilder("saida")
-      .leftJoinAndSelect("saida.venda", "venda")
-      .leftJoinAndSelect("saida.produto", "produto")
-      .where(`saida.empresa_id = :empresa and saida.data_saida between '${inicio}' and '${fim}'`, { empresa })
-      .getMany()    
+    const saidaList = await this.saidaRepository.listRelatorio(
+      inicio,
+      fim,
+      empresa
+    )  
 
     const workbook = new ExcelJS.Workbook()
 

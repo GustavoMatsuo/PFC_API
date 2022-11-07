@@ -1,8 +1,8 @@
-import { ICreateSaidaDTO } from "./SaidaDTO"
+import { CreateSaidaDTO } from "./SaidaDTO"
 
-export type ICreateVendaDTO = {
+export type CreateVendaDTO = {
   cliente:string
-  saidas:ICreateSaidaDTO[]
+  saidas:CreateSaidaDTO[]
   empresa:string
   usuario:string
 }
