@@ -36,7 +36,7 @@ export class Produto {
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
   @JoinColumn({ name: 'empresa_id' })
-  empresa:string
+  empresa:Empresa
 
   @Column()
   empresa_id:string

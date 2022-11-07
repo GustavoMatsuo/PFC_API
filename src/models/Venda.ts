@@ -10,21 +10,21 @@ export class Venda {
 
   @ManyToOne(() => Usuario, usuario => usuario.id_usuario)
   @JoinColumn({ name: 'usuario_id' })
-  usuario:string
+  usuario:Usuario
 
   @Column()
   usuario_id:string
 
   @ManyToOne(() => Cliente, cliente => cliente.id_cliente)
   @JoinColumn({ name: 'cliente' })
-  cliente:string
+  cliente:Cliente
 
   @Column('timestamptz')
   data_venda:Date
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
   @JoinColumn({ name: 'empresa_id' })
-  empresa:string
+  empresa:Empresa
 
   @Column()
   empresa_id:string

@@ -10,7 +10,7 @@ export class Saida {
 
   @ManyToOne(() => Produto, produto => produto.id_produto)
   @JoinColumn({ name: 'produto' })
-  produto:string
+  produto:Produto
 
   @Column('timestamptz')
   data_saida:Date
@@ -26,11 +26,11 @@ export class Saida {
 
   @ManyToOne(() => Venda, venda => venda.id_venda, { nullable: true })
   @JoinColumn({ name: 'venda' })
-  venda:string
+  venda:Venda
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
   @JoinColumn({ name: 'empresa_id' })
-  empresa:string
+  empresa:Empresa
 
   @Column()
   empresa_id:string

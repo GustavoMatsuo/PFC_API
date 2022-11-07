@@ -18,14 +18,14 @@ export class Anuncio {
 
   @ManyToOne(() => Usuario, usuario => usuario.id_usuario)
   @JoinColumn({ name: 'usuario_id' })
-  usuario:string
+  usuario:Usuario
 
   @Column()
   usuario_id:string
 
   @ManyToOne(() => Empresa, empresa => empresa.id_empresa)
   @JoinColumn({ name: 'empresa_id' })
-  empresa:string
+  empresa:Empresa
 
   @Column()
   empresa_id:string
