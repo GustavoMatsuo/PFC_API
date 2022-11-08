@@ -9,7 +9,6 @@ export class EntradaServices implements IEntradaServices {
   private entradaRepository: IEntradaRepository
   private produtoRepository: IProdutoRepository
 
-
   constructor(
     entradaRepository:IEntradaRepository, 
     produtoRepository:IProdutoRepository

@@ -10,7 +10,14 @@ export class EstoqueController {
 
   async index(request:Request, response:Response):Promise<Response> {
     try {
-      const estoqueList = await this.estoqueServices.index()
+      const { limit, skip } = request.query
+      const formattedLimit = limit? Number(limit) : null
+      const formattedSkip = skip?  Number(skip) : null
+      const estoqueList = await this.estoqueServices.index(
+        request.empresaId, 
+        formattedLimit, 
+        formattedSkip
+      )
   
       return response.status(200).json(estoqueList)
     } catch (err) {

@@ -120,7 +120,6 @@ export class UsuarioServices implements IUsuarioServices {
       email: data.email.toLowerCase(),
       senha: hash_password,
       status: true,
-      empresa: data.empresa,
       empresa_id: data.empresa,
       verificado: false
     })
@@ -163,7 +162,6 @@ export class UsuarioServices implements IUsuarioServices {
     const usuario = new Usuario({
       ...data, 
       senha: senha,
-      empresa: data.empresa,
       empresa_id: data.empresa
     })
 

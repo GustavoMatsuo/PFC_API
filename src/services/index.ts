@@ -35,11 +35,22 @@ const produtoServices = new ProdutoServices(
   fornecedorRepository, 
   categoriaRepository
 )
-const entradaServices = new EntradaServices(entradaRepository)
+const entradaServices = new EntradaServices(
+  entradaRepository, 
+  produtoRepository
+)
 const clienteServices = new ClienteServices(clienteRepository)
-const saidaServices = new SaidaServices(saidaRepository)
+const saidaServices = new SaidaServices(
+  saidaRepository, 
+  vendaRepository, 
+  produtoRepository
+)
 const estoqueServices = new EstoqueServices(estoqueRepository)
-const vendaServices = new VendaServices(vendaRepository)
+const vendaServices = new VendaServices(
+  vendaRepository,
+  produtoRepository,
+  clienteRepository
+)
 const empresaServices = new EmpresaServices(empresaRepository)
 const anuncioServices = new AnuncioServices(anuncioRepository)
 

@@ -1,47 +1,27 @@
-import { Entrada, Estoque, Produto, Saida } from "@models"
+import { Estoque, Produto } from "@models"
 import { IEstoqueServices } from "@interfaces"
-import { EstoqueRepository } from "@repositories"
 import { fDateSimple } from "../utils/formatTime"
 import ExcelJS from 'exceljs'
+import { IEstoqueRepository } from "src/interfaces/Repositories/IEstoqueRepository"
 
 export class EstoqueServices implements IEstoqueServices {
-  private estoqueRepository: EstoqueRepository
+  private estoqueRepository: IEstoqueRepository
 
-  constructor(estoqueRepository:EstoqueRepository) {
+  constructor(estoqueRepository:IEstoqueRepository) {
     this.estoqueRepository = estoqueRepository
   }
 
-  async index():Promise<Array<Estoque>> {
-    const estoqueList:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
-      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
-      .getMany()
+  async index(empresa:string, limit?:number, skip?:number):Promise<Estoque[]> {
+    const estoqueList = await this.estoqueRepository.listEstoque(empresa, limit, skip)
 
     return estoqueList
   }
 
   async getInventario(empresa:string):Promise<ExcelJS.Workbook> {
-    let estoqueListComMov:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
-      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
-      .innerJoinAndMapMany(
-        "estoque.entrada",
-        Entrada,
-        "entrada",
-        "entrada.produto = estoque.produto",
-      )
-      .innerJoinAndMapMany(
-        "estoque.saida",
-        Saida,
-        "saida",
-        "saida.produto = estoque.produto",
-      )
-      .where("estoque.empresa_id = :empresa", { empresa })
-      .getMany()
+    let estoqueListComMov:any[] = await this.estoqueRepository.findEstoqueComMov(empresa)
     
-    let estoqueListSemMov:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
-      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
-      .where("estoque.empresa_id = :empresa and estoque.qtd = 0", { empresa })
-      .getMany()
-    
+    let estoqueListSemMov:any[] = await this.estoqueRepository.findEstoqueSemMov(empresa)
+
     const estoqueListRaw:any[] = [...estoqueListComMov,...estoqueListSemMov]
 
     const estoqueList:any[] = []
@@ -123,28 +103,9 @@ export class EstoqueServices implements IEstoqueServices {
     tomorrow.setDate(tomorrow.getDate() + 1)
     const tomorrowSimple = fDateSimple(tomorrow)
 
-    let entradaList:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
-      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
-      .innerJoinAndMapMany(
-        "estoque.entrada",
-        Entrada,
-        "entrada",
-        `entrada.produto = estoque.produto and entrada.data_entrada between '${todaySimple}' and '${tomorrowSimple}'`,
-      )
-      .where("estoque.empresa_id = :empresa", { empresa })
-      .getMany()
+    let entradaList:any[] = await this.estoqueRepository.findEstoqueEntrada(empresa, todaySimple, tomorrowSimple)
     
-    let saidaList:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
-      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
-      .innerJoinAndMapMany(
-        "estoque.saida",
-        Saida,
-        "saida",
-        `saida.produto = estoque.produto and saida.data_saida between '${todaySimple}' and '${tomorrowSimple}'`,
-      )
-      .where("estoque.empresa_id = :empresa", { empresa })
-      .getMany()
-    
+    let saidaList:any[] = await this.estoqueRepository.findEstoqueSaida(empresa, todaySimple, tomorrowSimple)
 
     const workbook = new ExcelJS.Workbook()
 
@@ -276,16 +237,7 @@ export class EstoqueServices implements IEstoqueServices {
   }
 
   async getEstoqueMinimo(empresa:string):Promise<ExcelJS.Workbook> {
-    let estoqueMinimo:any[] = await this.estoqueRepository.createQueryBuilder("estoque")
-      .leftJoinAndSelect("estoque.produto", "estoque.id_produto")
-      .innerJoinAndMapMany(
-        "estoque.estoque_minimo",
-        Produto,
-        "produto",
-        "produto.estoque_minimo >= estoque.qtd and estoque.produto = produto.id_produto",
-      )
-      .where("estoque.empresa_id = :empresa", { empresa })
-      .getMany()    
+    let estoqueMinimo:any[] = await this.estoqueRepository.findEstoqueMinimo(empresa)   
 
     const workbook = new ExcelJS.Workbook()
 
