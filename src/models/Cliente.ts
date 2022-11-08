@@ -22,7 +22,7 @@ export class Cliente {
   @Column()
   empresa_id:string
 
-  constructor(props: Omit<Cliente, 'id_cliente'>) {
+  constructor(props: Omit<Cliente, 'id_cliente'|'empresa'>) {
     Object.assign(this, props)
   }
 }

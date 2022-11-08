@@ -71,7 +71,6 @@ export class ProdutoServices implements IProdutoServices {
       fornecedor: fornecedor,
       categoria: categoria, 
       status: true,
-      empresa: data.empresa,
       empresa_id: data.empresa
     })
 

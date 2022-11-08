@@ -30,7 +30,7 @@ export class Fornecedor {
   @Column()
   empresa_id:string
 
-  constructor(props: Omit<Fornecedor, 'id_fornecedor'>) {
+  constructor(props: Omit<Fornecedor, 'id_fornecedor'|'empresa'>) {
     Object.assign(this, props)
   }
 }

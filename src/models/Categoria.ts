@@ -22,7 +22,7 @@ export class Categoria {
   @Column()
   empresa_id:string
 
-  constructor(props: Omit<Categoria, 'id_categoria'>) {
+  constructor(props: Omit<Categoria, 'id_categoria'|'empresa'>) {
     Object.assign(this, props)
   }
 }
