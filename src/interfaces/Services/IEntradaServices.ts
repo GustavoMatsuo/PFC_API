@@ -1,5 +1,5 @@
 import { CreateEntradaDTO } from "@dto/EntradaDTO"
-import { Paginationlist } from "../globalTypes"
+import { Paginationlist } from "../../globalTypes"
 
 export interface IEntradaServices {
   create(data:CreateEntradaDTO):Promise<void>

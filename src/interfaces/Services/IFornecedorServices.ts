@@ -1,5 +1,5 @@
 import { CreateFornecedorDTO, UpdateFornecedorDTO } from "@dto/FornecedorDTO"
-import { Paginationlist } from "../globalTypes"
+import { Paginationlist } from "../../globalTypes"
 
 export interface IFornecedorServices {
   index(

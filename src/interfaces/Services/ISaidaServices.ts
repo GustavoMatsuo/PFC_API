@@ -1,5 +1,5 @@
 import { CreateSaidaDTO } from "@dto/SaidaDTO"
-import { Paginationlist } from "../globalTypes"
+import { Paginationlist } from "../../globalTypes"
 import ExcelJS from 'exceljs'
 
 export interface ISaidaServices {
