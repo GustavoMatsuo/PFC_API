@@ -12,8 +12,8 @@ export class UsuarioController {
   async index(request:Request, response:Response):Promise<Response> {
     try {
       const { limit, skip, filterBy, order, orderBy } = request.query
-      const formattedLimit = limit? String(limit) : null
-      const formattedSkip = skip?  String(skip) : null
+      const formattedLimit = limit? Number(limit) : null
+      const formattedSkip = skip?  Number(skip) : null
       const formattedFilterBy = filterBy? String(filterBy) : null
       const formattedOrder = order? String(order) : null
       const formattedOrderBy = orderBy?  String(orderBy) : null
@@ -149,7 +149,11 @@ export class UsuarioController {
     try {
       const { senha } = request.body
 
-      await this.usuarioServices.newPassword(senha, request.userId)
+      await this.usuarioServices.newPassword(
+        senha, 
+        request.userId, 
+        request.empresaId
+      )
 
       return response.status(200).json({msg: 'password changed'})
     } catch (err) {
@@ -178,8 +182,8 @@ export class UsuarioController {
     try {
       const { limit, skip, filterBy, order, orderBy, empresaId } = request.query
       const empresa = empresaId? String(empresaId) : null
-      const formattedLimit = limit? String(limit) : null
-      const formattedSkip = skip?  String(skip) : null
+      const formattedLimit = limit? Number(limit) : null
+      const formattedSkip = skip?  Number(skip) : null
       const formattedFilterBy = filterBy? String(filterBy) : null
       const formattedOrder = order? String(order) : null
       const formattedOrderBy = orderBy?  String(orderBy) : null

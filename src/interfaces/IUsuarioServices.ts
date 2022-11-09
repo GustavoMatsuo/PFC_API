@@ -16,8 +16,8 @@ export type loginType = {
 export interface IUsuarioServices {
   index(
     empresa:string,
-    limit?:string, 
-    skip?:string, 
+    limit?:number, 
+    skip?:number, 
     filterBy?:string,
     order?:string,
     orderBy?:string
@@ -28,6 +28,6 @@ export interface IUsuarioServices {
   delete(userId:string, empresaId:string):Promise<void>
   changeStatus(userId:string, empresaId:string):Promise<void>
   reset(email:string):Promise<void>
-  newPassword(senha:string, userId: string):Promise<void>
+  newPassword(senha:string, userId:string, empresaId:string):Promise<void>
   delete(senha:string, userId: string):Promise<void>
 }

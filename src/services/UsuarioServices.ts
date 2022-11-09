@@ -1,7 +1,7 @@
 import { Usuario } from "@models"
 import { loginType } from "@interfaces"
 import { IUsuarioServices, IMailProvider } from "@interfaces"
-import { UsuarioRepository } from "@repositories"
+import { IUsuarioRepository } from "src/interfaces/Repositories/IUsuarioRepository"
 import { 
   ICreateUsuarioDTO, 
   ILoginUsuarioDTO,
@@ -17,11 +17,11 @@ import { newUser } from "../templates/newUser"
 const API_URL = "https://tag-project.azurewebsites.net" 
 
 export class UsuarioServices implements IUsuarioServices {
-  private usuarioRepository: UsuarioRepository
+  private usuarioRepository: IUsuarioRepository
   private mailProvider:IMailProvider
 
   constructor(
-    usuarioRepository:UsuarioRepository,
+    usuarioRepository:IUsuarioRepository,
     mailProvider:IMailProvider,
   ) {
     this.usuarioRepository = usuarioRepository
@@ -30,45 +30,29 @@ export class UsuarioServices implements IUsuarioServices {
 
   async index(
     empresa:string,
-    limit:string, 
-    skip:string, 
-    filterBy:string,
-    order:string,
-    orderBy:string
+    limit?:number, 
+    skip?:number, 
+    filterBy?:string,
+    order?:string,
+    orderBy?:string
   ):Promise<Paginationlist> {
-    const limitNum = limit? Number.parseInt(limit) : null
-    const skipNum = skip? Number.parseInt(skip) : null
-
-    const query = this.usuarioRepository
-      .createQueryBuilder("usuario")
-      .where("usuario.empresa_id = :empresa", { empresa })
-      .andWhere("usuario.cargo <> 'admin global'")
-      .take(limitNum)
-      .skip(skipNum)
+    const usuarioList = await this.usuarioRepository.listUsuario(
+      empresa,
+      limit,
+      skip,
+      filterBy,
+      order,
+      orderBy
+    )
     
-    if(filterBy) {
-      query.andWhere("LOWER(usuario.nome) like LOWER(:nome)", { nome: `%${filterBy}%` })
-    }
-
-    if(order && orderBy) {
-      const descOrAsc = String(order).toUpperCase() === "DESC"? "DESC":"ASC"
-      query.orderBy(`usuario.${orderBy}`, descOrAsc)
-    }
-
-    const usuarioList = await query.getMany()
-
-    const sumRow = await query.getCount()
-    
-    return {list: usuarioList, total: sumRow}
+    return usuarioList
   }
 
   async login(data:ILoginUsuarioDTO):Promise<loginType> {
     let usuario:Usuario = null
     
     if(data.email){
-      usuario = await this.usuarioRepository.findOne({
-        where: { email: data.email.toLowerCase() }
-      })
+      usuario = await this.usuarioRepository.findByEmail(data.email)
     }
 
     if(!usuario){
@@ -105,11 +89,9 @@ export class UsuarioServices implements IUsuarioServices {
   }
 
   async create(data:ICreateUsuarioDTO):Promise<void> {
-    const usuarioAlreadyExists = await this.usuarioRepository.findOneBy({
-      email: data.email.toLowerCase()
-    })
+    const usuarioAlreadyExists = await this.usuarioRepository.findByEmail(data.email)
 
-    if (usuarioAlreadyExists) {
+    if (usuarioAlreadyExists && usuarioAlreadyExists.email === data.email) {
       throw new Error('Usuario already exists.')
     }
 
@@ -124,7 +106,7 @@ export class UsuarioServices implements IUsuarioServices {
       verificado: false
     })
 
-    const usuarioRegistred = await this.usuarioRepository.save(usuario)
+    const usuarioRegistred = await this.usuarioRepository.saveUsuario(usuario)
 
     const token = sign({id: usuarioRegistred.id_usuario}, "secret", { expiresIn: "1h" })
 
@@ -146,7 +128,7 @@ export class UsuarioServices implements IUsuarioServices {
   }
 
   async update(data:IUpdateUsuarioDTO):Promise<void> {
-    const usuarioExists = await this.usuarioRepository.findOneBy({id_usuario: data.id_usuario})
+    const usuarioExists = await this.usuarioRepository.findById(data.id_usuario, data.empresa)
 
     if (!usuarioExists || !(usuarioExists.id_usuario === data.id_usuario)) {
       throw new Error('Usuario not found.')
@@ -165,14 +147,11 @@ export class UsuarioServices implements IUsuarioServices {
       empresa_id: data.empresa
     })
 
-    await this.usuarioRepository.update(data.id_usuario, usuario)
+    await this.usuarioRepository.updateUsuario(usuario)
   }
 
   async delete(userId:string, empresaId:string):Promise<void> {
-    const usuarioExists = await this.usuarioRepository.findOneBy({
-      id_usuario: userId, 
-      empresa_id: empresaId
-    })
+    const usuarioExists = await this.usuarioRepository.findById(userId, empresaId)
 
     if (!usuarioExists || !(usuarioExists.id_usuario === userId)) {
       throw new Error('Usuario not found.')
@@ -182,14 +161,11 @@ export class UsuarioServices implements IUsuarioServices {
       throw new Error('Usuario is not able to delete.')
     }
 
-    await this.usuarioRepository.delete(userId)
+    await this.usuarioRepository.deleteUsuario(usuarioExists)
   }
 
   async changeStatus(userId:string, empresaId:string):Promise<void> {
-    let usuarioExists = await this.usuarioRepository.findOneBy({
-      id_usuario: userId, 
-      empresa_id: empresaId
-    })
+    let usuarioExists = await this.usuarioRepository.findById(userId, empresaId)
 
     if (!usuarioExists || !(usuarioExists.id_usuario === userId)) {
       throw new Error('Usuario not found.')
@@ -197,16 +173,14 @@ export class UsuarioServices implements IUsuarioServices {
 
     usuarioExists.status = !usuarioExists.status
 
-    await this.usuarioRepository.update(userId, usuarioExists)
+    await this.usuarioRepository.updateUsuario(usuarioExists)
   }
 
   async reset(email:string):Promise<void> {
     let usuarioExists:Usuario = null
     
     if(email){
-      usuarioExists = await this.usuarioRepository.findOne({
-        where: { email: email }
-      })
+      usuarioExists = await this.usuarioRepository.findByEmail(email)
     }
 
     if (!usuarioExists || !(usuarioExists.email === email)) {
@@ -236,8 +210,8 @@ export class UsuarioServices implements IUsuarioServices {
     })
   }
 
-  async newPassword(senha:string, userId: string):Promise<void> {
-    let usuarioExists = await this.usuarioRepository.findOneBy({id_usuario: userId})
+  async newPassword(senha:string, userId: string, empresaId:string):Promise<void> {
+    let usuarioExists = await this.usuarioRepository.findById(userId, empresaId)
 
     if (!usuarioExists && !(usuarioExists.id_usuario === userId)) {
       throw new Error('Usuario not found.')
@@ -247,6 +221,6 @@ export class UsuarioServices implements IUsuarioServices {
     usuarioExists.senha = hash_password
     usuarioExists.verificado = true
 
-    await this.usuarioRepository.update(usuarioExists.id_usuario, usuarioExists)
+    await this.usuarioRepository.updateUsuario(usuarioExists)
   }
 }
