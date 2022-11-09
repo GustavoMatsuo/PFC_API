@@ -1,10 +1,12 @@
 import { Produto } from "@models"
-import { IProdutoServices } from "@interfaces"
+import { 
+  IProdutoServices, 
+  IFornecedorRepository, 
+  ICategoriaRepository, 
+  IProdutoRepository 
+} from "@interfaces"
 import { CreateProdutoDTO, UpdateProdutoDTO } from "@dto/ProdutoDTO"
 import { Paginationlist } from "../globalTypes"
-import { IFornecedorRepository } from "src/interfaces/Repositories/IFornecedorRepository"
-import { ICategoriaRepository } from "src/interfaces/Repositories/ICategoriaRepository"
-import { IProdutoRepository } from "src/interfaces/Repositories/IProdutoRepository"
 
 export class ProdutoServices implements IProdutoServices {
   private produtoRepository:IProdutoRepository

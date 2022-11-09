@@ -1,5 +1,5 @@
 import { Cliente } from "@models"
-import { IClienteRepository } from "src/interfaces/Repositories/IClienteRepository"
+import { IClienteRepository } from "@interfaces"
 import { Repository } from "typeorm"
 
 export class ClienteRepository implements IClienteRepository {

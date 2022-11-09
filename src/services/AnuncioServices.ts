@@ -1,7 +1,6 @@
 import { Anuncio } from "@models"
-import { IAnuncioServices } from "@interfaces"
+import { IAnuncioServices, IAnuncioRepository } from "@interfaces"
 import { CreateAnuncioDTO, UpdateAnuncioDTO } from "@dto/AnuncioDTO"
-import { IAnuncioRepository } from "src/interfaces/Repositories/IAnuncioRepository"
 
 export class AnuncioServices implements IAnuncioServices {
   private anuncioRepository: IAnuncioRepository

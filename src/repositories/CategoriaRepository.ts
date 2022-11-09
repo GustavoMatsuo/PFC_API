@@ -1,6 +1,6 @@
 import { Categoria } from "@models"
 import { Repository } from "typeorm"
-import { ICategoriaRepository } from "src/interfaces/Repositories/ICategoriaRepository"
+import { ICategoriaRepository } from "@interfaces"
 
 export class CategoriaRepository implements ICategoriaRepository {
   private connection: Repository<Categoria>

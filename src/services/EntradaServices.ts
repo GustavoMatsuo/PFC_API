@@ -1,9 +1,7 @@
 import { Entrada, Produto } from "@models"
-import { IEntradaServices } from "@interfaces"
+import { IEntradaServices, IEntradaRepository, IProdutoRepository } from "@interfaces"
 import { CreateEntradaDTO, EntradaFormattedDTO } from "@dto/EntradaDTO"
 import { Paginationlist } from "../globalTypes"
-import { IEntradaRepository } from "src/interfaces/Repositories/IEntradaRepository"
-import { IProdutoRepository } from "src/interfaces/Repositories/IProdutoRepository"
 
 export class EntradaServices implements IEntradaServices {
   private entradaRepository: IEntradaRepository

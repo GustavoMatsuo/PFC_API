@@ -1,5 +1,5 @@
 import { Empresa, Endereco } from "@models"
-import { IEmpresaRepository } from "src/interfaces/Repositories/IEmpresaRepository"
+import { IEmpresaRepository } from "@interfaces"
 import { Repository } from "typeorm"
 
 export class EmpresaRepository implements IEmpresaRepository {

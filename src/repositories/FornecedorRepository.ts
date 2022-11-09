@@ -1,5 +1,5 @@
 import { Endereco, Fornecedor } from "@models"
-import { IFornecedorRepository } from "src/interfaces/Repositories/IFornecedorRepository"
+import { IFornecedorRepository } from "@interfaces"
 import { Repository } from "typeorm"
 
 export class FornecedorRepository implements IFornecedorRepository {

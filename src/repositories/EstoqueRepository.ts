@@ -1,5 +1,5 @@
 import { Entrada, Estoque, Produto, Saida } from "@models"
-import { IEstoqueRepository } from "src/interfaces/Repositories/IEstoqueRepository"
+import { IEstoqueRepository } from "@interfaces"
 import { Repository } from "typeorm"
 
 export class EstoqueRepository implements IEstoqueRepository {

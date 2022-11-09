@@ -1,5 +1,5 @@
 import { Anuncio } from "@models"
-import { IAnuncioRepository } from "src/interfaces/Repositories/IAnuncioRepository"
+import { IAnuncioRepository } from "@interfaces"
 import { Repository } from "typeorm"
 
 export class AnuncioRepository implements IAnuncioRepository{

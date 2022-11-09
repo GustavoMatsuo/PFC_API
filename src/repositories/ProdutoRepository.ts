@@ -1,6 +1,6 @@
 import { SimpleProdutoDTO } from "@dto/ProdutoDTO"
 import { Estoque, Produto } from "@models"
-import { IProdutoRepository } from "src/interfaces/Repositories/IProdutoRepository"
+import { IProdutoRepository } from "@interfaces"
 import { Repository } from "typeorm"
 
 export class ProdutoRepository implements IProdutoRepository {

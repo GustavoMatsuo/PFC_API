@@ -1,7 +1,10 @@
 import { Usuario } from "@models"
-import { loginType } from "@interfaces"
-import { IUsuarioServices, IMailProvider } from "@interfaces"
-import { IUsuarioRepository } from "src/interfaces/Repositories/IUsuarioRepository"
+import { 
+  loginType,
+  IUsuarioServices, 
+  IMailProvider,
+  IUsuarioRepository
+} from "@interfaces"
 import { 
   ICreateUsuarioDTO, 
   ILoginUsuarioDTO,

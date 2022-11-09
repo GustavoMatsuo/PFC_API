@@ -1,12 +1,14 @@
 import { Produto, Saida } from "@models"
-import { ISaidaServices } from "@interfaces"
+import { 
+  ISaidaServices,
+  ISaidaRepository,
+  IProdutoRepository,
+  IVendaRepository
+} from "@interfaces"
 import { CreateSaidaDTO } from "@dto/SaidaDTO"
 import { Paginationlist } from "../globalTypes"
 import { fDateSimple, fDateTime } from "../utils/formatTime"
 import ExcelJS from 'exceljs'
-import { ISaidaRepository } from "src/interfaces/Repositories/ISaidaRepository"
-import { IProdutoRepository } from "src/interfaces/Repositories/IProdutoRepository"
-import { IVendaRepository } from "src/interfaces/Repositories/IVendaRepository"
 
 export class SaidaServices implements ISaidaServices {
   private saidaRepository: ISaidaRepository

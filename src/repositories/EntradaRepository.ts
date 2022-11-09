@@ -1,5 +1,5 @@
 import { Entrada } from "@models"
-import { IEntradaRepository } from "src/interfaces/Repositories/IEntradaRepository"
+import { IEntradaRepository } from "@interfaces"
 import { Repository } from "typeorm"
 
 export class EntradaRepository implements IEntradaRepository {

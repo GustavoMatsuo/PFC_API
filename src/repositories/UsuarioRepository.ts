@@ -1,6 +1,6 @@
 import { Repository } from "typeorm"
 import { Usuario } from "@models"
-import { IUsuarioRepository } from "src/interfaces/Repositories/IUsuarioRepository"
+import { IUsuarioRepository } from "@interfaces"
 
 export class UsuarioRepository implements IUsuarioRepository {
   private connection: Repository<Usuario>

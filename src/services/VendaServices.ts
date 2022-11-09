@@ -1,11 +1,13 @@
 import { Venda } from "@models"
-import { IVendaServices } from "@interfaces"
+import { 
+  IVendaServices,
+  IVendaRepository,
+  IProdutoRepository,
+  IClienteRepository,
+} from "@interfaces"
 import { CreateVendaDTO, ResponseVendasChart } from "@dto/VendaDTO"
 import { fDateMonthYear } from "../utils/formatTime"
 import { subMonths, startOfMonth } from 'date-fns'
-import { IVendaRepository } from "src/interfaces/Repositories/IVendaRepository"
-import { IProdutoRepository } from "src/interfaces/Repositories/IProdutoRepository"
-import { IClienteRepository } from "src/interfaces/Repositories/IClienteRepository"
 import { VendaSaidaDTO } from "@dto/SaidaDTO"
 
 export class VendaServices implements IVendaServices {

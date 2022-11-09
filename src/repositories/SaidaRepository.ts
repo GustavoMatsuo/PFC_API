@@ -1,5 +1,5 @@
 import { Saida } from "@models"
-import { ISaidaRepository } from "src/interfaces/Repositories/ISaidaRepository"
+import { ISaidaRepository } from "@interfaces"
 import { Repository } from "typeorm"
 
 export class SaidaRepository implements ISaidaRepository {

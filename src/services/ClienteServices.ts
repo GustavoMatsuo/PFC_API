@@ -1,7 +1,6 @@
 import { Cliente } from "@models"
-import { IClienteServices } from "@interfaces"
+import { IClienteServices, IClienteRepository } from "@interfaces"
 import { CreateClienteDTO, UpdateClienteDTO } from "@dto/ClienteDTO"
-import { IClienteRepository } from "src/interfaces/Repositories/IClienteRepository"
 
 export class ClienteServices implements IClienteServices {
   private clienteRepository: IClienteRepository

@@ -1,8 +1,7 @@
 import { Endereco, Fornecedor } from "@models"
-import { IFornecedorServices } from "@interfaces"
+import { IFornecedorServices, IFornecedorRepository } from "@interfaces"
 import { CreateFornecedorDTO, UpdateFornecedorDTO } from "@dto/FornecedorDTO"
 import { Paginationlist } from "../globalTypes"
-import { IFornecedorRepository } from "src/interfaces/Repositories/IFornecedorRepository"
 
 export class FornecedorServices implements IFornecedorServices {
   private fornecedorRepository: IFornecedorRepository

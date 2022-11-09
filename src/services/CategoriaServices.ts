@@ -1,7 +1,6 @@
 import { Categoria } from "@models"
-import { ICategoriaServices } from "@interfaces"
+import { ICategoriaServices, ICategoriaRepository } from "@interfaces"
 import { CreateCategoriaDTO, UpdateCategoriaDTO } from "@dto/CategoriaDTO"
-import { ICategoriaRepository } from "src/interfaces/Repositories/ICategoriaRepository"
 
 export class CategoriaServices implements ICategoriaServices {
   private categoriaRepository: ICategoriaRepository

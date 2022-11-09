@@ -1,6 +1,6 @@
 import { VendaSaidaDTO } from "@dto/SaidaDTO"
 import { Saida, Venda } from "@models"
-import { IVendaRepository } from "src/interfaces/Repositories/IVendaRepository"
+import { IVendaRepository } from "@interfaces"
 import { Between, Repository } from "typeorm"
 
 export class VendaRepository implements IVendaRepository {
