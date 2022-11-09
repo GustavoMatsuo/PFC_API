@@ -24,16 +24,6 @@ import { VendaRepository } from "./VendaRepository"
 import { EmpresaRepository } from "./EmpresaRepository"
 import { AnuncioRepository } from "./AnuncioRepository"
 
-const usuarioRepository = db.getRepository(Usuario)
-
-export {
-  usuarioRepository,
-}
-
-export {
-  UsuarioRepository,
-}
-
 const categoriaRepository = new CategoriaRepository(
   db.getRepository(Categoria)
 )
@@ -73,6 +63,10 @@ const estoqueRepository = new EstoqueRepository(
   db.getRepository(Estoque)
 )
 
+const usuarioRepository = new UsuarioRepository(
+  db.getRepository(Usuario)
+)
+
 export {
   categoriaRepository,
   anuncioRepository,
@@ -83,5 +77,6 @@ export {
   entradaRepository,
   saidaRepository,
   vendaRepository,
-  estoqueRepository
+  estoqueRepository,
+  usuarioRepository
 }
