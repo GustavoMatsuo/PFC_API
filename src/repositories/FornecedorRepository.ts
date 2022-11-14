@@ -62,10 +62,11 @@ export class FornecedorRepository implements IFornecedorRepository {
   }
 
   async findById(id: string, empresa: string): Promise<Fornecedor> {
-    const result = await this.connection.findOneBy({
-      id_fornecedor: id,
-      empresa_id: empresa
-    })
+    const result = await this.connection
+    .createQueryBuilder("fornecedor")
+    .leftJoinAndSelect("fornecedor.endereco", "endereco.id_endereco")
+    .where("fornecedor.id_fornecedor = :id and fornecedor.empresa_id = :empresa", { id, empresa })
+    .getOne()
 
     return result
   }
