@@ -17,7 +17,7 @@ import { sign } from "jsonwebtoken"
 import { resetPassword } from "../templates/resetPassword"
 import { newUser } from "../templates/newUser"
 
-const API_URL = "https://tag-project.azurewebsites.net" 
+const API_URL = "http://tag-project.azurewebsites.net" 
 
 export class UsuarioServices implements IUsuarioServices {
   private usuarioRepository: IUsuarioRepository
