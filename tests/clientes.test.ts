@@ -1,7 +1,9 @@
 import { DataSource } from "typeorm"
 import { ClienteServices } from '../src/services/ClienteServices'
+import { ClienteRepository } from '../src/repositories/ClienteRepository'
+import { IClienteRepository } from '../src/interfaces/Repositories/IClienteRepository'
 import { Cliente, Empresa, Endereco } from '../src/models'
-import { ICreateClienteDTO, IUpdateClienteDTO } from '../src/dto/ClienteDTO'
+import { CreateClienteDTO, UpdateClienteDTO } from '../src/dto/ClienteDTO'
 import { v4 as uuidv4 } from 'uuid'
 
 let connection:DataSource
@@ -33,27 +35,30 @@ let idCliente = ""
 const randomCFP = Math.floor(Math.random() * 100000000000)
 
 it('should return list of Clientes', async() => {
-  const cliente = new ClienteServices(connection.getRepository(Cliente))
+  const clienteRepository:IClienteRepository = new ClienteRepository(connection.getRepository(Cliente))
+  const cliente = new ClienteServices(clienteRepository)
   const clienteList = await cliente.index(idEmpresaExist)
   expect(Array.isArray(clienteList)).toBe(true)
 })
 
 it('should Create Clientes', async() => {
-  const cliente = new ClienteServices(connection.getRepository(Cliente))
-  const newClient:ICreateClienteDTO = {
+  const clienteRepository:IClienteRepository = new ClienteRepository(connection.getRepository(Cliente))
+  const cliente = new ClienteServices(clienteRepository)
+  const newClientDTO:CreateClienteDTO = {
     nome:"novo cliente",
     cpf:randomCFP,
     cel:3127677662,
     empresa:idEmpresaExist
   }
-  const novoCliente:Cliente = await cliente.create(newClient)
+  const novoCliente:Cliente = await cliente.create(newClientDTO)
   idCliente = novoCliente.id_cliente
   expect(novoCliente.nome).toBe("novo cliente")
 })
 
 it('should Create Clientes Exist', async() => {
-  const cliente = new ClienteServices(connection.getRepository(Cliente))
-  const newClient:ICreateClienteDTO = {
+  const clienteRepository:IClienteRepository = new ClienteRepository(connection.getRepository(Cliente))
+  const cliente = new ClienteServices(clienteRepository)
+  const newClientDTO:CreateClienteDTO = {
     nome:"novo cliente",
     cpf:randomCFP,
     cel:3127677662,
@@ -61,7 +66,7 @@ it('should Create Clientes Exist', async() => {
   }
   let errorStrnig = ""
   try{
-    await cliente.create(newClient)
+    await cliente.create(newClientDTO)
   } catch(err){
     errorStrnig = err.message
   } 
@@ -69,8 +74,9 @@ it('should Create Clientes Exist', async() => {
 })
 
 it('should Upadte Clientes', async() => {
-  const cliente = new ClienteServices(connection.getRepository(Cliente))
-  const updateCliente:IUpdateClienteDTO = {
+  const clienteRepository:IClienteRepository = new ClienteRepository(connection.getRepository(Cliente))
+  const cliente = new ClienteServices(clienteRepository)
+  const updateCliente:UpdateClienteDTO = {
     id_cliente: idCliente,
     nome:"novo cliente update",
     cpf:randomCFP,
@@ -82,8 +88,9 @@ it('should Upadte Clientes', async() => {
 })
 
 it('should Upadte Clientes not found', async() => {
-  const cliente = new ClienteServices(connection.getRepository(Cliente))
-  const updateCliente:IUpdateClienteDTO = {
+  const clienteRepository:IClienteRepository = new ClienteRepository(connection.getRepository(Cliente))
+  const cliente = new ClienteServices(clienteRepository)
+  const updateCliente:UpdateClienteDTO = {
     id_cliente: uuidv4(),
     nome:"novo cliente update",
     cpf:randomCFP,
@@ -100,7 +107,8 @@ it('should Upadte Clientes not found', async() => {
 })
 
 it('should Read Clientes', async() => {
-  const cliente = new ClienteServices(connection.getRepository(Cliente))
+  const clienteRepository:IClienteRepository = new ClienteRepository(connection.getRepository(Cliente))
+  const cliente = new ClienteServices(clienteRepository)
 
   const getCLiente:Cliente = await cliente.read(idCliente, idEmpresaExist)
   expect(getCLiente.nome).toBe("novo cliente update")
@@ -108,7 +116,8 @@ it('should Read Clientes', async() => {
 })
 
 it('should Read Clientes not found', async() => {
-  const cliente = new ClienteServices(connection.getRepository(Cliente))
+  const clienteRepository:IClienteRepository = new ClienteRepository(connection.getRepository(Cliente))
+  const cliente = new ClienteServices(clienteRepository)
   let errorStrnig = ""
   try{
     await cliente.read(uuidv4(), idEmpresaExist)
@@ -119,14 +128,16 @@ it('should Read Clientes not found', async() => {
 })
 
 it('should Delete Clientes', async() => {
-  const cliente = new ClienteServices(connection.getRepository(Cliente))
+  const clienteRepository:IClienteRepository = new ClienteRepository(connection.getRepository(Cliente))
+  const cliente = new ClienteServices(clienteRepository)
 
   const deleted:boolean = await cliente.delete(idCliente, idEmpresaExist)
   expect(deleted).toBe(true)
 })
 
 it('should Delete Clientes not found', async() => {
-  const cliente = new ClienteServices(connection.getRepository(Cliente))
+  const clienteRepository:IClienteRepository = new ClienteRepository(connection.getRepository(Cliente))
+  const cliente = new ClienteServices(clienteRepository)
   let errorStrnig = ""
   try{
     await cliente.delete(uuidv4(), idEmpresaExist)
