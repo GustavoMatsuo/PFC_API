@@ -7,7 +7,8 @@ export interface IUsuarioRepository {
     skip?:number, 
     filterBy?:string,
     order?:string,
-    orderBy?:string
+    orderBy?:string,
+    withAdm?:boolean
   ):Promise<{list: Usuario[], total: number}>
   findByEmail(email:string):Promise<Usuario>
   findById(id:string, empresa:string):Promise<Usuario>

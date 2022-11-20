@@ -15,12 +15,14 @@ export class UsuarioRepository implements IUsuarioRepository {
     skip?:number, 
     filterBy?:string,
     order?:string,
-    orderBy?:string
+    orderBy?:string,
+    withAdm?:boolean
   ): Promise<{ list: Usuario[]; total: number }> {
     const query = this.connection
       .createQueryBuilder("usuario")
       .where("usuario.empresa_id = :empresa", { empresa })
-      .andWhere("usuario.cargo <> 'admin global'")
+
+    if(!withAdm) query.andWhere("usuario.cargo <> 'admin global'")
 
     if(limit) query.take(limit)
     if(skip) query.skip(skip)

@@ -20,7 +20,8 @@ export interface IUsuarioServices {
     skip?:number, 
     filterBy?:string,
     order?:string,
-    orderBy?:string
+    orderBy?:string,
+    withAdm?:boolean
   ):Promise<Paginationlist>
   login(data:ILoginUsuarioDTO):Promise<loginType>
   create(data:ICreateUsuarioDTO):Promise<void>

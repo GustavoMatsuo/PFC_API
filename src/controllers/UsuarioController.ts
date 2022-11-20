@@ -24,7 +24,8 @@ export class UsuarioController {
         formattedSkip,
         formattedFilterBy,
         formattedOrder,
-        formattedOrderBy
+        formattedOrderBy,
+        false
       )
   
       return response.status(200).json(usuarioList)
@@ -194,7 +195,8 @@ export class UsuarioController {
         formattedSkip,
         formattedFilterBy,
         formattedOrder,
-        formattedOrderBy
+        formattedOrderBy,
+        true
       )
   
       return response.status(200).json(usuarioList)

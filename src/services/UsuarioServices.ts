@@ -37,7 +37,8 @@ export class UsuarioServices implements IUsuarioServices {
     skip?:number, 
     filterBy?:string,
     order?:string,
-    orderBy?:string
+    orderBy?:string,
+    withAdm?:boolean
   ):Promise<Paginationlist> {
     const usuarioList = await this.usuarioRepository.listUsuario(
       empresa,
@@ -45,7 +46,8 @@ export class UsuarioServices implements IUsuarioServices {
       skip,
       filterBy,
       order,
-      orderBy
+      orderBy,
+      withAdm
     )
     
     return usuarioList
