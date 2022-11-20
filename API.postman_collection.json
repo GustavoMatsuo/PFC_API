@@ -46,13 +46,13 @@
 					"response": []
 				},
 				{
-					"name": "create_first_usuario",
+					"name": "create_adm_usuario",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n   \"nome\":\"Samara\",\r\n   \"email\":\"s@s.com\",\r\n   \"senha\": \"123\",\r\n   \"cargo\": \"employee\",\r\n   \"empresa\": \"d82af157-c2ca-4fa8-80e2-191e7e1ea04d\"\r\n}",
+							"raw": "{\r\n   \"nome\":\"Adminisrador\",\r\n   \"email\":\"adm@adm.com\",\r\n   \"senha\": \"123\",\r\n   \"cargo\": \"admin global\",\r\n   \"empresa\": \"5970d3bf-06c5-4591-a5fd-c004ae98b7ea\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -60,13 +60,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/usuario/first",
+							"raw": "{{BaseURL}}/usuario/adm",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
 								"usuario",
-								"first"
+								"adm"
 							]
 						},
 						"description": "User"
@@ -104,6 +104,44 @@
 							],
 							"path": [
 								"usuario"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "update_adm_usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNiNWVhZTcyLWUyYjQtNDU3OS05Y2U3LWU3NjU2YTQ2Y2E5YSIsImVtcHJlc2EiOiI1OTcwZDNiZi0wNmM1LTQ1OTEtYTVmZC1jMDA0YWU5OGI3ZWEiLCJyb2xlIjoiYWRtaW4gZ2xvYmFsIiwiaWF0IjoxNjY4NDYyOTE4LCJleHAiOjE2Njg1NDkzMTh9.dabI3oP3LEW9Ny-YGcJ0wpVVHJCKTZS6Mj9RTa9j3vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_usuario\": \"3b5eae72-e2b4-4579-9ce7-e7656a46ca9a\",\r\n    \"status\": true,\r\n    \"nome\": \"Usuario ADM_GLOBAL\",\r\n    \"cargo\": \"admin global\",\r\n    \"senha\": \"123\",\r\n    \"email\": \"adm@adm.com\",\r\n    \"verficado\": true,\r\n    \"empresa\": \"5970d3bf-06c5-4591-a5fd-c004ae98b7ea\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseProd}}/usuario/adm",
+							"host": [
+								"{{BaseProd}}"
+							],
+							"path": [
+								"usuario",
+								"adm"
 							]
 						},
 						"description": "User"
@@ -196,7 +234,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5YjhiNmE3LTFhNzgtNDQ3Ni04Y2YyLWE4ZDkwZWEwZTUyOSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjM1MTM3NzUsImV4cCI6MTY2MzYwMDE3NX0.zBhvb41dLYpJT9nLNZTVkd9EL-_bOrEslq27oHs-t-Y",
 									"type": "string"
 								}
 							]
@@ -250,7 +288,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\":\"g@g.com\",\r\n  \"senha\":\"123\"\r\n}",
+							"raw": "{\r\n  \"email\":\"adm@adm.com\",\r\n  \"senha\":\"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -258,9 +296,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/usuario/login",
+							"raw": "{{BaseProd}}/usuario/login",
 							"host": [
-								"{{BaseURL}}"
+								"{{BaseProd}}"
 							],
 							"path": [
 								"usuario",
@@ -333,6 +371,44 @@
 							"path": [
 								"usuario",
 								"newPassword"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "auth_usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNiNWVhZTcyLWUyYjQtNDU3OS05Y2U3LWU3NjU2YTQ2Y2E5YSIsImVtcHJlc2EiOiI1OTcwZDNiZi0wNmM1LTQ1OTEtYTVmZC1jMDA0YWU5OGI3ZWEiLCJyb2xlIjoiYWRtaW4gZ2xvYmFsIiwiaWF0IjoxNjY4NDYyOTE4LCJleHAiOjE2Njg1NDkzMTh9.dabI3oP3LEW9Ny-YGcJ0wpVVHJCKTZS6Mj9RTa9j3vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/usuario/auth",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"usuario",
+								"auth"
 							]
 						},
 						"description": "User"
@@ -709,6 +785,16 @@
 				{
 					"name": "delete_anuncio",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5YjhiNmE3LTFhNzgtNDQ3Ni04Y2YyLWE4ZDkwZWEwZTUyOSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjM1MTM3NzUsImV4cCI6MTY2MzYwMDE3NX0.zBhvb41dLYpJT9nLNZTVkd9EL-_bOrEslq27oHs-t-Y",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -937,7 +1023,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NjA0MDYzNzYsImV4cCI6MTY2MDQ5Mjc3Nn0.v2OO3YDKKtshTWf07GxoAT7jlkn84WHRYZXVbPfeVo4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU0MTg1MzQ2LTgxMGMtNDA0Mi04Y2IxLWY4M2RkNzM2ZTAyNiIsImVtcHJlc2EiOiJhNDQ2OTQyOS0wYmFhLTQ1ZTAtOGRmNy1lNTEzMGZkNzlkMzciLCJyb2xlIjoiYWRtaW4gZ2xvYmFsIiwiaWF0IjoxNjY2OTE3MDM2LCJleHAiOjE2NjcwMDM0MzZ9.scy01AN_YsZivqWUgVqNqD7mT_4GUxSOdq1eurXmlo0",
 									"type": "string"
 								}
 							]
@@ -1061,7 +1147,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NTk5OTg1NzAsImV4cCI6MTY2MDA4NDk3MH0.aoPBKl95Gi0G4gvtpxLQoRXkIyqCmBkGC6kI8xJ9AD4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhiY2I1NjI4LWNiMGUtNDBlZS1iYTNlLWM2MTcwZjBkNTlkOSIsImVtcHJlc2EiOiI1NGI1YjFjNy0wZGZiLTRlMWMtOWYzNi04ZWQxOTUzODBjY2UiLCJyb2xlIjoiYWRtaW4gZ2xvYmFsIiwiaWF0IjoxNjY2NTU5MDg5LCJleHAiOjE2NjY2NDU0ODl9.FtkBpUEnXk-gvFJJU38wNLW-ncZmM8NXCMTdoJxj2zM",
 									"type": "string"
 								}
 							]
@@ -1070,7 +1156,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"empresa fulane\",\r\n    \"email\":\"empresa@email.com\",\r\n    \"cnpj\":\"55467364000178\",\r\n    \"empresa\": \"e9582809-aee5-4109-b390-c7609dbe4ca8\",\r\n    \"endereco\": {\r\n        \"rua\":\"dois\",\r\n        \"numero\":\"123\",\r\n        \"bairro\":\"bairro um\",\r\n        \"cep\":\"08773500\",\r\n        \"cidade\":\"Mogi das Cruzes\",\r\n        \"uf\":\"SP\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"nome\":\"empresa fulane\",\r\n    \"email\":\"empresa@email.com\",\r\n    \"cnpj\":\"55467364000178\",\r\n    \"empresa\": \"a4469429-0baa-45e0-8df7-e5130fd79d37\",\r\n    \"endereco\": {\r\n        \"rua\":\"dois\",\r\n        \"numero\":\"123\",\r\n        \"bairro\":\"bairro um\",\r\n        \"cep\":\"08773500\",\r\n        \"cidade\":\"Mogi das Cruzes\",\r\n        \"uf\":\"SP\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1181,7 +1267,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUyZmI4MGUyLWU0MGItNDIzOS05OTFlLTBhOWZlY2JhOGNkMSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTY1OTg5MDExNywiZXhwIjoxNjU5OTc2NTE3fQ.5a_dXxQ6uDRdRFE1Bu4PfQ7Ou6ktMCS-twcvsPQNrZk",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNiNWVhZTcyLWUyYjQtNDU3OS05Y2U3LWU3NjU2YTQ2Y2E5YSIsImVtcHJlc2EiOiI1OTcwZDNiZi0wNmM1LTQ1OTEtYTVmZC1jMDA0YWU5OGI3ZWEiLCJyb2xlIjoiYWRtaW4gZ2xvYmFsIiwiaWF0IjoxNjY4NDYyOTE4LCJleHAiOjE2Njg1NDkzMTh9.dabI3oP3LEW9Ny-YGcJ0wpVVHJCKTZS6Mj9RTa9j3vg",
 									"type": "string"
 								}
 							]
@@ -1198,9 +1284,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/empresa",
+							"raw": "{{BaseProd}}/empresa",
 							"host": [
-								"{{BaseURL}}"
+								"{{BaseProd}}"
 							],
 							"path": [
 								"empresa"
@@ -1213,11 +1299,21 @@
 				{
 					"name": "create_empresa",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAxRUJDMTJELTc2NTItRUQxMS1CMDU3LTAwMEQzQUMwNUUzNyIsImVtcHJlc2EiOiI4NzAxNkQwQy03NjUyLUVEMTEtQjA1Ny0wMDBEM0FDMDVFMzciLCJyb2xlIjoiYWRtaW4gZ2xvYmFsIiwiaWF0IjoxNjY2NDkwNDUwLCJleHAiOjE2NjY1NzY4NTB9.zZI-oTif-LW6gDIUHl9qwaJIeXIH1pGuryahseAFg9A",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"empresa 2\",\r\n    \"email\":\"empresa@email.com\",\r\n    \"cel\": 11985262222,\r\n    \"cnpj\":\"55467364000179\",\r\n    \"endereco\": {\r\n        \"rua\":\"dois\",\r\n        \"numero\":\"123\",\r\n        \"bairro\":\"bairro um\",\r\n        \"cep\":\"08773500\",\r\n        \"cidade\":\"Mogi das Cruzes\",\r\n        \"uf\":\"SP\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"nome\":\"empresa\",\r\n    \"email\":\"empresa@email.com\",\r\n    \"cel\": 11985262222,\r\n    \"cnpj\":\"55467364000179\",\r\n    \"endereco\": {\r\n        \"rua\":\"dois\",\r\n        \"numero\":\"123\",\r\n        \"bairro\":\"bairro um\",\r\n        \"cep\":\"08773500\",\r\n        \"cidade\":\"Mogi das Cruzes\",\r\n        \"uf\":\"SP\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1328,7 +1424,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3Y2RmYmY1LWQyZmYtNGY1MC1iM2MwLWFiNTZjY2M1MWRiNCIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJpYXQiOjE2NjA0MDYzNzYsImV4cCI6MTY2MDQ5Mjc3Nn0.v2OO3YDKKtshTWf07GxoAT7jlkn84WHRYZXVbPfeVo4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAxRUJDMTJELTc2NTItRUQxMS1CMDU3LTAwMEQzQUMwNUUzNyIsImVtcHJlc2EiOiI4NzAxNkQwQy03NjUyLUVEMTEtQjA1Ny0wMDBEM0FDMDVFMzciLCJyb2xlIjoiYWRtaW4gZ2xvYmFsIiwiaWF0IjoxNjY2NDkwNDUwLCJleHAiOjE2NjY1NzY4NTB9.zZI-oTif-LW6gDIUHl9qwaJIeXIH1pGuryahseAFg9A",
 									"type": "string"
 								}
 							]
@@ -1606,6 +1702,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5YjhiNmE3LTFhNzgtNDQ3Ni04Y2YyLWE4ZDkwZWEwZTUyOSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjUzMjg5NDIsImV4cCI6MTY2NTQxNTM0Mn0.f0yyMrI1bJaZLDTOH7z0Z6YXRuBGArlKx0q8AenF_GQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -1624,6 +1730,47 @@
 							],
 							"path": [
 								"estoque"
+							]
+						},
+						"description": "User"
+					},
+					"response": []
+				},
+				{
+					"name": "inventario_estoque",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI5YjhiNmE3LTFhNzgtNDQ3Ni04Y2YyLWE4ZDkwZWEwZTUyOSIsImVtcHJlc2EiOiJlOTU4MjgwOS1hZWU1LTQxMDktYjM5MC1jNzYwOWRiZTRjYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjUzMjg5NDIsImV4cCI6MTY2NTQxNTM0Mn0.f0yyMrI1bJaZLDTOH7z0Z6YXRuBGArlKx0q8AenF_GQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/estoque/inventario",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"estoque",
+								"inventario"
 							]
 						},
 						"description": "User"
@@ -1855,6 +2002,11 @@
 	"variable": [
 		{
 			"key": "BaseURL",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "BaseProd",
 			"value": "",
 			"type": "default"
 		}
